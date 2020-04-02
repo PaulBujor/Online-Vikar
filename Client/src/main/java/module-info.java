@@ -1,7 +1,10 @@
-module org.openjfx {
+module dk.grouptwo {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
+    //requires com.google.gson;
 
-    opens org.openjfx to javafx.fxml;
-    exports org.openjfx;
+    opens dk.grouptwo to javafx.fxml;
+    opens dk.grouptwo.view to javafx.fxml;
+    exports dk.grouptwo;
 }
