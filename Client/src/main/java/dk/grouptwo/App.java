@@ -1,5 +1,8 @@
 package dk.grouptwo;
 
+import dk.grouptwo.model.Model;
+import dk.grouptwo.view.ViewHandler;
+import dk.grouptwo.viewmodel.ViewModelFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,21 +17,14 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private Model model;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"));
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        model = new Model() {
+        };//todo
+        new ViewModelFactory(model);
+        new ViewHandler(viewModelFactory).start(stage);
     }
 
     public static void main(String[] args) {
