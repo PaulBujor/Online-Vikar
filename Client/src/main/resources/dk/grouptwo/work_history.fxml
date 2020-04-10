@@ -146,13 +146,13 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="70.0">
+      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="100.0">
          <columns>
             <TableColumn prefWidth="77.0" text="Job Title" />
             <TableColumn prefWidth="88.0" text="Status" />
             <TableColumn prefWidth="98.0" text="Employer" />
-            <TableColumn prefWidth="93.0" text="Salary" />
-            <TableColumn prefWidth="90.0" text="Start" />
+            <TableColumn prefWidth="77.60003662109375" text="Salary" />
+            <TableColumn prefWidth="106.39996337890625" text="Start" />
             <TableColumn prefWidth="93.0" text="Work Time" />
             <TableColumn prefWidth="105.0" text="Location" />
          </columns>
@@ -160,6 +160,16 @@
       <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="History" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
             <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
+      <Label layoutX="135.0" layoutY="63.0" prefHeight="27.0" prefWidth="226.0" text="Hours worked this month:" textFill="#403f44" AnchorPane.leftAnchor="135.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="361.0" layoutY="63.0" text="Label">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>
