@@ -1,4 +1,4 @@
-package dk.grouptwo.view;
+package dk.grouptwo.view.worker;
 
 import javafx.fxml.FXML;
 

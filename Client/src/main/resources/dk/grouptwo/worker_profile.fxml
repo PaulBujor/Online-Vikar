@@ -120,8 +120,9 @@
             <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <TextField layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Password" />
                </children>
             </HBox>
          </children>
