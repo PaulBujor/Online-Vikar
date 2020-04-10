@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="104.0" layoutY="68.0" text="Create account">
+         <font>
+            <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="749.0" prefHeight="765.0" prefWidth="450.0" style="-fx-background-color: #e9e9e9;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView blendMode="MULTIPLY" fitHeight="765.0" fitWidth="450.0" opacity="0.8" AnchorPane.bottomAnchor="0.0">
+               <image>
+                  <Image url="@images/create_account_employer.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+            <Label layoutX="23.0" layoutY="75.0" prefHeight="59.0" prefWidth="405.0" style="-fx-background-color: #00affe;" text="Become an employer" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="41.0" />
+               </font>
+            </Label>
+            <Label layoutX="130.0" layoutY="177.0" text="Create job offers ">
+               <font>
+                  <Font name="System Italic" size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="109.0" layoutY="228.0" text="Choose your workers">
+               <font>
+                  <Font name="System Italic" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <VBox layoutX="104.0" layoutY="184.0" prefHeight="308.0" prefWidth="522.0" spacing="23.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
+         <children>
+            <HBox spacing="28.0">
+               <children>
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CVR" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Company" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox spacing="28.0">
+               <children>
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="63.0" spacing="28.0">
+               <children>
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Address" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
+            <HBox spacing="28.0">
+               <children>
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="33.0" prefWidth="522.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="389.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Next" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Back" textFill="WHITE" AnchorPane.leftAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

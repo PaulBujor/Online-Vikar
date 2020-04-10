@@ -10,18 +10,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Line endX="100.0" fill="WHITE" layoutX="500.0" layoutY="566.0" startX="100.0" startY="-368.0" AnchorPane.bottomAnchor="198.5" AnchorPane.topAnchor="197.5" />
-      <Button layoutX="278.0" layoutY="637.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="609.0" stylesheets="@css/style.css" text="CREATE ACCOUNT" textFill="WHITE" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="313.0">
-         <font>
-            <Font name="System Bold" size="26.0" />
-         </font>
-      </Button>
-      <Label layoutX="585.0" layoutY="578.0" prefHeight="45.0" prefWidth="31.0" text="or">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="494.0" layoutY="120.0" text="Sign in as an">
+      <Line endX="100.0" fill="WHITE" layoutX="500.0" layoutY="566.0" startX="100.0" startY="-368.0" />
+      <Label layoutX="425.0" layoutY="118.0" text="Create account as an">
          <font>
             <Font size="38.0" />
          </font>
@@ -48,6 +38,16 @@
          </graphic>
          <font>
             <Font name="System Bold" size="38.0" />
+         </font>
+      </Button>
+      <Label layoutX="493.0" layoutY="601.0" text="Already have an account?">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <Button layoutX="556.0" layoutY="624.0" mnemonicParsing="false" styleClass="button-login" stylesheets="@css/style.css" text="Sign in">
+         <font>
+            <Font name="System Bold" size="19.0" />
          </font>
       </Button>
    </children>

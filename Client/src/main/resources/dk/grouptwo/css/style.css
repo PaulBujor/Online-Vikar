@@ -1,0 +1,29 @@
+
+.account {
+	-fx-background-color: transparent !important;
+}
+
+.account:hover {
+	-fx-text-fill: #00affe !important;
+}
+
+.button {
+    -fx-background-color:  #00affe;
+    -fx-background-radius: 0;
+}
+
+.button:hover {
+    -fx-background-color: #00A7F5;
+    -fx-background-radius: 0;
+    -fx-text-fill : white;
+}
+
+.button:pressed {
+    -fx-background-color: #009DE6;
+    -fx-text-fill : white;
+}
+
+.button-login {
+	-fx-background-color: transparent !important;
+	-fx-text-fill: #00affe !important;
+}
