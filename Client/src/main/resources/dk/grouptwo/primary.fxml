@@ -10,40 +10,82 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="857.0" layoutY="50.0" prefHeight="665.0" prefWidth="336.0" styleClass="linear-grad" stylesheets="@css/style.css" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane layoutX="857.0" layoutY="2.0" prefHeight="713.0" prefWidth="350.0" styleClass="linear-grad" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="114.0" layoutY="14.0" prefHeight="49.0" prefWidth="108.0" text="Details" textFill="#008fcc">
+            <Label layoutX="114.0" layoutY="14.0" prefHeight="49.0" prefWidth="108.0" text="Details" textFill="#008fcc" AnchorPane.leftAnchor="15.0">
                <font>
                   <Font name="System Bold" size="33.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="78.0" prefHeight="27.0" prefWidth="43.0" text="Title:" textFill="#403f44">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="28.0" layoutY="275.0" prefHeight="27.0" prefWidth="157.0" text="Work description: " textFill="#403f44">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="28.0" layoutY="140.0" text="Salary:" textFill="#403f44">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="28.0" layoutY="199.0" text="Location:" textFill="#403f44">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="28.0" layoutY="105.0" text="job title" />
-            <Label layoutX="28.0" layoutY="167.0" text="hourly salary" />
-            <Label layoutX="28.0" layoutY="226.0" text="adress" />
-            <Label layoutX="28.0" layoutY="302.0" text="description" />
+            <VBox layoutX="13.83984375" layoutY="72.0" prefHeight="642.0" prefWidth="320.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="146.0" text="Title:" textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Have a Stroke" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Label prefHeight="27.0" prefWidth="212.0" text="Employer" textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reitan Bitches" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Label text="Salary:" textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hourly salary" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Label prefHeight="27.0" prefWidth="157.0" text="Date and Time" textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYY HH:MM - DD/MM/YYYY HH:MM" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Label text="Location:" textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Marsalle 32, 8700 Horshit" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Label prefHeight="27.0" prefWidth="157.0" text="Work description: " textFill="#403f44">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Die of Depression with Reitan's amazing treatment" wrappingWidth="320.0">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Text>
+               </children>
+            </VBox>
+            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" text="Apply" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
          </children>
       </AnchorPane>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -103,13 +145,17 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="70.0">
+      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="70.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="77.0" text="Job Title" />
+            <TableColumn prefWidth="111.0" text="Employer" />
+            <TableColumn prefWidth="93.0" text="Salary" />
+            <TableColumn prefWidth="90.0" text="Start" />
+            <TableColumn prefWidth="93.0" text="Work Time" />
+            <TableColumn prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
-      <Label layoutX="127.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Find Work" textFill="#008fcc">
+      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Find Work" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
