@@ -85,7 +85,7 @@
                   </Text>
                </children>
             </VBox>
-            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" text="Apply" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
          </children>
       </AnchorPane>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -157,7 +157,7 @@
             <TableColumn prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
-      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Find Work" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
+      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Upcoming" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>

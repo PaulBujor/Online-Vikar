@@ -85,7 +85,6 @@
                   </Text>
                </children>
             </VBox>
-            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" text="Apply" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
          </children>
       </AnchorPane>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -150,14 +149,15 @@
       <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="70.0">
          <columns>
             <TableColumn prefWidth="77.0" text="Job Title" />
-            <TableColumn prefWidth="111.0" text="Employer" />
+            <TableColumn prefWidth="88.0" text="Status" />
+            <TableColumn prefWidth="98.0" text="Employer" />
             <TableColumn prefWidth="93.0" text="Salary" />
             <TableColumn prefWidth="90.0" text="Start" />
             <TableColumn prefWidth="93.0" text="Work Time" />
             <TableColumn prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
-      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Find Work" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
+      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="History" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
