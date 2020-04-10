@@ -20,26 +20,30 @@
                   <Font name="System Bold" size="33.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="113.0" prefHeight="27.0" prefWidth="43.0" text="Title:" textFill="#403f44">
+            <Label layoutX="28.0" layoutY="78.0" prefHeight="27.0" prefWidth="43.0" text="Title:" textFill="#403f44">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="235.0" prefHeight="27.0" prefWidth="157.0" text="Work description: " textFill="#403f44">
+            <Label layoutX="28.0" layoutY="275.0" prefHeight="27.0" prefWidth="157.0" text="Work description: " textFill="#403f44">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="365.0" text="Salary:" textFill="#403f44">
+            <Label layoutX="28.0" layoutY="140.0" text="Salary:" textFill="#403f44">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="499.0" text="Location:" textFill="#403f44">
+            <Label layoutX="28.0" layoutY="199.0" text="Location:" textFill="#403f44">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <Label layoutX="28.0" layoutY="105.0" text="job title" />
+            <Label layoutX="28.0" layoutY="167.0" text="hourly salary" />
+            <Label layoutX="28.0" layoutY="226.0" text="adress" />
+            <Label layoutX="28.0" layoutY="302.0" text="description" />
          </children>
       </AnchorPane>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -99,11 +103,16 @@
             </Label>
          </children>
       </AnchorPane>
-      <TableView layoutX="132.0" layoutY="51.0" prefHeight="665.0" prefWidth="720.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="348.0" AnchorPane.topAnchor="51.0">
+      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="127.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="70.0">
          <columns>
             <TableColumn prefWidth="75.0" text="C1" />
             <TableColumn prefWidth="75.0" text="C2" />
          </columns>
       </TableView>
+      <Label layoutX="127.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Find Work" textFill="#008fcc">
+         <font>
+            <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
