@@ -50,9 +50,17 @@ public class ViewHandler {
         Region root = null;
         switch (id) {
             case "signin":
-                //todo
+                root = loadSignInView("sing_in.fxml");
                 break;
         }
+        currentScene.setRoot(root);
+        String title = "VikarOnline";
+        if (root.getUserData() != null) {
+            title += root.getUserData();
+        }
+        primaryStage.setTitle(title);
+        primaryStage.setScene(currentScene);
+        primaryStage.show();
     }
 
     public void closeView() {
@@ -63,17 +71,15 @@ public class ViewHandler {
         Region root = null;
         if (signInController == null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/"+fxmlFile));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
                 root = loader.load();
                 signInController = loader.getController();
-//                signInController.init(this, viewModelFactory.getLoginViewModel(), root);
+                signInController.init(this, root);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-//            signInController.reset();
         }
-//        return signInController.getRoot();
+        return null; //signInController.getRoot();
     }
 
     //todo loadviews
