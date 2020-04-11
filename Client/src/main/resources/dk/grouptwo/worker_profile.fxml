@@ -77,7 +77,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView layoutX="127.0" layoutY="604.0" prefHeight="125.0" prefWidth="530.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="595.0">
+      <TableView layoutX="135.0" layoutY="575.0" prefHeight="99.0" prefWidth="530.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="575.0">
          <columns>
             <TableColumn prefWidth="77.0" text="License" />
             <TableColumn prefWidth="75.0" text="Category" />
@@ -88,7 +88,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <VBox layoutX="114.0" layoutY="146.0" prefHeight="520.0" prefWidth="530.0" spacing="23.0" AnchorPane.leftAnchor="135.0" AnchorPane.topAnchor="70.0">
+      <VBox layoutX="114.0" layoutY="146.0" prefHeight="475.0" prefWidth="530.0" spacing="21.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="70.0">
          <children>
             <TextField disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
             <HBox spacing="28.0">
@@ -120,17 +120,17 @@
             <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
-                  <TextField layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" promptText="Password" />
+                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <TextField layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <HBox layoutX="135.0" layoutY="725.0" prefWidth="530.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0">
+      <HBox layoutX="135.0" layoutY="691.0" prefWidth="530.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0">
          <children>
-            <TextField prefHeight="25.0" prefWidth="220.0" promptText="License" />
-            <TextField prefWidth="220.0" promptText="Category">
+            <TextField prefHeight="25.0" prefWidth="220.0" promptText="License" HBox.hgrow="ALWAYS" />
+            <TextField prefWidth="220.0" promptText="Category" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" />
                </HBox.margin>
@@ -147,10 +147,15 @@
             </HBox>
          </children>
       </HBox>
-      <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="680.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
+      <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
          <image>
             <Image url="@images/maestro.jpg" />
          </image>
       </ImageView>
+      <Button layoutX="601.0" layoutY="726.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="535.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

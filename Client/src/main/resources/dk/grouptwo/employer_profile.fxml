@@ -17,12 +17,12 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="680.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
+      <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
          <image>
             <Image url="@images/maestro.jpg" />
          </image>
       </ImageView>
-      <VBox layoutX="135.0" layoutY="70.0" prefHeight="308.0" prefWidth="522.0" spacing="23.0">
+      <VBox layoutX="135.0" layoutY="70.0" prefHeight="244.0" prefWidth="530.0" spacing="23.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0">
          <children>
             <HBox spacing="28.0">
                <children>
@@ -45,13 +45,14 @@
             <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Current password" HBox.hgrow="ALWAYS" />
+                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="New password" HBox.hgrow="ALWAYS" />
+                  <TextField layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <AnchorPane prefHeight="765.0" prefWidth="120.0" style="-fx-background-color: #00affe;">
+      <AnchorPane prefHeight="765.0" prefWidth="120.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -95,5 +96,10 @@
             </VBox>
          </children>
       </AnchorPane>
+      <Button layoutX="600.0" layoutY="334.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="334.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
