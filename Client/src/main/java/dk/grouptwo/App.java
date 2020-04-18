@@ -23,8 +23,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         model = new Model() {
         };//todo
-        new ViewModelFactory(model);
-        new ViewHandler(viewModelFactory).start(stage);
+
+        new ViewHandler(new ViewModelFactory(model)).start(stage);
     }
 
     public static void main(String[] args) {
