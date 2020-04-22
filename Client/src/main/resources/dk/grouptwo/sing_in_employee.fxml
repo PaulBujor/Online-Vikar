@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.SingInEmployeeController">
    <children>
       <VBox alignment="CENTER" layoutX="394.0" layoutY="121.0" prefHeight="362.0" prefWidth="414.0" spacing="30.0" AnchorPane.bottomAnchor="282.0" AnchorPane.leftAnchor="394.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="121.0">
          <children>
@@ -20,9 +20,9 @@
                   <Insets bottom="68.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="39.0" prefWidth="414.0" promptText="CPR" />
-            <TextField prefHeight="39.0" prefWidth="414.0" promptText="Password" />
-            <Label alignment="CENTER" text="Error_label" textFill="RED">
+            <TextField fx:id="signInEmployerCPRTextField" prefHeight="39.0" prefWidth="414.0" promptText="CPR" />
+            <TextField fx:id="signInEmployeePasswordTextField" prefHeight="39.0" prefWidth="414.0" promptText="Password" />
+            <Label fx:id="signInEmployeeErrorLabel" alignment="CENTER" text="Error_label" textFill="RED">
                <VBox.margin>
                   <Insets bottom="-13.0" top="-13.0" />
                </VBox.margin>
@@ -32,12 +32,12 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="62.0" stylesheets="@css/style.css" text="Back" textFill="WHITE" AnchorPane.leftAnchor="0.0">
+                  <Button mnemonicParsing="false" onAction="#backEmployeeButtonPressed" prefHeight="32.0" prefWidth="62.0" stylesheets="@css/style.css" text="Back" textFill="WHITE" AnchorPane.leftAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button layoutX="357.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="62.0" stylesheets="@css/style.css" text="Log in" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                  <Button layoutX="357.0" mnemonicParsing="false" onAction="#logInEmployeeButtonPressed" prefHeight="32.0" prefWidth="62.0" stylesheets="@css/style.css" text="Log in" textFill="WHITE" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
