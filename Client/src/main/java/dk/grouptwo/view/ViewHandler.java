@@ -1,9 +1,6 @@
 package dk.grouptwo.view;
 
-import dk.grouptwo.view.employer.CreateEmployerAccountController;
-import dk.grouptwo.view.employer.EmployerProfileController;
-import dk.grouptwo.view.employer.EmployerWorkHistoryController;
-import dk.grouptwo.view.employer.WorkController;
+import dk.grouptwo.view.employer.*;
 import dk.grouptwo.view.worker.FindWorkController;
 import dk.grouptwo.view.worker.UpcomingWorkController;
 import dk.grouptwo.view.worker.WorkerWorkHistoryController;
@@ -25,6 +22,7 @@ public class ViewHandler {
     private UpcomingWorkController upcomingWorkController;
     private WorkerProfileController workerProfileController;
     private WorkerWorkHistoryController workerWorkHistoryController;
+    private CreateWorkOfferController createWorkOfferController;
 
     //employer controllers
     private CreateEmployerAccountController createEmployerAccountController;
