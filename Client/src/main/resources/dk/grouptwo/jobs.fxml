@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.employer.WorkController">
    <children>
       <AnchorPane layoutX="857.0" layoutY="2.0" prefHeight="713.0" prefWidth="350.0" styleClass="linear-grad" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Have a Stroke" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Have a Stroke" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -38,7 +38,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reitan Bitches" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsEmployer" strokeType="OUTSIDE" strokeWidth="0.0" text="Reitan Bitches" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hourly salary" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsSalary" strokeType="OUTSIDE" strokeWidth="0.0" text="hourly salary" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -58,7 +58,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYY HH:MM - DD/MM/YYYY HH:MM" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsStartEndDates" strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYY HH:MM - DD/MM/YYYY HH:MM" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Marsalle 32, 8700 Horshit" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsLocation" strokeType="OUTSIDE" strokeWidth="0.0" text="Marsalle 32, 8700 Horshit" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -78,14 +78,14 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Die of Depression with Reitan's amazing treatment" wrappingWidth="320.0">
+                  <Text fx:id="jobsDetailsWorkDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Die of Depression with Reitan's amazing treatment" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </Text>
                </children>
             </VBox>
-            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" text="Apply" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" onAction="#jobsApplyButtonPressed" text="Apply" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
@@ -95,7 +95,7 @@
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#jobsUsernameButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -107,7 +107,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Jobs" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#jobsJobsButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Jobs" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -119,7 +119,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#jobsHistoryButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -135,14 +135,14 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView layoutX="127.0" layoutY="115.0" prefHeight="635.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="115.0">
+      <TableView fx:id="jobsTable" layoutX="127.0" layoutY="115.0" prefHeight="635.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="115.0">
          <columns>
-            <TableColumn prefWidth="77.0" text="Job Title" />
-            <TableColumn prefWidth="111.0" text="Employer" />
-            <TableColumn prefWidth="93.0" text="Salary" />
-            <TableColumn prefWidth="90.0" text="Start" />
-            <TableColumn prefWidth="93.0" text="Work Time" />
-            <TableColumn prefWidth="105.0" text="Location" />
+            <TableColumn fx:id="jobsJobTitleColumn" prefWidth="77.0" text="Job Title" />
+            <TableColumn fx:id="jobsEmployerColumn" prefWidth="111.0" text="Employer" />
+            <TableColumn fx:id="jobsSalaryColumn" prefWidth="93.0" text="Salary" />
+            <TableColumn fx:id="jobsStartColumn" prefWidth="90.0" text="Start" />
+            <TableColumn fx:id="jobsWorkTimeColumn" prefWidth="93.0" text="Work Time" />
+            <TableColumn fx:id="jobsLocationColumn" prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
       <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Jobs" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
@@ -150,7 +150,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <Button fx:id="createWorkOfferButton" alignment="CENTER" graphicTextGap="7.0" layoutX="685.0" layoutY="63.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="37.0" prefWidth="174.0" stylesheets="@css/style.css" text="Create work offer" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="350.0">
+      <Button alignment="CENTER" graphicTextGap="7.0" layoutX="685.0" layoutY="63.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#jobsCreateWorkOfferButtonPressed" prefHeight="37.0" prefWidth="174.0" stylesheets="@css/style.css" text="Create work offer" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="350.0">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" preserveRatio="true">
                <image>

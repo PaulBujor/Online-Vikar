@@ -11,15 +11,15 @@ public class SignInController {
     public void init(ViewHandler viewHandler, Region root) {
         this.viewHandler = viewHandler;
     }
-
+    @FXML
     public void signInCreateAccountButtonPressed()
     {
     }
-
+    @FXML
     public void singInEmployerButtonPressed()
     {
     }
-
+    @FXML
     public void signInEmployeeButtonPressed()
     {
     }

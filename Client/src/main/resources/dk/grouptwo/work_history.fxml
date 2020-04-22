@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.WorkerWorkHistoryController">
    <children>
       <AnchorPane layoutX="857.0" layoutY="2.0" prefHeight="713.0" prefWidth="350.0" styleClass="linear-grad" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Have a Stroke" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsTitle" strokeType="OUTSIDE" strokeWidth="0.0" text="Have a Stroke" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -38,7 +38,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Reitan Bitches" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsEmployer" strokeType="OUTSIDE" strokeWidth="0.0" text="Reitan Bitches" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hourly salary" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsSalary" strokeType="OUTSIDE" strokeWidth="0.0" text="hourly salary" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -58,7 +58,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYY HH:MM - DD/MM/YYYY HH:MM" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsStartEndDates" strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYY HH:MM - DD/MM/YYYY HH:MM" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -68,7 +68,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Marsalle 32, 8700 Horshit" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsLocation" strokeType="OUTSIDE" strokeWidth="0.0" text="Marsalle 32, 8700 Horshit" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -78,7 +78,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Die of Depression with Reitan's amazing treatment" wrappingWidth="320.0">
+                  <Text fx:id="workHistoryDetailsWorkDescription" strokeType="OUTSIDE" strokeWidth="0.0" text="Die of Depression with Reitan's amazing treatment" wrappingWidth="320.0">
                      <VBox.margin>
                         <Insets bottom="15.0" />
                      </VBox.margin>
@@ -91,7 +91,7 @@
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workHistoryUsernameButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -103,7 +103,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workHistoryFindWorkButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -118,7 +118,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workHistoryUpcomingButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -130,7 +130,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workHistoryHistoryButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -146,15 +146,15 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="100.0">
+      <TableView fx:id="workHistoryTable" layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="100.0">
          <columns>
-            <TableColumn prefWidth="77.0" text="Job Title" />
-            <TableColumn prefWidth="88.0" text="Status" />
-            <TableColumn prefWidth="98.0" text="Employer" />
-            <TableColumn prefWidth="77.60003662109375" text="Salary" />
-            <TableColumn prefWidth="106.39996337890625" text="Start" />
-            <TableColumn prefWidth="93.0" text="Work Time" />
-            <TableColumn prefWidth="105.0" text="Location" />
+            <TableColumn fx:id="workHistoryJobTitleColumn" prefWidth="77.0" text="Job Title" />
+            <TableColumn fx:id="workHistoryStatusColumn" prefWidth="88.0" text="Status" />
+            <TableColumn fx:id="workHistoryEmployerColumn" prefWidth="98.0" text="Employer" />
+            <TableColumn fx:id="workHistorySalaryColumn" prefWidth="77.60003662109375" text="Salary" />
+            <TableColumn fx:id="workHistoryStartColumn" prefWidth="106.39996337890625" text="Start" />
+            <TableColumn fx:id="workHistoryWorkTimeColumn" prefWidth="93.0" text="Work Time" />
+            <TableColumn fx:id="workHistoryLocationColumn" prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
       <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="History" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
@@ -167,7 +167,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="361.0" layoutY="63.0" text="Label">
+      <Label fx:id="workHistoryHoursLabel" layoutX="361.0" layoutY="63.0" text="Label">
          <font>
             <Font size="18.0" />
          </font>

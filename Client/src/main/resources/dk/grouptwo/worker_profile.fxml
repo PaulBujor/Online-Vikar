@@ -16,13 +16,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="dk.grouptwo.view.worker.WorkerProfileController" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workerProfileUsernameButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -34,7 +34,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workerProfileFindWorkButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -49,7 +49,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workerProfileUpcomingButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -61,7 +61,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#workerProfileHistoryButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -77,72 +77,72 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView layoutX="135.0" layoutY="575.0" prefHeight="99.0" prefWidth="530.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="575.0">
+      <TableView fx:id="workerProfileLicenseTable" layoutX="135.0" layoutY="575.0" prefHeight="99.0" prefWidth="530.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="575.0">
          <columns>
-            <TableColumn prefWidth="77.0" text="License" />
-            <TableColumn prefWidth="75.0" text="Category" />
+            <TableColumn fx:id="workerProfileLicenseColumn" prefWidth="77.0" text="License" />
+            <TableColumn fx:id="workerProfileCategoryColumn" prefWidth="75.0" text="Category" />
          </columns>
       </TableView>
-      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="Hello, first name" textFill="#008fcc" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="15.0">
+      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="101.0" text="Hello, " textFill="#008fcc" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="964.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
       <VBox layoutX="114.0" layoutY="146.0" prefHeight="475.0" prefWidth="530.0" spacing="21.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="70.0">
          <children>
-            <TextField disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
+            <TextField fx:id="workerProfileCPR" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="First name" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Last name" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileFirstName" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="First name" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileLastName" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Last name" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <DatePicker maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Date of birth" HBox.hgrow="ALWAYS" />
-                  <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" />
+                  <DatePicker fx:id="workerProfileDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Date of birth" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="workerProfileGender" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfilePostCode" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
-                  <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileMobilePhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="workerProfileTaxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />
-            <TextArea minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="522.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
+            <TextField fx:id="workerProfileLanguages" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />
+            <TextArea fx:id="workerProfileDescription" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="522.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
+            <TextField fx:id="workerProfileEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
-                  <TextField layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Password" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileCurrentPassword" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Current Password" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileNewPassword" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="New Password" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="workerProfileConfirmPassword" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm Password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
          </children>
       </VBox>
       <HBox layoutX="135.0" layoutY="691.0" prefWidth="530.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0">
          <children>
-            <TextField prefHeight="25.0" prefWidth="220.0" promptText="License" HBox.hgrow="ALWAYS" />
-            <TextField prefWidth="220.0" promptText="Category" HBox.hgrow="ALWAYS">
+            <TextField fx:id="workerProfileLicense" prefHeight="25.0" prefWidth="220.0" promptText="License" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="workerProfileCategory" prefWidth="220.0" promptText="Category" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" />
                </HBox.margin>
             </TextField>
             <HBox>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#workerProfileAddButtonPressed" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#workerProfileRemoveButtonPressed" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
                </children>
             </HBox>
          </children>
@@ -152,10 +152,15 @@
             <Image url="@images/maestro.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="601.0" layoutY="726.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="535.0">
+      <Button layoutX="601.0" layoutY="726.0" mnemonicParsing="false" onAction="#workerProfileSaveButtonPressed" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="535.0">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
       </Button>
+      <Label fx:id="workerProfileNameLabel" layoutX="236.0" layoutY="14.0" text="Label" textFill="#008fcc">
+         <font>
+            <Font name="System Bold" size="33.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

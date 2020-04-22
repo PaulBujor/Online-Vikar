@@ -29,11 +29,6 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
-            <Label layoutX="23.0" layoutY="75.0" prefHeight="59.0" prefWidth="405.0" style="-fx-background-color: #00affe;" text="Become an employer" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="41.0" />
-               </font>
-            </Label>
             <Label layoutX="130.0" layoutY="177.0" text="Create job offers ">
                <font>
                   <Font name="System Italic" size="26.0" />
