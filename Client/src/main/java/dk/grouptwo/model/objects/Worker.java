@@ -1,5 +1,7 @@
 package dk.grouptwo.model.objects;
 
+import java.util.ArrayList;
+
 public class Worker extends Account {
     private String CPR;
     private String firstName;
@@ -7,6 +9,7 @@ public class Worker extends Account {
     private String taxCard;
     private String languages;
     private String description;
+    private ArrayList<License> licenses;
 
     public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description) {
         super(email, phone, address);
@@ -16,6 +19,7 @@ public class Worker extends Account {
         this.taxCard = taxCard;
         this.languages = languages;
         this.description = description;
+        licenses = new ArrayList<License>();
     }
 
     public String getCPR() {
@@ -60,5 +64,13 @@ public class Worker extends Account {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ArrayList<License> getLicenses() {
+        return licenses;
+    }
+
+    public void setLicenses(ArrayList<License> licenses) {
+        this.licenses = licenses;
     }
 }
