@@ -10,6 +10,7 @@
 .button {
     -fx-background-color:  #00affe;
     -fx-background-radius: 0;
+    -fx-text-fill : white;
 }
 
 .button:hover {
