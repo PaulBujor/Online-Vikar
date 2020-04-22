@@ -8,10 +8,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.SignInController">
    <children>
       <Line endX="100.0" fill="WHITE" layoutX="500.0" layoutY="566.0" startX="100.0" startY="-368.0" AnchorPane.bottomAnchor="198.5" AnchorPane.topAnchor="197.5" />
-      <Button layoutX="278.0" layoutY="637.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="609.0" stylesheets="@css/style.css" text="CREATE ACCOUNT" textFill="WHITE" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="313.0">
+      <Button layoutX="278.0" layoutY="637.0" mnemonicParsing="false" onAction="#signInCreateAccountButtonPressed" prefHeight="58.0" prefWidth="609.0" stylesheets="@css/style.css" text="CREATE ACCOUNT" textFill="WHITE" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="313.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
@@ -26,7 +26,7 @@
             <Font size="38.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="256.0" layoutY="245.0" mnemonicParsing="false" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="256.0" layoutY="245.0" mnemonicParsing="false" onAction="#singInEmployerButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer">
          <graphic>
             <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
                <image>
@@ -38,7 +38,7 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="695.0" layoutY="245.0" mnemonicParsing="false" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="695.0" layoutY="245.0" mnemonicParsing="false" onAction="#signInEmployeeButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee">
          <graphic>
             <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
                <image>

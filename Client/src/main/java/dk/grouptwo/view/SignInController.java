@@ -1,5 +1,7 @@
 package dk.grouptwo.view;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 
 public class SignInController {
@@ -10,5 +12,18 @@ public class SignInController {
         this.viewHandler = viewHandler;
     }
 
+    public void signInCreateAccountButtonPressed()
+    {
+    }
+
+    public void singInEmployerButtonPressed()
+    {
+    }
+
+    public void signInEmployeeButtonPressed()
+    {
+    }
+
     //todo button methods * 3
+
 }

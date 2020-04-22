@@ -1,5 +1,23 @@
 package dk.grouptwo.view;
 
+import javafx.event.ActionEvent;
+
 public class CreateAccountController {
-    //todo no viewmodel, just reference to viewhandler to switch to correct controller
+
+
+
+
+
+  public void createAccountEmployerButtonPressed()
+  {
+  }
+
+  public void createAccountEmployeeButtonPressed()
+  {
+  }
+
+  public void createAccountSingInButtonPressed()
+  {
+  }
+  //todo no viewmodel, just reference to viewhandler to switch to correct controller
 }

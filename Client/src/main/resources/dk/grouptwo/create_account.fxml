@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.CreateAccountController">
    <children>
       <Line endX="100.0" fill="WHITE" layoutX="500.0" layoutY="566.0" startX="100.0" startY="-368.0" />
       <Label layoutX="425.0" layoutY="118.0" text="Create account as an">
@@ -16,7 +16,7 @@
             <Font size="38.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="256.0" layoutY="245.0" mnemonicParsing="false" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="256.0" layoutY="245.0" mnemonicParsing="false" onAction="#createAccountEmployerButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer">
          <graphic>
             <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
                <image>
@@ -28,7 +28,7 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Button>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="695.0" layoutY="245.0" mnemonicParsing="false" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="695.0" layoutY="245.0" mnemonicParsing="false" onAction="#createAccountEmployeeButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee">
          <graphic>
             <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
                <image>
@@ -45,7 +45,7 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button layoutX="556.0" layoutY="624.0" mnemonicParsing="false" styleClass="button-login" stylesheets="@css/style.css" text="Sign in">
+      <Button layoutX="556.0" layoutY="624.0" mnemonicParsing="false" onAction="#createAccountSingInButtonPressed" styleClass="button-login" stylesheets="@css/style.css" text="Sign in">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>

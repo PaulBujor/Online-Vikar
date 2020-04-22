@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.CreateWorkerAccountController">
    <children>
       <Label layoutX="104.0" layoutY="68.0" text="Create account">
          <font>
@@ -46,48 +46,48 @@
       </AnchorPane>
       <VBox layoutX="104.0" layoutY="136.0" prefHeight="569.0" prefWidth="522.0" spacing="23.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
          <children>
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
+            <TextField fx:id="createAccountEmployeeCPRNumber" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="First name" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Last name" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeFirstName" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="First name" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeLastName" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Last name" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <DatePicker maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Date of birth" HBox.hgrow="ALWAYS" />
-                  <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" />
+                  <DatePicker fx:id="createAccountEmployeeDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Date of birth" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="createAccountEmployeeGender" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeePostCode" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
-                  <ComboBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeMobilePhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="createAccountEmployeeTaxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />
-            <TextArea minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="522.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
-            <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
+            <TextField fx:id="createAccountEmployeeLanguages" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />
+            <TextArea fx:id="createAccountEmployeeDescription" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="522.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
+            <TextField fx:id="createAccountEmployeeEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeePassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeConfirmPassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <AnchorPane prefHeight="33.0" prefWidth="522.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="389.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Next" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                  <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="389.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#createAccountEmployeeNextButtonPressed" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Next" textFill="WHITE" AnchorPane.rightAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Back" textFill="WHITE" AnchorPane.leftAnchor="0.0">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createAccountEmployeeBackButtonPressed" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Back" textFill="WHITE" AnchorPane.leftAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
