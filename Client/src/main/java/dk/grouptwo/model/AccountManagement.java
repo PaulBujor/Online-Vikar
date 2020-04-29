@@ -14,5 +14,13 @@ public interface AccountManagement {
 
     public void logInEmployer(String CVR, String password);
 
+    public void editEmployer(Employer employer, String password);
+
+    public void editWorker(Worker worker, String password);
+
+    public void logOutWorker();
+
+    public void logOutEmployer();
+
 
 }

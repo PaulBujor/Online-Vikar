@@ -32,6 +32,6 @@ public interface RemoteClient extends Remote
   ArrayList<Job> getUpcomingJobsWorker() throws RemoteException;
 
   //Edit profiles these methods should be available only if the passwords match in the gui and the critical fields are not empty
-  void editEmployer(Employer employer, String password) throws RemoteException;
-  void editWorker(Worker worker, String password) throws RemoteException;
+  Employer editEmployer(Employer employer, String password) throws RemoteException;
+  Worker editWorker(Worker worker, String password) throws RemoteException;
 }

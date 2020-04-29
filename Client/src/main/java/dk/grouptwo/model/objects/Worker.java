@@ -73,4 +73,15 @@ public class Worker extends Account {
     public void setLicenses(ArrayList<License> licenses) {
         this.licenses = licenses;
     }
+
+    public void addLicense(License license)
+    {
+        licenses.add(license);
+    }
+
+    public void removeLicense(License license)
+    {
+        licenses.remove(license);
+    }
+
 }
