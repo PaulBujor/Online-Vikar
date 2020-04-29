@@ -15,7 +15,7 @@ public class Client implements RemoteClient
 
   @Override public void addJob(Job job) throws RemoteException
   {
-    
+
   }
 
   @Override public void removeJob(Job job) throws RemoteException
