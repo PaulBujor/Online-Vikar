@@ -2,6 +2,7 @@ package dk.grouptwo.model.objects;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Job implements Serializable {
     private int jobID;
@@ -13,8 +14,10 @@ public class Job implements Serializable {
     private LocalDateTime shiftStart;
     private LocalDateTime shiftEnd;
     private String status;
+    private Employer employer;
+    private ArrayList<Worker> workers;
 
-    public Job(int jobID, String jobTitle, String description, String category, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status) {
+    public Job(int jobID, String jobTitle, String description, String category, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Employer employer) {
         this.jobID = jobID;
         this.jobTitle = jobTitle;
         this.description = description;
@@ -24,6 +27,8 @@ public class Job implements Serializable {
         this.shiftStart = shiftStart;
         this.shiftEnd = shiftEnd;
         this.status = status;
+        this.employer = employer;
+        workers = new ArrayList<Worker>();
     }
 
     public int getJobID() {
@@ -96,5 +101,25 @@ public class Job implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(Employer employer) {
+        this.employer = employer;
+    }
+
+    public ArrayList<Worker> getWorkers() {
+        return workers;
+    }
+
+    public void addWorker(Worker worker) {
+        workers.add(worker);
+    }
+
+    public void removeWorker(Worker worker) {
+        workers.remove(worker);
     }
 }
