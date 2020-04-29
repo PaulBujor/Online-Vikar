@@ -1,9 +1,0 @@
-Option 1:
-    Have one big model that deals with both worker and employer profile
-    + Easier to program
-    - Harder to manage
-
-Option 2:
-    Have two models, one for worker app and one for employer app
-    - Harder to program
-    + Easier to manage

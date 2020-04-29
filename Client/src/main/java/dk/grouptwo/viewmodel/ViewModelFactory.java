@@ -1,6 +1,5 @@
 package dk.grouptwo.viewmodel;
 
-import dk.grouptwo.model.Model;
 import dk.grouptwo.viewmodel.employer.CreateEmployerAccountViewModel;
 import dk.grouptwo.viewmodel.employer.EmployerProfileViewModel;
 import dk.grouptwo.viewmodel.employer.EmployerWorkHistoryViewModel;

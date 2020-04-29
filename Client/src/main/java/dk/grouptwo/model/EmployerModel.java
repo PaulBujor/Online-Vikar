@@ -1,4 +1,4 @@
 package dk.grouptwo.model;
 
-public class EmployerModel {
+public interface EmployerModel {
 }

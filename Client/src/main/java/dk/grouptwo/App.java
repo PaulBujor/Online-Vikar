@@ -1,11 +1,8 @@
 package dk.grouptwo;
 
-import dk.grouptwo.model.Model;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.ViewModelFactory;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
