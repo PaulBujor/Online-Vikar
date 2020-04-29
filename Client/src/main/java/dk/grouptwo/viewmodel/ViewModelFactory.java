@@ -1,9 +1,6 @@
 package dk.grouptwo.viewmodel;
 
-import dk.grouptwo.viewmodel.employer.CreateEmployerAccountViewModel;
-import dk.grouptwo.viewmodel.employer.EmployerProfileViewModel;
-import dk.grouptwo.viewmodel.employer.EmployerWorkHistoryViewModel;
-import dk.grouptwo.viewmodel.employer.WorkViewModel;
+import dk.grouptwo.viewmodel.employer.*;
 import dk.grouptwo.viewmodel.worker.*;
 
 public class ViewModelFactory {
@@ -13,14 +10,16 @@ public class ViewModelFactory {
     private UpcomingWorkViewModel upcomingWorkViewModel;
     private WorkerProfileViewModel workerProfileViewModel;
     private WorkerWorkHistoryViewModel workerWorkHistoryViewModel;
+    private SignInWorkerViewModel signInWorkerViewModel;
 
     //employer view models
     private CreateEmployerAccountViewModel createEmployerAccountViewModel;
     private EmployerProfileViewModel employerProfileViewModel;
     private EmployerWorkHistoryViewModel employerWorkHistoryViewModel;
     private WorkViewModel workViewModel;
+    private SignInEmployerViewModel signInEmployerViewModel;
 
-    public ViewModelFactory(Model model) {
+    public ViewModelFactory() {
         //todo construct new viewmodels
     }
 
@@ -58,5 +57,13 @@ public class ViewModelFactory {
 
     public WorkViewModel getWorkViewModel() {
         return workViewModel;
+    }
+
+    public SignInWorkerViewModel getSignInWorkerViewModel() {
+        return signInWorkerViewModel;
+    }
+
+    public SignInEmployerViewModel getSignInEmployerViewModel() {
+        return signInEmployerViewModel;
     }
 }
