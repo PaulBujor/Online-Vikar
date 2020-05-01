@@ -1,6 +1,8 @@
 package dk.grouptwo.view.worker;
 
+import dk.grouptwo.view.ViewHandler;
 import javafx.fxml.FXML;
+import javafx.scene.layout.Region;
 
 /**
  * this is package-private
@@ -9,23 +11,41 @@ import javafx.fxml.FXML;
  * (Profile, Find Work, Upcoming and History Controllers)
  */
 class WorkerViewTabController {
+    private ViewHandler viewHandler;
+    private Region root;
+
+    public void init(ViewHandler viewHandler, Region root){
+        this.viewHandler = viewHandler;
+        this.root = root;
+    }
+
     @FXML
     public void switchToProfile() {
-        //TODO
+        viewHandler.openView("workerProfile");
     }
 
     @FXML
     public void switchToFindWork() {
-        //TODO
+        viewHandler.openView("findWork");
     }
 
     @FXML
     public void switchToUpcoming() {
-        //TODO
+        viewHandler.openView("upcomingWork");
     }
 
     @FXML
     public void switchToHistory() {
-        //TODO
+        viewHandler.openView("workerHistory");
+    }
+
+    //todo log out
+
+    public void reset() {
+
+    }
+
+    public Region getRoot() {
+        return root;
     }
 }

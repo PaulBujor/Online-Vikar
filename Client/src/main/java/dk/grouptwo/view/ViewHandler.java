@@ -66,6 +66,20 @@ public class ViewHandler {
             case "findWork":
                 root = loadFindWorkView("find_work.fxml");
                 break;
+            case "workerProfile":
+                root = loadWorkerProfileView("worker_profile.fxml");
+                break;
+            case "upcomingWork":
+                root = loadWorkerUpcomingView("upcoming_work.fxml");
+                break;
+            case "workerHistory":
+                root = loadWorkerHistoryView("work_history.fxml");
+                break;
+
+
+            default:
+                System.out.println("non existent");
+                break;
         }
         currentScene.setRoot(root);
         String title = "VikarOnline";
@@ -186,7 +200,7 @@ public class ViewHandler {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
                 root = loader.load();
                 findWorkController = loader.getController();
-                findWorkController.init(this, viewModelFactory.getSignInWorkerViewModel(), root);
+                findWorkController.init(this, viewModelFactory.getFindWorkViewModel(), root);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -196,5 +210,57 @@ public class ViewHandler {
         return findWorkController.getRoot();
     }
 
-    //todo loadviews
+    private Region loadWorkerProfileView(String fxmlFile) {
+        Region root = null;
+        if (workerProfileController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                workerProfileController = loader.getController();
+                workerProfileController.init(this, viewModelFactory.getWorkerProfileViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            workerProfileController.reset();
+        }
+        return workerProfileController.getRoot();
+    }
+
+    private Region loadWorkerUpcomingView(String fxmlFile) {
+        Region root = null;
+        if (upcomingWorkController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                upcomingWorkController = loader.getController();
+                upcomingWorkController.init(this, viewModelFactory.getUpcomingWorkViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            upcomingWorkController.reset();
+        }
+        return upcomingWorkController.getRoot();
+    }
+
+    private Region loadWorkerHistoryView(String fxmlFile) {
+        Region root = null;
+        if (workerWorkHistoryController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                workerWorkHistoryController = loader.getController();
+                workerWorkHistoryController.init(this, viewModelFactory.getWorkerWorkHistoryViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            workerWorkHistoryController.reset();
+        }
+        return workerWorkHistoryController.getRoot();
+    }
+
+
+
 }

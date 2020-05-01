@@ -1,74 +1,64 @@
 package dk.grouptwo.view.worker;
 
+import dk.grouptwo.view.ViewHandler;
+import dk.grouptwo.viewmodel.worker.WorkerWorkHistoryViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class WorkerWorkHistoryController extends WorkerViewTabController {
-  @FXML
-  private Text workHistoryDetailsTitle;
+    private WorkerWorkHistoryViewModel viewModel;
 
-  @FXML
-  private Text workHistoryDetailsEmployer;
+    @FXML
+    private Text workHistoryDetailsTitle;
 
-  @FXML
-  private Text workHistoryDetailsSalary;
+    @FXML
+    private Text workHistoryDetailsEmployer;
 
-  @FXML
-  private Text workHistoryDetailsStartEndDates;
+    @FXML
+    private Text workHistoryDetailsSalary;
 
-  @FXML
-  private Text workHistoryDetailsLocation;
+    @FXML
+    private Text workHistoryDetailsStartEndDates;
 
-  @FXML
-  private Text workHistoryDetailsWorkDescription;
+    @FXML
+    private Text workHistoryDetailsLocation;
 
-  @FXML
-  private TableView<?> workHistoryTable;
+    @FXML
+    private Text workHistoryDetailsWorkDescription;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryJobTitleColumn;
+    @FXML
+    private TableView<?> workHistoryTable;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryStatusColumn;
+    @FXML
+    private TableColumn<?, ?> workHistoryJobTitleColumn;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryEmployerColumn;
+    @FXML
+    private TableColumn<?, ?> workHistoryStatusColumn;
 
-  @FXML
-  private TableColumn<?, ?> workHistorySalaryColumn;
+    @FXML
+    private TableColumn<?, ?> workHistoryEmployerColumn;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryStartColumn;
+    @FXML
+    private TableColumn<?, ?> workHistorySalaryColumn;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryWorkTimeColumn;
+    @FXML
+    private TableColumn<?, ?> workHistoryStartColumn;
 
-  @FXML
-  private TableColumn<?, ?> workHistoryLocationColumn;
+    @FXML
+    private TableColumn<?, ?> workHistoryWorkTimeColumn;
 
-  @FXML
-  private Label workHistoryHoursLabel;
+    @FXML
+    private TableColumn<?, ?> workHistoryLocationColumn;
 
-  @FXML
-  void workHistoryFindWorkButtonPressed() {
+    @FXML
+    private Label workHistoryHoursLabel;
 
-  }
-
-  @FXML
-  void workHistoryHistoryButtonPressed() {
-
-  }
-
-  @FXML
-  void workHistoryUpcomingButtonPressed() {
-
-  }
-
-  @FXML
-  void workHistoryUsernameButtonPressed() {
-
-  }
+    public void init(ViewHandler viewHandler, WorkerWorkHistoryViewModel viewModel, Region root) {
+        super.init(viewHandler, root);
+        this.viewModel = viewModel;
+    }
 }

@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.FindWorkController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.FindWorkController">
    <children>
       <AnchorPane layoutX="857.0" layoutY="2.0" prefHeight="713.0" prefWidth="350.0" styleClass="linear-grad" stylesheets="@css/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -92,7 +92,7 @@
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#findWorkUsernameButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToProfile" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -104,7 +104,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#findWorkFindWorkButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToFindWork" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Find Work" textAlignment="CENTER" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -119,7 +119,7 @@
                         <Insets />
                      </VBox.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#findWorkUpcomingButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToUpcoming" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="Upcoming" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -131,7 +131,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#findWorkHistoryButtonPressed" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="TOP" layoutX="10.0" layoutY="151.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToHistory" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="History" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

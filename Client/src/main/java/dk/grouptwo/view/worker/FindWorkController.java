@@ -9,9 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class FindWorkController extends WorkerViewTabController {
-    private ViewHandler viewHandler;
     private FindWorkViewModel viewModel;
-    private Region root;
 
     @FXML
     private Text findWorkDetailsTitle;
@@ -53,9 +51,8 @@ public class FindWorkController extends WorkerViewTabController {
     private TableColumn<?, ?> findWorkLocationColumn;
 
     public void init(ViewHandler viewHandler, FindWorkViewModel viewModel, Region root) {
-        this.viewHandler = viewHandler;
+        super.init(viewHandler, root);
         this.viewModel = viewModel;
-        this.root = root;
     }
 
     @FXML
@@ -63,25 +60,7 @@ public class FindWorkController extends WorkerViewTabController {
 
     }
 
-    @FXML
-    void findWorkFindWorkButtonPressed() {
-
+    public void reset() {
+        //todo
     }
-
-    @FXML
-    void findWorkHistoryButtonPressed() {
-
-    }
-
-    @FXML
-    void findWorkUpcomingButtonPressed() {
-
-    }
-
-    @FXML
-    void findWorkUsernameButtonPressed() {
-
-    }
-
-    public void reset()
 }
