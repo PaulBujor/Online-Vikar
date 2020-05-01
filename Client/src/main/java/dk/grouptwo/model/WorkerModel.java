@@ -4,7 +4,6 @@ import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
 
 
-import java.util.ArrayList;
 
 public interface WorkerModel {
 

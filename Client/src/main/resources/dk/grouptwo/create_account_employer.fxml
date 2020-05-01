@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.employer.CreateEmployerAccountController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.employer.CreateEmployerAccountController">
    <children>
       <Label layoutX="104.0" layoutY="68.0" text="Create account">
          <font>
@@ -37,6 +37,11 @@
             <Label layoutX="109.0" layoutY="228.0" text="Choose your workers">
                <font>
                   <Font name="System Italic" size="26.0" />
+               </font>
+            </Label>
+            <Label layoutX="102.0" layoutY="74.0" prefHeight="59.0" prefWidth="247.0" style="-fx-background-color: #00affe;" text="Hire workers" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Label>
          </children>
