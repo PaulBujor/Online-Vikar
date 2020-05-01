@@ -1,6 +1,5 @@
 package dk.grouptwo.model;
 
-import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Worker;
 
