@@ -1,6 +1,7 @@
 package dk.grouptwo.networking.remote;
 
 import dk.grouptwo.model.objects.Job;
+import main.java.dk.grouptwo.networking.remote.RemoteClient;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -13,7 +14,4 @@ public interface RemoteServer extends Remote
 
   void addJob(Job job) throws RemoteException;
   void removeJob(Job job) throws RemoteException;
-
-
-
 }
