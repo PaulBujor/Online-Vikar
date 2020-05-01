@@ -15,6 +15,12 @@ public interface RemoteClient extends Remote
   void addJob(Job job) throws RemoteException;
   void removeJob(Job job) throws RemoteException;
 
+  //Update job
+  void updateJob(Job job) throws RemoteException;
+
+  //Apply for a job
+  void applyForAJob(Job job) throws RemoteException;
+
   //Logins  **** If null don't load anything
   Employer loginEmployer(String CVR, String password) throws RemoteException;
   Worker loginWorker(String CPR, String password) throws RemoteException;
@@ -32,6 +38,9 @@ public interface RemoteClient extends Remote
   ArrayList<Job> getUpcomingJobsWorker() throws RemoteException;
 
   //Edit profiles these methods should be available only if the passwords match in the gui and the critical fields are not empty
-  void editEmployer(Employer employer, String password) throws RemoteException;
-  void editWorker(Worker worker, String password) throws RemoteException;
+  Employer editEmployer(Employer employer, String password) throws RemoteException;
+  Worker editWorker(Worker worker, String password) throws RemoteException;
+
+
+
 }
