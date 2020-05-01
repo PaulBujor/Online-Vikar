@@ -1,104 +1,98 @@
 package dk.grouptwo.view.worker;
 
+import dk.grouptwo.view.ViewHandler;
+import dk.grouptwo.viewmodel.worker.WorkerProfileViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 
 public class WorkerProfileController extends WorkerViewTabController {
-  @FXML
-  private TableView<?> workerProfileLicenseTable;
+    private WorkerProfileViewModel viewModel;
 
-  @FXML
-  private TableColumn<?, ?> workerProfileLicenseColumn;
+    @FXML
+    private TableView<?> workerProfileLicenseTable;
 
-  @FXML
-  private TableColumn<?, ?> workerProfileCategoryColumn;
+    @FXML
+    private TableColumn<?, ?> workerProfileLicenseColumn;
 
-  @FXML
-  private TextField workerProfileCPR;
+    @FXML
+    private TableColumn<?, ?> workerProfileCategoryColumn;
 
-  @FXML
-  private TextField workerProfileFirstName;
+    @FXML
+    private TextField workerProfileCPR;
 
-  @FXML
-  private TextField workerProfileLastName;
+    @FXML
+    private TextField workerProfileFirstName;
 
-  @FXML
-  private DatePicker workerProfileDatePicker;
+    @FXML
+    private TextField workerProfileLastName;
 
-  @FXML
-  private ComboBox<?> workerProfileGender;
+    @FXML
+    private DatePicker workerProfileDatePicker;
 
-  @FXML
-  private TextField workerProfileCity;
+    @FXML
+    private ComboBox<?> workerProfileGender;
 
-  @FXML
-  private TextField workerProfilePostCode;
+    @FXML
+    private TextField workerProfileCity;
 
-  @FXML
-  private TextField workerProfileMobilePhone;
+    @FXML
+    private TextField workerProfilePostCode;
 
-  @FXML
-  private ComboBox<?> workerProfileTaxCard;
+    @FXML
+    private TextField workerProfileMobilePhone;
 
-  @FXML
-  private TextField workerProfileLanguages;
+    @FXML
+    private ComboBox<?> workerProfileTaxCard;
 
-  @FXML
-  private TextArea workerProfileDescription;
+    @FXML
+    private TextField workerProfileLanguages;
 
-  @FXML
-  private TextField workerProfileEmail;
+    @FXML
+    private TextArea workerProfileDescription;
 
-  @FXML
-  private TextField workerProfileCurrentPassword;
+    @FXML
+    private TextField workerProfileEmail;
 
-  @FXML
-  private TextField workerProfileNewPassword;
+    @FXML
+    private TextField workerProfileCurrentPassword;
 
-  @FXML
-  private TextField workerProfileConfirmPassword;
+    @FXML
+    private TextField workerProfileNewPassword;
 
-  @FXML
-  private TextField workerProfileLicense;
+    @FXML
+    private TextField workerProfileConfirmPassword;
 
-  @FXML
-  private TextField workerProfileCategory;
+    @FXML
+    private TextField workerProfileLicense;
 
-  @FXML
-  private Label workerProfileNameLabel;
+    @FXML
+    private TextField workerProfileCategory;
 
-  @FXML
-  void workerProfileAddButtonPressed() {
+    @FXML
+    private Label workerProfileNameLabel;
 
-  }
+    public void init(ViewHandler viewHandler, WorkerProfileViewModel viewModel, Region root) {
+        super.init(viewHandler, root);
+        this.viewModel = viewModel;
+    }
 
-  @FXML
-  void workerProfileFindWorkButtonPressed() {
+    @FXML
+    void workerProfileAddButtonPressed() {
 
-  }
+    }
 
-  @FXML
-  void workerProfileHistoryButtonPressed() {
+    @FXML
+    void workerProfileRemoveButtonPressed() {
 
-  }
+    }
 
-  @FXML
-  void workerProfileRemoveButtonPressed() {
+    @FXML
+    void workerProfileSaveButtonPressed() {
 
-  }
+    }
 
-  @FXML
-  void workerProfileSaveButtonPressed() {
+    public void reset() {
 
-  }
-
-  @FXML
-  void workerProfileUpcomingButtonPressed() {
-
-  }
-
-  @FXML
-  void workerProfileUsernameButtonPressed() {
-
-  }
+    }
 }

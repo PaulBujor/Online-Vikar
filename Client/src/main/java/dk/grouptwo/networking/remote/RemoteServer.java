@@ -2,7 +2,11 @@ package dk.grouptwo.networking.remote;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+
 import dk.grouptwo.model.objects.Worker;
+
+
+
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -13,6 +17,7 @@ public interface RemoteServer extends Remote
 //TODO need to test everything to see how it works, missing methods, maybe need some editing and so on..
   //This should register workers to get updates for job changes
   void registerClient(RemoteClient clientToRegister) throws RemoteException;
+
 
   //Adding and removing jobs
   //TODO might not need remoteCLient
@@ -43,4 +48,5 @@ public interface RemoteServer extends Remote
 
   //Getting jobs of the employer
   ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException;
+
 }
