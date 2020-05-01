@@ -3,6 +3,7 @@ package dk.grouptwo.viewmodel.employer;
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
+import dk.grouptwo.utility.EmailValidator;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,7 +24,7 @@ public class CreateEmployerAccountViewModel {
     private StringProperty email;
     private StringProperty password;
     private StringProperty confirmPassword;
-    private StringProperty errorLabel;
+    private StringProperty error;
     private BooleanProperty accountCreated;
 
     public CreateEmployerAccountViewModel(ModelManager model) {
@@ -37,7 +38,7 @@ public class CreateEmployerAccountViewModel {
         email = new SimpleStringProperty();
         password = new SimpleStringProperty();
         confirmPassword = new SimpleStringProperty();
-        errorLabel = new SimpleStringProperty();
+        error = new SimpleStringProperty();
         accountCreated = new SimpleBooleanProperty();
     }
 
@@ -46,15 +47,19 @@ public class CreateEmployerAccountViewModel {
         if (CVR.get().equals("") || company.get().equals("") || city.get().equals("") || postCode.get().equals("") || address.get().equals("") ||
         mobilePhone.get().equals("") || email.get().equals("") || password.get().equals("") || confirmPassword.get().equals(""))
         {
-            errorLabel.set("All the fields should be filled.");
+            error.set("All fields should be filled.");
             return false;
         }
-        else if (password.get().equals(confirmPassword.get()))
+        else if (!(password.get().equals(confirmPassword.get())))
         {
-            errorLabel.set("The passwords do not match.");
+            error.set("The passwords do not match.");
             return false;
         }
-        // TODO check for email
+        else if (!(EmailValidator.emailCheck(email.get())))
+        {
+            error.set("Wrong email format.");
+            return false;
+        }
         else
         {
             try {
@@ -63,7 +68,7 @@ public class CreateEmployerAccountViewModel {
             }
             catch (IllegalArgumentException e)
             {
-                errorLabel.set(e.getMessage());
+                error.set(e.getMessage());
                 return false;
             }
         }

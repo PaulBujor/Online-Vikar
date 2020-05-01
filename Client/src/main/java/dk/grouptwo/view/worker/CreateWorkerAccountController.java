@@ -59,7 +59,7 @@ public class CreateWorkerAccountController {
 
     @FXML
     public void createAccountEmployeeNextButtonPressed() {
-
+        viewModel.createWorkerAccount();
     }
 
     public void reset() {

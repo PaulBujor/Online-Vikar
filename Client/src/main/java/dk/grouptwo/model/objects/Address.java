@@ -23,6 +23,12 @@ public class Address implements Serializable {
         this.zip = zip;
     }
 
+    public Address(String city, String zip) {
+        this.city = city;
+        this.zip = zip;
+    }
+
+
     public String getCountry() {
         return country;
     }
