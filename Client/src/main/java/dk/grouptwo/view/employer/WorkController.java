@@ -1,11 +1,15 @@
 package dk.grouptwo.view.employer;
 
+import dk.grouptwo.view.ViewHandler;
+import dk.grouptwo.viewmodel.employer.WorkViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class WorkController extends EmployerViewTabController {
+  private WorkViewModel viewModel;
 
   @FXML
   private Text jobsDetailsTitle;
@@ -46,28 +50,18 @@ public class WorkController extends EmployerViewTabController {
   @FXML
   private TableColumn<?, ?> jobsLocationColumn;
 
+  public void init(ViewHandler viewHandler, WorkViewModel viewModel, Region root){
+    super.init(viewHandler, root);
+    this.viewModel = viewModel;
+  }
+
   @FXML
-  void jobsApplyButtonPressed() {
+  void openOffer() {
 
   }
 
   @FXML
-  void jobsCreateWorkOfferButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsHistoryButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsJobsButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsUsernameButtonPressed() {
+  void createWorkOffer() {
 
   }
 
