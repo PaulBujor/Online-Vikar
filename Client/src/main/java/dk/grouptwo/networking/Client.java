@@ -12,8 +12,10 @@ import java.util.ArrayList;
 //maybe singleton
 public class Client implements RemoteClient {
 
-    @Override
-    public void addJob(Job job) throws RemoteException {
+
+  @Override public void addJob(Job job) throws RemoteException
+  {
+
 
     }
 

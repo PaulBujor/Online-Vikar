@@ -14,14 +14,10 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
-    private Model model;
 
     @Override
     public void start(Stage stage) throws IOException {
-        model = new Model() {
-        };//todo
-
-        new ViewHandler(new ViewModelFactory(model)).start(stage);
+        new ViewHandler(new ViewModelFactory()).start(stage);
     }
 
     public static void main(String[] args) {

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.SingInEmployeeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.SignInWorkerController">
    <children>
       <VBox alignment="CENTER" layoutX="394.0" layoutY="121.0" prefHeight="362.0" prefWidth="414.0" spacing="30.0" AnchorPane.bottomAnchor="282.0" AnchorPane.leftAnchor="394.0" AnchorPane.rightAnchor="392.0" AnchorPane.topAnchor="121.0">
          <children>
