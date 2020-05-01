@@ -1,19 +1,25 @@
 package dk.grouptwo.model.objects;
 
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 
 public class Address implements Serializable {
     private String country;
     private String city;
     private String street;
-    private String number;
-    private int zip;
+    private String zip;
 
-    public Address(String country, String city, String street, String number, int zip) {
+    public Address(String country, String city, String street, String zip) {
         this.country = country;
         this.city = city;
         this.street = street;
-        this.number = number;
+        this.zip = zip;
+    }
+
+    public Address(String city, String street, String zip) {
+        this.city = city;
+        this.street = street;
         this.zip = zip;
     }
 
@@ -41,19 +47,11 @@ public class Address implements Serializable {
         this.street = street;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public int getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 }

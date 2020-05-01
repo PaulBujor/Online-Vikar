@@ -46,7 +46,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <VBox layoutX="104.0" layoutY="184.0" prefHeight="308.0" prefWidth="522.0" spacing="23.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
+      <VBox alignment="CENTER_LEFT" layoutX="104.0" layoutY="184.0" prefHeight="308.0" prefWidth="522.0" spacing="23.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
          <children>
             <HBox spacing="28.0">
                <children>
@@ -73,6 +73,11 @@
                   <TextField fx:id="createAccountEmployerConfirmPassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
+            <Label fx:id="createAccountEmployerErrorLabel" text="Error_label" textFill="RED">
+               <VBox.margin>
+                  <Insets bottom="-20.0" top="-12.0" />
+               </VBox.margin>
+            </Label>
             <AnchorPane prefHeight="33.0" prefWidth="522.0">
                <children>
                   <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="389.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#createAccountEmployerNextButtonPressed" prefHeight="33.0" prefWidth="133.0" stylesheets="@css/style.css" text="Next" textFill="WHITE" AnchorPane.rightAnchor="0.0">

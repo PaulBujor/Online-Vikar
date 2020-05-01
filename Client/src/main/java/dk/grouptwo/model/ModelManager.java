@@ -15,8 +15,15 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private RemoteClient client;
 
     @Override
-    public void registerAccountWorker(Worker worker, String password) throws RemoteException {
-        client.createWorkerAccount(worker, password);
+    public void registerAccountWorker(Worker worker, String password) {
+        try {
+            client.createWorkerAccount(worker, password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Some kind of error");
+        }
+
     }
 
     @Override
@@ -25,8 +32,14 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void registerAccountEmployer(Employer employer, String password) throws RemoteException {
-        client.createEmployerAccount(employer, password);
+    public void registerAccountEmployer(Employer employer, String password) {
+        try {
+            client.createEmployerAccount(employer, password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Some kind of error");
+        }
     }
 
 

@@ -7,6 +7,7 @@ import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.CreateEmployerAccountViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
@@ -33,6 +34,8 @@ public class CreateEmployerAccountController {
     private TextField createAccountEmployerPassword;
     @FXML
     private TextField createAccountEmployerConfirmPassword;
+    @FXML
+    private Label createAccountEmployerErrorLabel;
 
     public void init(ViewHandler viewHandler, CreateEmployerAccountViewModel viewModel, Region root) {
         this.viewHandler = viewHandler;
@@ -47,6 +50,7 @@ public class CreateEmployerAccountController {
 
     @FXML
     public void createAccountEmployerNextButtonPressed(ActionEvent actionEvent) {
+        viewModel.createEmployerAccount();
     }
 
     public void reset() {

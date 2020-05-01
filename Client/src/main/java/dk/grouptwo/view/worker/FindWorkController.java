@@ -84,4 +84,7 @@ public class FindWorkController extends WorkerViewTabController {
     }
 
     public void reset()
+    {
+
+    }
 }

@@ -7,10 +7,7 @@ import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.worker.CreateWorkerAccountViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
 public class CreateWorkerAccountController {
@@ -52,6 +49,8 @@ public class CreateWorkerAccountController {
     private TextField createAccountEmployeePassword;
     @FXML
     private TextField createAccountEmployeeConfirmPassword;
+    @FXML
+    private Label createAccountEmployeeErrorLabel;
 
     @FXML
     public void createAccountEmployeeBackButtonPressed() {
@@ -60,6 +59,7 @@ public class CreateWorkerAccountController {
 
     @FXML
     public void createAccountEmployeeNextButtonPressed() {
+
     }
 
     public void reset() {
