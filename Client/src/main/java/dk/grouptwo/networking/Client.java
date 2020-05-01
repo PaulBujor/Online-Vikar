@@ -24,7 +24,17 @@ public class Client implements RemoteClient {
 
     }
 
-    @Override
+  @Override public void updateJob(Job job) throws RemoteException
+  {
+
+  }
+
+  @Override public void applyForAJob(Job job) throws RemoteException
+  {
+
+  }
+
+  @Override
     public Employer loginEmployer(String CVR, String password)
             throws RemoteException {
         return null;
