@@ -43,7 +43,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1588337148321</updated>
-      <workItem from="1588337149402" duration="264000" />
+      <workItem from="1588337149402" duration="962000" />
     </task>
     <servers />
   </component>
@@ -51,6 +51,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="1218" y="402" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1588337641743">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1218" y="402" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588337641743" />
     <state x="1298" y="386" width="477" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1588337409914">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
