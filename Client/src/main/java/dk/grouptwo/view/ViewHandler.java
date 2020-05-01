@@ -63,6 +63,9 @@ public class ViewHandler {
             case "signInWorker":
                 root = loadSignInWorkerView("sign_in_employee.fxml");
                 break;
+            case "findWork":
+                root = loadFindWorkView("find_work.fxml");
+                break;
         }
         currentScene.setRoot(root);
         String title = "VikarOnline";
@@ -174,6 +177,23 @@ public class ViewHandler {
             signInWorkerController.reset();
         }
         return signInWorkerController.getRoot();
+    }
+
+    private Region loadFindWorkView(String fxmlFile) {
+        Region root = null;
+        if (findWorkController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                findWorkController = loader.getController();
+                findWorkController.init(this, viewModelFactory.getSignInWorkerViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            findWorkController.reset();
+        }
+        return findWorkController.getRoot();
     }
 
     //todo loadviews

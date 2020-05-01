@@ -35,7 +35,8 @@ public class SignInWorkerController {
 
     @FXML
     void logInEmployeeButtonPressed(ActionEvent event) {
-
+        //TODO change to viewmodel.login, in viewmodel have booleanproperty connect, add listener and when it fires change window
+        viewHandler.openView("findWork");
     }
 
     public void reset() {
