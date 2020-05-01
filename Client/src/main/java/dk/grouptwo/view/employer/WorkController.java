@@ -56,27 +56,12 @@ public class WorkController extends EmployerViewTabController {
   }
 
   @FXML
-  void jobsApplyButtonPressed() {
+  void openOffer() {
 
   }
 
   @FXML
-  void jobsCreateWorkOfferButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsHistoryButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsJobsButtonPressed() {
-
-  }
-
-  @FXML
-  void jobsUsernameButtonPressed() {
+  void createWorkOffer() {
 
   }
 

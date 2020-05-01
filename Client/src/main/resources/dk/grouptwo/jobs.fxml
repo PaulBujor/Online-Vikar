@@ -85,7 +85,7 @@
                   </Text>
                </children>
             </VBox>
-            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" onAction="#jobsApplyButtonPressed" text="Apply" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+            <Button layoutX="284.0" layoutY="726.0" mnemonicParsing="false" onAction="#openOffer" text="Open" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Button>
@@ -150,7 +150,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <Button alignment="CENTER" graphicTextGap="7.0" layoutX="685.0" layoutY="63.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#jobsCreateWorkOfferButtonPressed" prefHeight="37.0" prefWidth="174.0" stylesheets="@css/style.css" text="Create work offer" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="350.0">
+      <Button alignment="CENTER" graphicTextGap="7.0" layoutX="685.0" layoutY="63.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#createWorkOffer" prefHeight="37.0" prefWidth="174.0" stylesheets="@css/style.css" text="Create work offer" textAlignment="RIGHT" textFill="WHITE" AnchorPane.rightAnchor="350.0">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" preserveRatio="true">
                <image>
