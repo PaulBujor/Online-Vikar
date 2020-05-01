@@ -35,7 +35,7 @@ public class SignInEmployerController {
 
     @FXML
     void logInEmployerButtonPressed(ActionEvent event) {
-
+        viewHandler.openView("employerWork");
     }
 
     public void reset() {

@@ -75,7 +75,15 @@ public class ViewHandler {
             case "workerHistory":
                 root = loadWorkerHistoryView("work_history.fxml");
                 break;
-
+            case "employerWork":
+                root = loadEmployerWorkView("jobs.fxml");
+                break;
+            case "employerProfile":
+                root = loadEmployerProfileView("employer_profile.fxml");
+                break;
+            case "employerHistory":
+                root = loadEmployerHistoryView("employer_history.fxml");
+                break;
 
             default:
                 System.out.println("non existent");
@@ -261,6 +269,55 @@ public class ViewHandler {
         return workerWorkHistoryController.getRoot();
     }
 
+    private Region loadEmployerWorkView(String fxmlFile) {
+        Region root = null;
+        if (workController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                workController = loader.getController();
+                workController.init(this, viewModelFactory.getWorkViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            workController.reset();
+        }
+        return workController.getRoot();
+    }
 
+    private Region loadEmployerProfileView(String fxmlFile) {
+        Region root = null;
+        if (employerProfileController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                employerProfileController = loader.getController();
+                employerProfileController.init(this, viewModelFactory.getEmployerProfileViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            employerProfileController.reset();
+        }
+        return employerProfileController.getRoot();
+    }
+
+    private Region loadEmployerHistoryView(String fxmlFile) {
+        Region root = null;
+        if (employerWorkHistoryController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                employerWorkHistoryController = loader.getController();
+                employerWorkHistoryController.init(this, viewModelFactory.getEmployerWorkHistoryViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            employerWorkHistoryController.reset();
+        }
+        return employerWorkHistoryController.getRoot();
+    }
 
 }
