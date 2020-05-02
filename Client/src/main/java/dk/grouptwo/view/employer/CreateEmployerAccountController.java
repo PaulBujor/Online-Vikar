@@ -41,6 +41,17 @@ public class CreateEmployerAccountController {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         this.root = root;
+
+        createAccountEmployerCVR.textProperty().bindBidirectional(viewModel.CVRProperty());
+        createAccountEmployerCompany.textProperty().bindBidirectional(viewModel.companyProperty());
+        createAccountEmployerCity.textProperty().bindBidirectional(viewModel.cityProperty());
+        createAccountEmployerPostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
+        createAccountEmployerAddress.textProperty().bindBidirectional(viewModel.addressProperty());
+        createAccountEmployerMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
+        createAccountEmployerEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        createAccountEmployerPassword.textProperty().bindBidirectional(viewModel.passwordProperty());
+        createAccountEmployerConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        createAccountEmployerErrorLabel.textProperty().bind(viewModel.errorProperty());
     }
 
     @FXML
@@ -50,11 +61,12 @@ public class CreateEmployerAccountController {
 
     @FXML
     public void createAccountEmployerNextButtonPressed(ActionEvent actionEvent) {
-        viewModel.createEmployerAccount();
+        if(viewModel.createEmployerAccount())
+            viewHandler.openView("signInEmployer");
     }
 
     public void reset() {
-        //todo clear fields
+        viewModel.reset();
     }
 
     public Region getRoot() {

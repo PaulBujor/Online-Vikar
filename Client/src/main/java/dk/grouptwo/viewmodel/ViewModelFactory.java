@@ -23,9 +23,11 @@ public class ViewModelFactory {
     public ViewModelFactory(ModelManager model) {
         //worker
         signInWorkerViewModel = new SignInWorkerViewModel(model);
+        createWorkerAccountViewModel = new CreateWorkerAccountViewModel(model);
 
         //employer
         signInEmployerViewModel = new SignInEmployerViewModel(model);
+        createEmployerAccountViewModel = new CreateEmployerAccountViewModel(model);
     }
 
     public CreateWorkerAccountViewModel getCreateWorkerAccountViewModel() {
