@@ -1,7 +1,5 @@
 package dk.grouptwo.model.objects;
 
-import javafx.beans.property.StringProperty;
-
 import java.io.Serializable;
 
 public class Address implements Serializable {

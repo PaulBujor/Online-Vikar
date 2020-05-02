@@ -74,6 +74,4 @@ public class Server implements RemoteServer{
             e.printStackTrace();
         }
     }
-
-
 }
