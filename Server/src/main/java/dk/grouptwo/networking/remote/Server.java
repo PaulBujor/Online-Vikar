@@ -42,16 +42,16 @@ public class Server implements RemoteServer {
     @Override
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
-            client.createWorkerAccount(clientToRegister);
+           // client.createWorkerAccount(clientToRegister);
         }
     }
 
     @Override
     public void addJob(Job job) throws RemoteException {
         try {
-            RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + IP + ":1099/ChatClient");
+           // RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job);
             System.out.println(job + " added");
-            clients.add(remoteClient);
+           // clients.add(remoteClient);
             for (RemoteClient client : clients) {
                 client.updateJob(job);
             }

@@ -7,6 +7,20 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -27,6 +41,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -45,6 +62,7 @@
       <updated>1588337148321</updated>
       <workItem from="1588337149402" duration="962000" />
       <workItem from="1588343218620" duration="1764000" />
+      <workItem from="1588416272027" duration="227000" />
     </task>
     <servers />
   </component>
@@ -52,6 +70,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="781" y="168" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588351454352">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="781" y="168" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588351454352" />
     <state x="1132" y="223" key="#com.intellij.ide.util.MemberChooser" timestamp="1588343616408">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -64,5 +86,13 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1298" y="386" width="477" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1588337409914" />
+    <state x="1033" y="255" key="FileChooserDialogImpl" timestamp="1588351470936">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1033" y="255" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588351470936" />
+    <state x="807" y="88" key="SettingsEditor" timestamp="1588351473240">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="807" y="88" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588351473240" />
   </component>
 </project>
