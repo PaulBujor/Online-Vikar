@@ -21,10 +21,12 @@ public class Server implements RemoteServer{
     private Worker worker;
     private Employer employer;
 
-    public Server() {
-        clients = new ArrayList<RemoteClient>();
+    public Server() throws RemoteException {
+        UnicastRemoteObject.exportObject(this,0);
+        //TODO sorry had to comment this out
+      /*  clients = new ArrayList<RemoteClient>();
         worker = null;
-        employer = null;
+        employer = null;*/
     }
 
     public static String getIP() {
