@@ -28,8 +28,8 @@ public interface RemoteClient extends Remote
     Worker loginWorker(String CPR, String password) throws RemoteException;
 
     //Creating accounts **** these methods should be available only if the passwords match in the gui and the critical fields are not empty
-    void createEmployerAccount(Employer employer, String password) throws RemoteException;
-    void createWorkerAccount(Worker worker, String password) throws RemoteException;
+    void createEmployerAccount(Employer employer) throws RemoteException;
+    void createWorkerAccount(Worker worker) throws RemoteException;
 
     //This should load every time the program starts, but then listeners will update gui when jobs are being added or removed
     ArrayList<Job> getAllJobs() throws RemoteException;

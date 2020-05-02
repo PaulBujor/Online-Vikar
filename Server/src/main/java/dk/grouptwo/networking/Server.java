@@ -51,10 +51,12 @@ public class Server implements RemoteServer{
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
             if(client.equals(employer)) {
-                client.createEmployerAccount(clientToRegister);
+                assert clientToRegister instanceof Employer;
+                client.createEmployerAccount((Employer) clientToRegister); // password seems redundant
             }
             else if (client.equals(worker)){
-                client.createWorkerAccount(clientToRegister);
+                assert clientToRegister instanceof Worker;
+                client.createWorkerAccount((Worker)clientToRegister);
             }
         }
     }
