@@ -66,7 +66,7 @@ public class Server implements RemoteServer{
     @Override
     public void addJob(Job job) throws RemoteException {
         try {
-           RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job);
+           RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Client");
             System.out.println(job + " added");
            clients.add(remoteClient);
             for (RemoteClient client : clients) {
