@@ -1,5 +1,6 @@
 package dk.grouptwo.viewmodel;
 
+import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.viewmodel.employer.*;
 import dk.grouptwo.viewmodel.worker.*;
 
@@ -19,7 +20,7 @@ public class ViewModelFactory {
     private WorkViewModel workViewModel;
     private SignInEmployerViewModel signInEmployerViewModel;
 
-    public ViewModelFactory() {
+    public ViewModelFactory(ModelManager model) {
         //todo construct new viewmodels
     }
 

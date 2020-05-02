@@ -119,3 +119,4 @@ Client/target/classes/dk/grouptwo/model/Model.class
 Client/target/classes/dk/grouptwo/model/AccountManagement.class
 Client/target/classes/dk/grouptwo/employer_history.fxml
 Client/target/classes/dk/grouptwo/App.class
+Client/target/classes/dk/grouptwo/utility/EmailValidator.class

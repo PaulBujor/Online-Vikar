@@ -1,6 +1,8 @@
 package dk.grouptwo.networking;
 
+import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 
@@ -14,11 +16,15 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Server implements RemoteServer {
+public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
+    private Worker worker;
+    private Employer employer;
 
     public Server() {
         clients = new ArrayList<RemoteClient>();
+        worker = null;
+        employer = null;
     }
 
     public static String getIP() {
@@ -44,16 +50,23 @@ public class Server implements RemoteServer {
     @Override
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
-           // client.createWorkerAccount(clientToRegister);
+            if(client.equals(employer)) {
+                assert clientToRegister instanceof Employer;
+                client.createEmployerAccount((Employer) clientToRegister); // password seems redundant
+            }
+            else if (client.equals(worker)){
+                assert clientToRegister instanceof Worker;
+                client.createWorkerAccount((Worker)clientToRegister);
+            }
         }
     }
 
     @Override
     public void addJob(Job job) throws RemoteException {
         try {
-           // RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job);
+           RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job);
             System.out.println(job + " added");
-           // clients.add(remoteClient);
+           clients.add(remoteClient);
             for (RemoteClient client : clients) {
                 client.updateJob(job);
             }

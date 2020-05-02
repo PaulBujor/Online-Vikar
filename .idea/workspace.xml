@@ -41,9 +41,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -62,7 +62,7 @@
       <updated>1588337148321</updated>
       <workItem from="1588337149402" duration="962000" />
       <workItem from="1588343218620" duration="1764000" />
-      <workItem from="1588416272027" duration="227000" />
+      <workItem from="1588416272027" duration="2277000" />
     </task>
     <servers />
   </component>
@@ -74,10 +74,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="781" y="168" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588351454352" />
-    <state x="1132" y="223" key="#com.intellij.ide.util.MemberChooser" timestamp="1588343616408">
+    <state x="1132" y="223" key="#com.intellij.ide.util.MemberChooser" timestamp="1588419035682">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1132" y="223" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588343616408" />
+    <state x="1132" y="223" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1588419035682" />
     <state x="1218" y="402" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1588337641743">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -86,13 +86,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1298" y="386" width="477" height="288" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040@0.0.1920.1040" timestamp="1588337409914" />
-    <state x="1033" y="255" key="FileChooserDialogImpl" timestamp="1588351470936">
+    <state x="1033" y="255" key="FileChooserDialogImpl" timestamp="1588418857342">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1033" y="255" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588351470936" />
-    <state x="807" y="88" key="SettingsEditor" timestamp="1588351473240">
+    <state x="1033" y="255" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588418857342" />
+    <state x="807" y="88" key="SettingsEditor" timestamp="1588418859618">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="807" y="88" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588351473240" />
+    <state x="807" y="88" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588418859618" />
+    <state x="954" y="142" key="refactoring.ChangeSignatureDialog" timestamp="1588419346051">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="954" y="142" key="refactoring.ChangeSignatureDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1588419346051" />
   </component>
 </project>
