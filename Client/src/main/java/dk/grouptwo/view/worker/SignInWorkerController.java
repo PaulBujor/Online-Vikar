@@ -37,6 +37,7 @@ public class SignInWorkerController {
     void logInEmployeeButtonPressed(ActionEvent event) {
         //TODO change to viewmodel.login, in viewmodel have booleanproperty connect, add listener and when it fires change window
         viewHandler.openView("findWork");
+        viewModel.logInWorker();
     }
 
     public void reset() {

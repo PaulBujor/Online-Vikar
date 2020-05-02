@@ -55,6 +55,10 @@ public class CreateEmployerAccountViewModel {
             error.set("The passwords do not match.");
             return false;
         }
+        else if (password.get().length() < 8)
+        {
+            error.set("The password should contain at least 8 characters.");
+        }
         else if (!(EmailValidator.emailCheck(email.get())))
         {
             error.set("Wrong email format.");

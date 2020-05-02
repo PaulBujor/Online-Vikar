@@ -27,8 +27,15 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void logInWorker(String CPR, String password) throws RemoteException {
-        worker = client.loginWorker(CPR,password);
+    public void logInWorker(String CPR, String password) {
+        try {
+            worker = client.loginWorker(CPR,password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Wrong login or password.");
+        }
+
     }
 
     @Override
@@ -44,18 +51,37 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
 
     @Override
-    public void logInEmployer(String CVR, String password) throws RemoteException {
-        employer = client.loginEmployer(CVR, password);
+    public void logInEmployer(String CVR, String password) {
+        try {
+            employer = client.loginEmployer(CVR, password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Wrong login or password.");
+        }
     }
 
     @Override
-    public void editEmployer(Employer employer, String password) throws RemoteException {
-        employer = client.editEmployer(employer, password);
+    public void editEmployer(Employer employer, String password) {
+
+        try {
+            client.editEmployer(employer, password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Error saving edited data.");
+        }
     }
 
     @Override
-    public void editWorker(Worker worker, String password) throws RemoteException {
-        worker = client.editWorker(worker, password);
+    public void editWorker(Worker worker, String password) {
+        try {
+            worker = client.editWorker(worker, password);
+        }
+        catch (RemoteException e)
+        {
+            throw new IllegalArgumentException("Error saving edited data.");
+        }
     }
 
     @Override
