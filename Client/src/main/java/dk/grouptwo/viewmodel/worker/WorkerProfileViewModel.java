@@ -66,8 +66,16 @@ public class WorkerProfileViewModel {
     }
 
     public boolean saveChangesWorker() {
-
-
+        if (!(newPassword.get().equals(confirmPassword.get())))
+        {
+            error.set("The passwords do not match.");
+            return false;
+        }
+        else if (newPassword.get().length() < 8) {
+            error.set("The password should contain at least 8 characters.");
+            return false;
+        }
+        return true;
     }
 
     public void addLicense() {
