@@ -1,6 +1,8 @@
-package dk.grouptwo.networking.remote;
+package dk.grouptwo.networking;
 
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.networking.remote.RemoteClient;
+import dk.grouptwo.networking.remote.RemoteServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package dk.grouptwo.networking.remote;
+package dk.grouptwo.networking;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
