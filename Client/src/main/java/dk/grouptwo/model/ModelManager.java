@@ -42,11 +42,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void registerAccountEmployer(Employer employer, String password) {
+    public void registerAccountEmployer(Employer employer, String password) throws Exception {
         try {
             client.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
-            throw new IllegalArgumentException("Some kind of error");
+            throw new Exception("Account could not be created!");
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
     }
 

@@ -38,7 +38,7 @@ public class EmailValidator {
                 emailAfterAtSign.add(emailToArray[i]);
             }
 
-            return beforeAtSign() & afterAtSign();
+            return beforeAtSign() && afterAtSign();
         }
 
     }

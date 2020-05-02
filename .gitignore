@@ -122,3 +122,4 @@ Client/target/classes/dk/grouptwo/App.class
 Client/target/classes/dk/grouptwo/utility/EmailValidator.class
 Client/target/classes/dk/grouptwo/utility/Encryptor.class
 Client/target/classes/dk/grouptwo/networking/LocalClientTest.class
+Client/target/classes/dk/grouptwo/utility/LicenseTableData.class

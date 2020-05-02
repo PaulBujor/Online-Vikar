@@ -27,7 +27,7 @@ public interface RemoteClient extends Remote {
     Worker loginWorker(String CPR, String password) throws RemoteException, NoSuchAlgorithmException;
 
     //Creating accounts **** these methods should be available only if the passwords match in the gui and the critical fields are not empty
-    void createEmployerAccount(Employer employer, String password) throws RemoteException;
+    void createEmployerAccount(Employer employer, String password) throws RemoteException, NoSuchAlgorithmException;
 
     void createWorkerAccount(Worker worker, String password) throws RemoteException;
 

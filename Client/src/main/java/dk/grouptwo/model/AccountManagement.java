@@ -9,7 +9,7 @@ public interface AccountManagement {
 
     public void logInWorker(String CPR, String password) throws Exception;
 
-    public void registerAccountEmployer(Employer employer, String password);
+    public void registerAccountEmployer(Employer employer, String password) throws Exception;
 
     public void logInEmployer(String CVR, String password) throws Exception;
 
