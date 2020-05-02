@@ -21,9 +21,10 @@ public class Server implements RemoteServer{
     private Worker worker;
     private Employer employer;
 
-    public Server() throws RemoteException {
+    public Server() throws RemoteException, MalformedURLException {
         UnicastRemoteObject.exportObject(this,0);
         //TODO sorry had to comment this out
+        Naming.rebind("Job", this);
       /*  clients = new ArrayList<RemoteClient>();
         worker = null;
         employer = null;*/
