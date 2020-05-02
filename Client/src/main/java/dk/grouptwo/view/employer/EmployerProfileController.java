@@ -50,7 +50,7 @@ public class EmployerProfileController extends EmployerViewTabController {
 
     @FXML
     void employerProfileSaveButtonPressed() {
-
+        viewModel.saveChangesEmployer();
     }
 
 

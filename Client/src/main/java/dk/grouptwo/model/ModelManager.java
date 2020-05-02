@@ -64,7 +64,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public void editEmployer(Employer employer, String password) {
-
         try {
             client.editEmployer(employer, password);
         } catch (RemoteException e) {
@@ -128,8 +127,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void deleteLicense(License license) {
-        worker.removeLicense(license);
+    public void deleteLicense(String licenseNumber) {
+       // worker.removeLicense(license);
+    }
+
+    @Override
+    public ArrayList<License> getLicenses() {
+        return worker.getLicenses();
     }
 
 }
