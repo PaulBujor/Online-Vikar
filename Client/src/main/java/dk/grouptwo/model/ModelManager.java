@@ -96,15 +96,23 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void createWorkOffer(Job job) throws RemoteException {
+    public void createWorkOffer(Job job)   {
         jobs.add(job);
-        client.addJob(job);
+        try {
+            client.addJob(job);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void cancelWorkOffer(Job job) throws RemoteException {
+    public void cancelWorkOffer(Job job)   {
         jobs.remove(job);
-        client.removeJob(job);
+        try {
+            client.removeJob(job);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
