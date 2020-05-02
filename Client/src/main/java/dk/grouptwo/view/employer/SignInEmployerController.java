@@ -10,14 +10,8 @@ import javafx.scene.layout.Region;
 
 public class SignInEmployerController {
     private ViewHandler viewHandler;
-    private SignInEmployerViewModel signInEmployerViewModel;
+    private SignInEmployerViewModel viewModel;
     private Region root;
-
-    public void init(ViewHandler viewHandler, SignInEmployerViewModel signInEmployerViewModel, Region root) {
-        this.viewHandler = viewHandler;
-        this.signInEmployerViewModel = signInEmployerViewModel;
-        this.root = root;
-    }
 
     @FXML
     private TextField signInEmployerCVRTextField;
@@ -28,6 +22,17 @@ public class SignInEmployerController {
     @FXML
     private Label signInEmployerErrorLabel;
 
+    public void init(ViewHandler viewHandler, SignInEmployerViewModel viewModel, Region root) {
+        this.viewHandler = viewHandler;
+        this.viewModel = viewModel;
+        this.root = root;
+
+        signInEmployerCVRTextField.textProperty().bindBidirectional(viewModel.CVRProperty());
+        signInEmployerPasswordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
+        signInEmployerErrorLabel.textProperty().bind(viewModel.errorProperty());
+    }
+
+
     @FXML
     void backEmployerButtonPressed(ActionEvent event) {
         viewHandler.openView("signin");
@@ -35,12 +40,12 @@ public class SignInEmployerController {
 
     @FXML
     void logInEmployerButtonPressed(ActionEvent event) {
-        signInEmployerViewModel.logInEmployer();
-        viewHandler.openView("employerWork");
+        if (viewModel.logInEmployer())
+            viewHandler.openView("employerWork");
     }
 
     public void reset() {
-        //todo clear fields
+        viewModel.reset();
     }
 
     public Region getRoot() {

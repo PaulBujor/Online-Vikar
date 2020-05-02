@@ -77,18 +77,12 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView fx:id="workerProfileLicenseTable" layoutX="135.0" layoutY="575.0" prefHeight="99.0" prefWidth="530.0" AnchorPane.bottomAnchor="91.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="575.0">
-         <columns>
-            <TableColumn fx:id="workerProfileLicenseColumn" prefWidth="77.0" text="License" />
-            <TableColumn fx:id="workerProfileCategoryColumn" prefWidth="75.0" text="Category" />
-         </columns>
-      </TableView>
       <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="101.0" text="Hello, " textFill="#008fcc" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="964.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <VBox layoutX="114.0" layoutY="146.0" prefHeight="475.0" prefWidth="530.0" spacing="21.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="70.0">
+      <VBox layoutX="114.0" layoutY="146.0" prefHeight="693.0" prefWidth="530.0" spacing="19.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0" AnchorPane.topAnchor="70.0">
          <children>
             <TextField fx:id="workerProfileCPR" disable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
             <HBox spacing="28.0">
@@ -116,7 +110,7 @@
                </children>
             </HBox>
             <TextField fx:id="workerProfileLanguages" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />
-            <TextArea fx:id="workerProfileDescription" minHeight="-Infinity" minWidth="-Infinity" prefHeight="78.0" prefWidth="522.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
+            <TextArea fx:id="workerProfileDescription" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="530.0" promptText="Write a small description about yourself, previous work experiences etc." wrapText="true" />
             <TextField fx:id="workerProfileEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
@@ -125,38 +119,79 @@
                   <TextField fx:id="workerProfileConfirmPassword" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm Password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-         </children>
-      </VBox>
-      <HBox layoutX="135.0" layoutY="691.0" prefWidth="530.0" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0">
-         <children>
-            <TextField fx:id="workerProfileLicense" prefHeight="25.0" prefWidth="220.0" promptText="License" HBox.hgrow="ALWAYS" />
-            <TextField fx:id="workerProfileCategory" prefWidth="220.0" promptText="Category" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets left="15.0" right="15.0" />
-               </HBox.margin>
-            </TextField>
-            <HBox>
+            <TableView fx:id="workerProfileLicenseTable" prefHeight="110.0" prefWidth="530.0">
+               <columns>
+                  <TableColumn fx:id="workerProfileLicenseColumn" prefWidth="77.0" text="License" />
+                  <TableColumn fx:id="workerProfileCategoryColumn" prefWidth="75.0" text="Category" />
+               </columns>
+            </TableView>
+            <HBox prefWidth="530.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#workerProfileAddButtonPressed" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER">
+                  <TextField fx:id="workerProfileLicense" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="118.0" promptText="License type" HBox.hgrow="ALWAYS">
                      <HBox.margin>
-                        <Insets right="15.0" />
+                        <Insets right="10.0" />
                      </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#workerProfileRemoveButtonPressed" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER" />
+                  </TextField>
+                  <TextField fx:id="workerProfileCategory" maxWidth="1.7976931348623157E308" prefWidth="118.0" promptText="Category" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="workerProfileLicenseNumber" layoutX="243.0" layoutY="10.0" maxWidth="1.7976931348623157E308" prefWidth="118.0" promptText="License no." HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <DatePicker fx:id="workerProfileIssueDate" prefHeight="25.0" prefWidth="118.0" promptText="Issue Date" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <DatePicker fx:id="workerProfileExpiryDate" layoutX="373.0" layoutY="10.0" prefHeight="25.0" prefWidth="118.0" promptText="Expiry Date" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </DatePicker>
+                  <HBox alignment="CENTER_RIGHT" maxWidth="64.0" minWidth="64.0" prefHeight="25.0" prefWidth="64.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#workerProfileAddButtonPressed" prefHeight="25.0" prefWidth="25.0" text="+" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#workerProfileRemoveButtonPressed" prefHeight="25.0" prefWidth="25.0" text="-" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </HBox>
                </children>
             </HBox>
+            <Label text="Error_label" textFill="RED">
+               <VBox.margin>
+                  <Insets bottom="-20.0" top="-12.0" />
+               </VBox.margin>
+            </Label>
+            <AnchorPane prefHeight="30.0" prefWidth="530.0">
+               <children>
+                  <Button layoutX="466.0" layoutY="-1.0" mnemonicParsing="false" onAction="#workerProfileSaveButtonPressed" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
-      </HBox>
+      </VBox>
       <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
          <image>
             <Image url="@images/maestro.jpg" />
          </image>
       </ImageView>
-      <Button layoutX="601.0" layoutY="726.0" mnemonicParsing="false" onAction="#workerProfileSaveButtonPressed" prefHeight="30.0" prefWidth="64.0" stylesheets="@css/style.css" text="Save" textFill="WHITE" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="535.0">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Button>
       <Label fx:id="workerProfileNameLabel" layoutX="236.0" layoutY="14.0" text="Label" textFill="#008fcc">
          <font>
             <Font name="System Bold" size="33.0" />

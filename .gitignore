@@ -120,3 +120,5 @@ Client/target/classes/dk/grouptwo/model/AccountManagement.class
 Client/target/classes/dk/grouptwo/employer_history.fxml
 Client/target/classes/dk/grouptwo/App.class
 Client/target/classes/dk/grouptwo/utility/EmailValidator.class
+Client/target/classes/dk/grouptwo/utility/Encryptor.class
+Client/target/classes/dk/grouptwo/networking/LocalClientTest.class

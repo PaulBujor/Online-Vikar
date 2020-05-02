@@ -7,11 +7,11 @@ public interface AccountManagement {
 
     public void registerAccountWorker(Worker worker, String password);
 
-    public void logInWorker(String CPR, String password);
+    public void logInWorker(String CPR, String password) throws Exception;
 
     public void registerAccountEmployer(Employer employer, String password);
 
-    public void logInEmployer(String CVR, String password);
+    public void logInEmployer(String CVR, String password) throws Exception;
 
     public void editEmployer(Employer employer, String password);
 
