@@ -1,6 +1,7 @@
 package dk.grouptwo.model.objects;
 
 import java.util.ArrayList;
+import dk.grouptwo.model.objects.Account;
 
 public class Worker extends Account {
     private String CPR;

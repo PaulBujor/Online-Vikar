@@ -1,6 +1,8 @@
 package dk.grouptwo.networking;
 
+import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 
@@ -14,7 +16,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
-public class Server implements RemoteServer {
+public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
 
     public Server() {
@@ -72,4 +74,6 @@ public class Server implements RemoteServer {
             e.printStackTrace();
         }
     }
+
+
 }
