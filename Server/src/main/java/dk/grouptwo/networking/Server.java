@@ -1,4 +1,4 @@
-package main.java.dk.grouptwo.networking.remote;
+package dk.grouptwo.networking.remote;
 
 import dk.grouptwo.model.objects.Job;
 
