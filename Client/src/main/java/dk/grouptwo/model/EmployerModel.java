@@ -12,4 +12,6 @@ public interface EmployerModel {
     public void updateWorkOffer(Job job);
 
 
+
+
 }
