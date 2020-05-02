@@ -76,6 +76,7 @@ public class CreateEmployerAccountViewModel {
                 return false;
             }
         }
+        return true;
     }
 
 }
