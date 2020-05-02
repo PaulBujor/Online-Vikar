@@ -13,12 +13,6 @@ public class SignInWorkerController {
     private SignInWorkerViewModel viewModel;
     private Region root;
 
-    public void init(ViewHandler viewHandler, SignInWorkerViewModel viewModel, Region root) {
-        this.viewHandler = viewHandler;
-        this.viewModel = viewModel;
-        this.root = root;
-    }
-
     @FXML
     private TextField signInEmployerCPRTextField;
 
@@ -28,6 +22,16 @@ public class SignInWorkerController {
     @FXML
     private Label signInEmployeeErrorLabel;
 
+    public void init(ViewHandler viewHandler, SignInWorkerViewModel viewModel, Region root) {
+        this.viewHandler = viewHandler;
+        this.viewModel = viewModel;
+        this.root = root;
+
+        signInEmployerCPRTextField.textProperty().bindBidirectional(viewModel.CPRProperty());
+        signInEmployeePasswordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
+        signInEmployeeErrorLabel.textProperty().bind(viewModel.errorProperty());
+    }
+
     @FXML
     void backEmployeeButtonPressed(ActionEvent event) {
         viewHandler.openView("signin");
@@ -35,13 +39,12 @@ public class SignInWorkerController {
 
     @FXML
     void logInEmployeeButtonPressed(ActionEvent event) {
-        //TODO change to viewmodel.login, in viewmodel have booleanproperty connect, add listener and when it fires change window
-        viewHandler.openView("findWork");
-        viewModel.logInWorker();
+        if(viewModel.logInWorker())
+            viewHandler.openView("findWork");
     }
 
     public void reset() {
-        //todo clear fields
+        viewModel.reset();
     }
 
     public Region getRoot() {

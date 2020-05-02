@@ -21,7 +21,11 @@ public class ViewModelFactory {
     private SignInEmployerViewModel signInEmployerViewModel;
 
     public ViewModelFactory(ModelManager model) {
-        //todo construct new viewmodels
+        //worker
+        signInWorkerViewModel = new SignInWorkerViewModel(model);
+
+        //employer
+        signInEmployerViewModel = new SignInEmployerViewModel(model);
     }
 
     public CreateWorkerAccountViewModel getCreateWorkerAccountViewModel() {
