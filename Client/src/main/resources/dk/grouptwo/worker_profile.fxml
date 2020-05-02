@@ -171,7 +171,7 @@
                   </HBox>
                </children>
             </HBox>
-            <Label text="Error_label" textFill="RED">
+            <Label fx:id="workerProfileErrorLabel" text="Error_label" textFill="RED">
                <VBox.margin>
                   <Insets bottom="-20.0" top="-12.0" />
                </VBox.margin>

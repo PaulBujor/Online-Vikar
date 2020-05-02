@@ -94,6 +94,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
+    public ArrayList<Job> getJobHistory() {
+        return null;
+        //TODO return not null
+    }
+
+    @Override
     public void createWorkOffer(Job job) {
         jobs.add(job);
         try {

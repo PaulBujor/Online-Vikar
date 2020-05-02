@@ -70,6 +70,18 @@ public class WorkerProfileController extends WorkerViewTabController {
     private TextField workerProfileCategory;
 
     @FXML
+    private TextField workerProfileLicenseNumber;
+
+    @FXML
+    private DatePicker workerProfileIssueDate;
+
+    @FXML
+    private DatePicker workerProfileExpiryDate;
+
+    @FXML
+    private Label workerProfileErrorLabel;
+
+    @FXML
     private Label workerProfileNameLabel;
 
     public void init(ViewHandler viewHandler, WorkerProfileViewModel viewModel, Region root) {
@@ -79,17 +91,17 @@ public class WorkerProfileController extends WorkerViewTabController {
 
     @FXML
     void workerProfileAddButtonPressed() {
-
+        viewModel.addLicense();
     }
 
     @FXML
     void workerProfileRemoveButtonPressed() {
-
+        //viewModel.removeLicense();
     }
 
     @FXML
     void workerProfileSaveButtonPressed() {
-
+        viewModel.saveChangesWorker();
     }
 
     public void reset() {

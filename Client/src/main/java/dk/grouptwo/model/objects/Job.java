@@ -14,8 +14,10 @@ public class Job implements Serializable {
     private LocalDateTime shiftStart;
     private LocalDateTime shiftEnd;
     private String status;
+    private String location;
     private Employer employer;
     private ArrayList<Worker> workers;
+
 
     public Job(int jobID, String jobTitle, String description, String category, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Employer employer) {
         this.jobID = jobID;
@@ -121,5 +123,13 @@ public class Job implements Serializable {
 
     public void removeWorker(Worker worker) {
         workers.remove(worker);
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

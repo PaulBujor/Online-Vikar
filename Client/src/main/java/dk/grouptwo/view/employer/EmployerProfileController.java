@@ -41,6 +41,9 @@ public class EmployerProfileController extends EmployerViewTabController {
     private TextField employerProfileConfirmPassword;
 
     @FXML
+    private Label employerProfileErrorLabel;
+
+    @FXML
     private Label employerProfileCompanyNameLabel;
 
     public void init(ViewHandler viewHandler, EmployerProfileViewModel viewModel, Region root) {
