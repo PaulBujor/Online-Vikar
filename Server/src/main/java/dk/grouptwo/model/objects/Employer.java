@@ -1,6 +1,7 @@
 package dk.grouptwo.model.objects;
 
 import java.io.Serializable;
+import dk.grouptwo.model.objects.Account;
 
 public class Employer extends Account {
     private String CVR;
