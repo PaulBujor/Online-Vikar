@@ -120,6 +120,7 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return employer;
     }
 
     @Override
@@ -131,6 +132,7 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return worker;
     }
 
     @Override
@@ -181,30 +183,21 @@ public class Server implements RemoteServer{
 
     @Override
     public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
-        try {
-            ArrayList<Job> workerHistory = new ArrayList<Job>();
-            db.getAllJobHistoryWorkerFromDB(worker);
-            for (Job job : jobs){
-        //        workerHistory.get();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //return workerHistory;
+        return db.getAllJobHistoryWorkerFromDB(worker);
     }
 
     @Override
     public ArrayList<Job> getAllJobHistoryEmployerFromDB() throws RemoteException {
-        return null;
+        return db.getAllJobHistoryEmployerFromDB(employer);
     }
 
     @Override
     public ArrayList<Job> getUpcomingJobsWorkerFromDB() throws RemoteException {
-        return null;
+        return db.getUpcomingJobsWorkerFromDB(worker);
     }
 
     @Override
     public ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException {
-        return null;
+        return db.getCurrentEmployerJobs(employer);
     }
 }
