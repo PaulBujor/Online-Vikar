@@ -24,4 +24,8 @@ public class LocalClientTest extends Client {
                                       String password) throws RemoteException, NoSuchAlgorithmException {
         System.out.println("account created");
     }
+
+    public void createWorkerAccount(Worker worker, String password) throws RemoteException, NoSuchAlgorithmException {
+        System.out.println("account created");
+    }
 }

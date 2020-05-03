@@ -32,24 +32,24 @@ public class CreateWorkerAccountViewModel {
 
     public CreateWorkerAccountViewModel(ModelManager model) {
         this.model = model;
-        CPR = new SimpleStringProperty();
-        firstName = new SimpleStringProperty();
-        lastName = new SimpleStringProperty();
-        birthday = new SimpleObjectProperty<>();
-        gender = new SimpleStringProperty();
-        city = new SimpleStringProperty();
-        postCode = new SimpleStringProperty();
-        mobilePhone = new SimpleStringProperty();
-        taxCard = new SimpleStringProperty();
-        languages = new SimpleStringProperty();
-        description = new SimpleStringProperty();
-        email = new SimpleStringProperty();
-        password = new SimpleStringProperty();
-        confirmPassword = new SimpleStringProperty();
-        error = new SimpleStringProperty();
+        CPR = new SimpleStringProperty("");
+        firstName = new SimpleStringProperty("");
+        lastName = new SimpleStringProperty("");
+        birthday = new SimpleObjectProperty<>(null);
+        gender = new SimpleStringProperty("Gender");
+        city = new SimpleStringProperty("");
+        postCode = new SimpleStringProperty("");
+        mobilePhone = new SimpleStringProperty("");
+        taxCard = new SimpleStringProperty("Tax card");
+        languages = new SimpleStringProperty("");
+        description = new SimpleStringProperty("");
+        email = new SimpleStringProperty("");
+        password = new SimpleStringProperty("");
+        confirmPassword = new SimpleStringProperty("");
+        error = new SimpleStringProperty("");
     }
 
-    public boolean createWorkerAccount() {
+    private boolean dataValid() {
         if (CPR.get().equals("") || firstName.get().equals("") || lastName.get().equals("") || gender.get().equals("") || city.get().equals("") ||
                 postCode.get().equals("") || mobilePhone.get().equals("") || taxCard.get().equals("") || languages.get().equals("") || description.get().equals("") || email.get().equals("") ||
                 password.get().equals("") || confirmPassword.get().equals("")) {
@@ -61,17 +61,99 @@ public class CreateWorkerAccountViewModel {
         } else if (!(EmailValidator.emailCheck(email.get()))) {
             error.set("Wrong email format.");
             return false;
-        } else {
-            try {
+        }
+        return true;
+    }
+
+    public boolean createWorkerAccount() {
+        try {
+            if (dataValid()) {
                 model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(city.get(), postCode.get()), CPR.get(),
                         firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get()), password.get());
                 return true;
             }
-            catch (IllegalArgumentException e) {
-                error.set(e.getMessage());
-                return false;
-            }
+            return false;
+        } catch (Exception e) {
+            error.set(e.getMessage());
+            return false;
         }
     }
 
+    public void reset() {
+        CPR.set("");
+        firstName.set("");
+        lastName.set("");
+        birthday.set(null);
+        gender.set("Gender");
+        city.set("");
+        postCode.set("");
+        mobilePhone.set("");
+        taxCard.set("Tax card");
+        languages.set("");
+        description.set("");
+        email.set("");
+        password.set("");
+        confirmPassword.set("");
+        error.set("");
+    }
+
+    public StringProperty CPRProperty() {
+        return CPR;
+    }
+
+    public StringProperty firstNameProperty() {
+        return firstName;
+    }
+
+    public StringProperty lastNameProperty() {
+        return lastName;
+    }
+
+    public ObjectProperty<LocalDate> birthdayProperty() {
+        return birthday;
+    }
+
+    public StringProperty genderProperty() {
+        return gender;
+    }
+
+    public StringProperty cityProperty() {
+        return city;
+    }
+
+    public StringProperty postCodeProperty() {
+        return postCode;
+    }
+
+    public StringProperty mobilePhoneProperty() {
+        return mobilePhone;
+    }
+
+    public StringProperty taxCardProperty() {
+        return taxCard;
+    }
+
+    public StringProperty languagesProperty() {
+        return languages;
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public StringProperty emailProperty() {
+        return email;
+    }
+
+    public StringProperty passwordProperty() {
+        return password;
+    }
+
+    public StringProperty confirmPasswordProperty() {
+        return confirmPassword;
+    }
+
+    public StringProperty errorProperty() {
+        return error;
+    }
 }

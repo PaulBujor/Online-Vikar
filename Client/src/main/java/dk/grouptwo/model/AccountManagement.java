@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public interface AccountManagement {
 
-    public void registerAccountWorker(Worker worker, String password);
+    public void registerAccountWorker(Worker worker, String password) throws Exception;
 
     public void logInWorker(String CPR, String password) throws Exception;
 
