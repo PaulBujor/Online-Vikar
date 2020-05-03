@@ -1,6 +1,10 @@
 package dk.grouptwo.model;
 
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
+import javafx.beans.property.StringProperty;
+
+import java.util.ArrayList;
 
 
 public interface EmployerModel {
@@ -10,6 +14,8 @@ public interface EmployerModel {
     public void cancelWorkOffer(Job job);
 
     public void updateWorkOffer(Job job);
+
+    public Job getJobById(int jobId);
 
 
 

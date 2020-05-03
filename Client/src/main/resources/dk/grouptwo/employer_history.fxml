@@ -88,7 +88,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView fx:id="employerHistoryMainTable" layoutX="127.0" layoutY="77.0" prefHeight="673.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="77.0">
+      <TableView fx:id="employerHistoryMainTable" layoutX="127.0" layoutY="77.0" onMouseClicked="#employerHistoryJobSelected" prefHeight="673.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="77.0">
          <columns>
             <TableColumn fx:id="employerHistoryJobTitleColumn" prefWidth="77.0" text="Job Title" />
             <TableColumn fx:id="employerHistoryStatusColumn" prefWidth="88.0" text="Status" />

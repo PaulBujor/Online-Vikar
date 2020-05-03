@@ -4,10 +4,14 @@ import dk.grouptwo.model.objects.*;
 import dk.grouptwo.networking.Client;
 import dk.grouptwo.networking.LocalClientTest;
 import dk.grouptwo.networking.remote.RemoteClient;
+import javafx.beans.property.DoubleProperty;
 
 import java.rmi.RemoteException;
 import java.security.InvalidParameterException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
@@ -15,6 +19,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
 
     private ArrayList<Job> jobs;
+    private ArrayList<Job> workHistory;
     private Worker worker;
     private Employer employer;
     private Client client = new LocalClientTest();
@@ -124,6 +129,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     }
 
+
     @Override
     public void applyForJob(Worker worker) {
 
@@ -136,12 +142,35 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public void deleteLicense(String licenseNumber) {
-       // worker.removeLicense(license);
+        // worker.removeLicense(license);
     }
 
     @Override
     public ArrayList<License> getLicenses() {
         return worker.getLicenses();
+    }
+
+    @Override
+    public Job getJobById(int jobId) {
+        for (Job job : jobs) {
+            if (job.getJobID() == jobId)
+                return job;
+        }
+        return null;
+    }
+
+    @Override
+    public double getHoursWorkedThisMonth() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        int minutes = 0;
+
+        for (Job job : workHistory) {
+            if (job.getShiftStart().getMonth().equals(currentDate.getMonth())) {
+                minutes += ChronoUnit.MINUTES.between(job.getShiftEnd(), job.getShiftStart());
+            }
+        }
+        return (double) minutes/60;
+
     }
 
 }

@@ -2,13 +2,12 @@ package dk.grouptwo.utility;
 
 import dk.grouptwo.model.objects.Job;
 import javafx.beans.property.*;
-import javafx.collections.ObservableList;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class WorkTableData {
 
+    private int jobId;
     private StringProperty jobTitle;
     private StringProperty status;
     private StringProperty employer;
@@ -18,15 +17,17 @@ public class WorkTableData {
     private ObjectProperty<LocalDateTime> endTime;
     private StringProperty location;
 
+
     public WorkTableData(Job job) {
         jobTitle = new SimpleStringProperty(job.getJobTitle());
         status = new SimpleStringProperty(job.getStatus());
         employer = new SimpleStringProperty(job.getEmployer().getCompanyName());
-        numberOfWorkers = new SimpleIntegerProperty(job.getWorkers().size());
+        numberOfWorkers = new SimpleIntegerProperty(job.getSelectedWorkers().size());
         salary = new SimpleDoubleProperty(job.getSalary());
         startTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftStart());
         endTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftEnd());
         location = new SimpleStringProperty(job.getLocation());
+        jobId = job.getJobID();
     }
 
 
@@ -65,5 +66,9 @@ public class WorkTableData {
 
     public StringProperty locationProperty() {
         return location;
+    }
+
+    public int getJobId() {
+        return jobId;
     }
 }

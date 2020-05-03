@@ -1,5 +1,7 @@
 package dk.grouptwo.view.employer;
 
+import dk.grouptwo.utility.WorkTableData;
+import dk.grouptwo.utility.WorkersTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.EmployerWorkHistoryViewModel;
 import javafx.fxml.FXML;
@@ -27,7 +29,7 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
     private Text employerHistoryDetailsWorkDescription;
 
     @FXML
-    private TableView<?> employerHistoryEmployeesTable;
+    private TableView<WorkersTableData> employerHistoryEmployeesTable;
 
     @FXML
     private TableColumn<?, ?> employerHistoryEmployeesTableCPRColumn;
@@ -36,7 +38,7 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
     private TableColumn<?, ?> employerHistoryEmployeesTableNameColumn;
 
     @FXML
-    private TableView<?> employerHistoryMainTable;
+    private TableView<WorkTableData> employerHistoryMainTable;
 
     @FXML
     private TableColumn<?, ?> employerHistoryJobTitleColumn;
@@ -64,5 +66,14 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
     public void init(ViewHandler viewHandler, EmployerWorkHistoryViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
+
     }
+
+    @FXML
+    public void employerHistoryJobSelected() {
+        WorkTableData workTableData = employerHistoryMainTable.getSelectionModel().getSelectedItem();
+        viewModel.getWorkers(workTableData);
+    }
+
+
 }

@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public interface WorkerModel {
 
-    public void applyForJob(Worker worker);
+    void applyForJob(Worker worker);
 
-    public void addLicense(License license);
+    void addLicense(License license);
 
-    public void deleteLicense(String licenseNumber);
+    void deleteLicense(String licenseNumber);
 
-    public ArrayList<License> getLicenses();
+    ArrayList<License> getLicenses();
+
+    double getHoursWorkedThisMonth();
 
 
 }
