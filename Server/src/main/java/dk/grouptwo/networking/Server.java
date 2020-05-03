@@ -30,7 +30,7 @@ public class Server implements RemoteServer{
         employer = null;*/
     }
 
-    public static String getIP() {
+   /* public static String getIP() {
         try {
             URL aws = new URL("http://checkip.amazonaws.com");
             BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -42,7 +42,7 @@ public class Server implements RemoteServer{
             e.printStackTrace();
             return "Could not get IP";
         }
-    }
+    }*/
 
     public void start() throws RemoteException, MalformedURLException {
         System.out.printf("Server IP: %s\n", "localhost"/*getIP()*/);
@@ -65,11 +65,11 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void addJob(Job job) throws RemoteException {
+    public void addJob(Job job, RemoteClient remoteClient) throws RemoteException {
         try {
-           RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
+            remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
             System.out.println(job + " added");
-           clients.add(remoteClient);
+            clients.add(remoteClient);
             for (RemoteClient client : clients) {
                 client.updateJob(job);
             }
@@ -79,7 +79,7 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void removeJob(Job job) throws RemoteException {
+    public void removeJob(Job job, RemoteClient remoteClient) throws RemoteException {
         try {
             for (RemoteClient client : clients) {
                 client.removeJob(job);
@@ -87,5 +87,70 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Employer loginEmployer(String CVR, String password) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public Worker loginWorker(String CPR, String password) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public Employer editEmployer(Employer employer, String password) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public Worker editWorker(Worker worker, String password) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void applyForJob(Job job, RemoteClient client) throws RemoteException {
+
+    }
+
+    @Override
+    public void updateJob(Job job, RemoteClient client) throws RemoteException {
+
+    }
+
+    @Override
+    public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
+
+    }
+
+    @Override
+    public void createWorkerAccount(Worker worker, String password, RemoteClient client) throws RemoteException {
+
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobHistoryEmployerFromDB() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getUpcomingJobsWorkerFromDB() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException {
+        return null;
     }
 }
