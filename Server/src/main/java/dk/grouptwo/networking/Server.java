@@ -6,11 +6,7 @@ import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -91,7 +87,13 @@ public class Server implements RemoteServer{
 
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
-        return null;
+        try {
+            for (RemoteClient client : clients) {
+                client.loginEmployer(CVR,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
