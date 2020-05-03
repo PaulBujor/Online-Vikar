@@ -143,8 +143,9 @@ public class Server implements RemoteServer{
     public void applyForJob(Job job, Worker worker) throws RemoteException {
         try {
             for (RemoteClient client : clients) {
-                db.applyForJob();
+                db.applyForJob(worker);
                 client.applyForAJob(job);
+                System.out.println(worker + " applied to " + job);
             }
         } catch (Exception e) {
             e.printStackTrace();
