@@ -1,6 +1,5 @@
 package dk.grouptwo.networking;
 
-import dk.grouptwo.database.Database;
 import dk.grouptwo.database.Persistence;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
@@ -84,6 +83,7 @@ public class Server implements RemoteServer{
         jobs.remove(job);
         try {
             client.removeJob(job);
+            System.out.println(job + " removed");
         } catch (Exception e) {
             e.printStackTrace();
         }
