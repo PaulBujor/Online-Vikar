@@ -8,7 +8,6 @@ public class Job implements Serializable {
     private int jobID;
     private String jobTitle;
     private String description;
-    private String category;
     private double salary;
     private int workersNeeded;
     private LocalDateTime shiftStart;
@@ -23,11 +22,10 @@ public class Job implements Serializable {
     private ArrayList<Worker> applicants;
 
 
-    public Job(int jobID, String jobTitle, String description, String category, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Employer employer) {
+    public Job(int jobID, String jobTitle, String description, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Employer employer) {
         this.jobID = jobID;
         this.jobTitle = jobTitle;
         this.description = description;
-        this.category = category;
         this.salary = salary;
         this.workersNeeded = workersNeeded;
         this.shiftStart = shiftStart;
@@ -59,14 +57,6 @@ public class Job implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public double getSalary() {

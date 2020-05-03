@@ -25,13 +25,14 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private Client client = new LocalClientTest();
 
     @Override
-    public void registerAccountWorker(Worker worker, String password) {
+    public void registerAccountWorker(Worker worker, String password) throws Exception {
         try {
             client.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
-            throw new IllegalArgumentException("Some kind of error");
+            throw new Exception("Account could not be created!");
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
-
     }
 
     @Override
@@ -43,7 +44,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
-
     }
 
     @Override

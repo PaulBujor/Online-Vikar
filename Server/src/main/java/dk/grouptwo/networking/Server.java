@@ -1,16 +1,13 @@
 package dk.grouptwo.networking;
 
+import dk.grouptwo.database.Persistence;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -18,8 +15,10 @@ import java.util.ArrayList;
 
 public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
-    private Worker worker;
-    private Employer employer;
+    private ArrayList<Job> jobs;
+    private ArrayList<Worker> workers;
+    private ArrayList<Employer> employers;
+    private Persistence db;
 
     public Server() throws RemoteException {
         UnicastRemoteObject.exportObject(this,0);
@@ -30,7 +29,7 @@ public class Server implements RemoteServer{
         employer = null;*/
     }
 
-    public static String getIP() {
+   /* public static String getIP() {
         try {
             URL aws = new URL("http://checkip.amazonaws.com");
             BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -42,7 +41,7 @@ public class Server implements RemoteServer{
             e.printStackTrace();
             return "Could not get IP";
         }
-    }
+    }*/
 
     public void start() throws RemoteException, MalformedURLException {
         System.out.printf("Server IP: %s\n", "localhost"/*getIP()*/);
@@ -53,11 +52,11 @@ public class Server implements RemoteServer{
     @Override
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
-            if(client.equals(employer)) {
+            if(employers.contains(client)) {
                 assert clientToRegister instanceof Employer;
-                client.createEmployerAccount((Employer) clientToRegister); // password seems redundant
+                client.createEmployerAccount((Employer) clientToRegister);
             }
-            else if (client.equals(worker)){
+            else if (workers.contains(client)){
                 assert clientToRegister instanceof Worker;
                 client.createWorkerAccount((Worker)clientToRegister);
             }
@@ -65,11 +64,13 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void addJob(Job job) throws RemoteException {
+    public void addJob(Job job, RemoteClient remoteClient) throws RemoteException {
         try {
-           RemoteClient remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
+            remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
+            jobs.add(job);
+            db.addJobToDB(job);
             System.out.println(job + " added");
-           clients.add(remoteClient);
+            clients.add(remoteClient);
             for (RemoteClient client : clients) {
                 client.updateJob(job);
             }
@@ -79,13 +80,142 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void removeJob(Job job) throws RemoteException {
+    public void removeJob(Job job, RemoteClient client) throws RemoteException {
+        try {
+            jobs.remove(job);
+            db.removeJobFromDB(job);
+            client.removeJob(job);
+            System.out.println(job + " removed");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Employer loginEmployer(String CVR, String password) throws RemoteException {
         try {
             for (RemoteClient client : clients) {
-                client.removeJob(job);
+                client.loginEmployer(CVR,password);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    @Override
+    public Worker loginWorker(String CPR, String password) throws RemoteException {
+        try {
+            for (RemoteClient client : clients) {
+                client.loginWorker(CPR,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Employer editEmployer(Employer employer, String password) throws RemoteException {
+        try {
+            for (RemoteClient client : clients) {
+                client.editEmployer(employer,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return employer;
+    }
+
+    @Override
+    public Worker editWorker(Worker worker, String password) throws RemoteException {
+        try {
+            for (RemoteClient client : clients) {
+                client.editWorker(worker,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return worker;
+    }
+
+    @Override
+    public void applyForJob(Job job, Worker worker) throws RemoteException {
+        try {
+            for (RemoteClient client : clients) {
+                db.applyForJob(worker);
+                client.applyForAJob(job);
+                System.out.println(worker + " applied to " + job);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateJob(Job job) throws RemoteException {
+        try {
+            for (RemoteClient client : clients) {
+                db.updateJob();
+                client.updateJob(job);
+                System.out.println(job + " updated");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
+        try {
+            client.createEmployerAccount(employer);
+            System.out.println(employer + " account created");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void createWorkerAccount(Worker worker, String password, RemoteClient client) throws RemoteException {
+        try {
+            client.createWorkerAccount(worker);
+            System.out.println(worker + " account created");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
+        return db.getAllJobsFromDB();
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
+        for (Worker worker : workers) {
+            db.getAllJobHistoryWorkerFromDB(worker);
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getAllJobHistoryEmployerFromDB() throws RemoteException {
+        for (Employer employer : employers) {
+        return db.getAllJobHistoryEmployerFromDB(employer);
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getUpcomingJobsWorkerFromDB() throws RemoteException {
+        for (Worker worker : workers) {
+            db.getUpcomingJobsWorkerFromDB(worker);
+        }
+        return null;
+    }
+
+    @Override
+    public ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException {
+        return db.getCurrentEmployerJobs(employer);
     }
 }

@@ -13,7 +13,7 @@ public interface Persistence
   void removeJobFromDB(Job job);
 
   // maybe Worker instead of void
-  void applyForJob();
+  Worker applyForJob(Worker worker);
   void updateJob();
 
  //Login checks
