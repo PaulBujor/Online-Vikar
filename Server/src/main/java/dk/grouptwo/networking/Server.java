@@ -155,6 +155,7 @@ public class Server implements RemoteServer{
             for (RemoteClient client : clients) {
                 db.updateJob();
                 client.updateJob(job);
+                System.out.println(job + " updated");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,6 +166,7 @@ public class Server implements RemoteServer{
     public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
         try {
             client.createEmployerAccount(employer);
+            System.out.println(employer + " account created");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,6 +176,7 @@ public class Server implements RemoteServer{
     public void createWorkerAccount(Worker worker, String password, RemoteClient client) throws RemoteException {
         try {
             client.createWorkerAccount(worker);
+            System.out.println(worker + " account created");
         } catch (Exception e) {
             e.printStackTrace();
         }
