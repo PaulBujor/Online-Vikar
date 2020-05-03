@@ -181,12 +181,7 @@ public class Server implements RemoteServer{
 
     @Override
     public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
-        try {
-           ArrayList<Job> jobList = db.getAllJobsFromDB();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jobList;
+        return db.getAllJobsFromDB();
     }
 
     @Override
