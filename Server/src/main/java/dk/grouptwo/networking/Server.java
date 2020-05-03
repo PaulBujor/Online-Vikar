@@ -1,6 +1,7 @@
 package dk.grouptwo.networking;
 
 import dk.grouptwo.database.Database;
+import dk.grouptwo.database.Persistence;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
@@ -15,9 +16,10 @@ import java.util.ArrayList;
 
 public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
+    private ArrayList<Job> jobs;
     private Worker worker;
     private Employer employer;
-    private Database db;
+    private Persistence db;
 
     public Server() throws RemoteException {
         UnicastRemoteObject.exportObject(this,0);
@@ -167,12 +169,22 @@ public class Server implements RemoteServer{
 
     @Override
     public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
-        return null;
+        try {
+           jobs = db.getAllJobsFromDB();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jobs;
     }
 
     @Override
     public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
-        return null;
+        try {
+            workerHistory = new ArrayList<Job>(db.getAllJobHistoryWorkerFromDB(worker));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return workerHistory;
     }
 
     @Override
