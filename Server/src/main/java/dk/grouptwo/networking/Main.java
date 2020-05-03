@@ -20,8 +20,8 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws RemoteException, AlreadyBoundException, MalformedURLException {
-        startRegistry();
+    public static void main(String[] args) throws RemoteException, AlreadyBoundException {
+       /* startRegistry();*/
         RemoteServer server = new Server();
         Registry registry = LocateRegistry.createRegistry(1099);
 
