@@ -1,5 +1,6 @@
 package dk.grouptwo.networking;
 
+import dk.grouptwo.database.Database;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
@@ -16,6 +17,7 @@ public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
     private Worker worker;
     private Employer employer;
+    private Database db;
 
     public Server() throws RemoteException {
         UnicastRemoteObject.exportObject(this,0);
@@ -131,22 +133,42 @@ public class Server implements RemoteServer{
 
     @Override
     public void applyForJob(Job job, RemoteClient client) throws RemoteException {
-
+        try {
+            for (RemoteClient client : clients) {
+                client.applyForAJob(job);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updateJob(Job job, RemoteClient client) throws RemoteException {
-
+        try {
+            for (RemoteClient client : clients) {
+                client.updateJob(job);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
-
+        try {
+            client.createEmployerAccount(employer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void createWorkerAccount(Worker worker, String password, RemoteClient client) throws RemoteException {
-
+        try {
+            client.createWorkerAccount(worker);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
