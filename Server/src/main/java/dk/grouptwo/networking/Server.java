@@ -77,11 +77,9 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void removeJob(Job job, RemoteClient remoteClient) throws RemoteException {
+    public void removeJob(Job job, RemoteClient client) throws RemoteException {
         try {
-            for (RemoteClient client : clients) {
-                client.removeJob(job);
-            }
+            client.removeJob(job);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -134,9 +132,7 @@ public class Server implements RemoteServer{
     @Override
     public void applyForJob(Job job, RemoteClient client) throws RemoteException {
         try {
-            for (RemoteClient client : clients) {
-                client.applyForAJob(job);
-            }
+            client.applyForAJob(job);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,9 +141,7 @@ public class Server implements RemoteServer{
     @Override
     public void updateJob(Job job, RemoteClient client) throws RemoteException {
         try {
-            for (RemoteClient client : clients) {
-                client.updateJob(job);
-            }
+            client.updateJob(job);
         } catch (Exception e) {
             e.printStackTrace();
         }
