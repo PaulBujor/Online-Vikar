@@ -68,6 +68,7 @@ public class Server implements RemoteServer{
         try {
             remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
             jobs.add(job);
+            db.addJobToDB(job);
             System.out.println(job + " added");
             clients.add(remoteClient);
             for (RemoteClient client : clients) {
@@ -80,8 +81,9 @@ public class Server implements RemoteServer{
 
     @Override
     public void removeJob(Job job, RemoteClient client) throws RemoteException {
-        jobs.remove(job);
         try {
+            jobs.remove(job);
+            db.removeJobFromDB(job);
             client.removeJob(job);
             System.out.println(job + " removed");
         } catch (Exception e) {
@@ -138,7 +140,10 @@ public class Server implements RemoteServer{
     @Override
     public void applyForJob(Job job, RemoteClient client) throws RemoteException {
         try {
-            client.applyForAJob(job);
+            for (RemoteClient client : clients) {
+                db.applyForJob();
+                client.applyForAJob(job);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +152,10 @@ public class Server implements RemoteServer{
     @Override
     public void updateJob(Job job, RemoteClient client) throws RemoteException {
         try {
-            client.updateJob(job);
+            for (RemoteClient client : clients) {
+                db.updateJob();
+                client.updateJob(job);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,11 +182,11 @@ public class Server implements RemoteServer{
     @Override
     public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
         try {
-           jobs = db.getAllJobsFromDB();
+           ArrayList<Job> jobList = db.getAllJobsFromDB();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return jobs;
+        return jobList;
     }
 
     @Override
