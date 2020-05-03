@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
     private ArrayList<Job> jobs;
-    private Worker worker;
-    private Employer employer;
+    private ArrayList<Worker> workers;
+    private ArrayList<Employer> employers;
     private Persistence db;
 
     public Server() throws RemoteException {
@@ -52,11 +52,11 @@ public class Server implements RemoteServer{
     @Override
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
-            if(client.equals(employer)) {
+            if(employers.contains(client)) {
                 assert clientToRegister instanceof Employer;
-                client.createEmployerAccount((Employer) clientToRegister); // password seems redundant
+                client.createEmployerAccount((Employer) clientToRegister);
             }
-            else if (client.equals(worker)){
+            else if (workers.contains(client)){
                 assert clientToRegister instanceof Worker;
                 client.createWorkerAccount((Worker)clientToRegister);
             }
@@ -68,6 +68,7 @@ public class Server implements RemoteServer{
         try {
             remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
             jobs.add(job);
+            db.addJobToDB(job);
             System.out.println(job + " added");
             clients.add(remoteClient);
             for (RemoteClient client : clients) {
@@ -80,8 +81,9 @@ public class Server implements RemoteServer{
 
     @Override
     public void removeJob(Job job, RemoteClient client) throws RemoteException {
-        jobs.remove(job);
         try {
+            jobs.remove(job);
+            db.removeJobFromDB(job);
             client.removeJob(job);
             System.out.println(job + " removed");
         } catch (Exception e) {
@@ -98,6 +100,7 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -109,6 +112,7 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
@@ -120,6 +124,7 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return employer;
     }
 
     @Override
@@ -131,21 +136,29 @@ public class Server implements RemoteServer{
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return worker;
     }
 
     @Override
-    public void applyForJob(Job job, RemoteClient client) throws RemoteException {
+    public void applyForJob(Job job, Worker worker) throws RemoteException {
         try {
-            client.applyForAJob(job);
+            for (RemoteClient client : clients) {
+                db.applyForJob();
+                client.applyForAJob(job);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void updateJob(Job job, RemoteClient client) throws RemoteException {
+    public void updateJob(Job job) throws RemoteException {
         try {
-            client.updateJob(job);
+            for (RemoteClient client : clients) {
+                db.updateJob();
+                client.updateJob(job);
+                System.out.println(job + " updated");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,6 +168,7 @@ public class Server implements RemoteServer{
     public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
         try {
             client.createEmployerAccount(employer);
+            System.out.println(employer + " account created");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -164,6 +178,7 @@ public class Server implements RemoteServer{
     public void createWorkerAccount(Worker worker, String password, RemoteClient client) throws RemoteException {
         try {
             client.createWorkerAccount(worker);
+            System.out.println(worker + " account created");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,40 +186,35 @@ public class Server implements RemoteServer{
 
     @Override
     public ArrayList<Job> getAllJobsFromDB() throws RemoteException {
-        try {
-           jobs = db.getAllJobsFromDB();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return jobs;
+        return db.getAllJobsFromDB();
     }
 
     @Override
     public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
-        try {
-            ArrayList<Job> workerHistory = new ArrayList<Job>();
+        for (Worker worker : workers) {
             db.getAllJobHistoryWorkerFromDB(worker);
-            for (Job job : jobs){
-        //        workerHistory.get();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        //return workerHistory;
+        return null;
     }
 
     @Override
     public ArrayList<Job> getAllJobHistoryEmployerFromDB() throws RemoteException {
+        for (Employer employer : employers) {
+        return db.getAllJobHistoryEmployerFromDB(employer);
+        }
         return null;
     }
 
     @Override
     public ArrayList<Job> getUpcomingJobsWorkerFromDB() throws RemoteException {
+        for (Worker worker : workers) {
+            db.getUpcomingJobsWorkerFromDB(worker);
+        }
         return null;
     }
 
     @Override
     public ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException {
-        return null;
+        return db.getCurrentEmployerJobs(employer);
     }
 }
