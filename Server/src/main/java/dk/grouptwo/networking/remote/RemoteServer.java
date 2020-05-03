@@ -28,8 +28,8 @@ public interface RemoteServer extends Remote
     Worker editWorker(Worker worker,String password) throws RemoteException;
 
     //Apply and update job
-    void applyForJob(Job job, RemoteClient client) throws RemoteException;
-    void updateJob(Job job, RemoteClient client) throws RemoteException;
+    void applyForJob(Job job, Worker worker) throws RemoteException;
+    void updateJob(Job job) throws RemoteException;
 
     //Creating accounts
     void createEmployerAccount(Employer employer,String password,RemoteClient client) throws RemoteException;

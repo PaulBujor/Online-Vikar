@@ -138,7 +138,7 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void applyForJob(Job job, RemoteClient client) throws RemoteException {
+    public void applyForJob(Job job, Worker worker) throws RemoteException {
         try {
             for (RemoteClient client : clients) {
                 db.applyForJob();
@@ -150,7 +150,7 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void updateJob(Job job, RemoteClient client) throws RemoteException {
+    public void updateJob(Job job) throws RemoteException {
         try {
             for (RemoteClient client : clients) {
                 db.updateJob();
