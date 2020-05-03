@@ -89,8 +89,8 @@ public class Client implements RemoteClient {
 
     @Override
     public void createWorkerAccount(Worker worker, String password)
-            throws RemoteException {
-        server.createWorkerAccount(worker, password, this);
+            throws RemoteException, NoSuchAlgorithmException {
+        server.createWorkerAccount(worker, Encryptor.toHexString(Encryptor.getSHA(password)), this);
     }
 
     @Override
