@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Server implements RemoteServer{
     private ArrayList<RemoteClient> clients;
     private ArrayList<Job> jobs;
-    private Worker worker;
-    private Employer employer;
+    private ArrayList<Worker> workers;
+    private ArrayList<Employer> employers;
     private Persistence db;
 
     public Server() throws RemoteException {
@@ -52,11 +52,11 @@ public class Server implements RemoteServer{
     @Override
     public void registerClient(RemoteClient clientToRegister) throws RemoteException {
         for (RemoteClient client : clients) {
-            if(client.equals(employer)) {
+            if(employers.contains(client)) {
                 assert clientToRegister instanceof Employer;
-                client.createEmployerAccount((Employer) clientToRegister); // password seems redundant
+                client.createEmployerAccount((Employer) clientToRegister);
             }
-            else if (client.equals(worker)){
+            else if (workers.contains(client)){
                 assert clientToRegister instanceof Worker;
                 client.createWorkerAccount((Worker)clientToRegister);
             }
