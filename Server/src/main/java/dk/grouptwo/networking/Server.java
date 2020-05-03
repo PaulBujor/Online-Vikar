@@ -68,6 +68,7 @@ public class Server implements RemoteServer{
     public void addJob(Job job, RemoteClient remoteClient) throws RemoteException {
         try {
             remoteClient = (RemoteClient) Naming.lookup("rmi://" + job + ":1099/Job");
+            jobs.add(job);
             System.out.println(job + " added");
             clients.add(remoteClient);
             for (RemoteClient client : clients) {
@@ -80,6 +81,7 @@ public class Server implements RemoteServer{
 
     @Override
     public void removeJob(Job job, RemoteClient client) throws RemoteException {
+        jobs.remove(job);
         try {
             client.removeJob(job);
         } catch (Exception e) {
@@ -180,11 +182,15 @@ public class Server implements RemoteServer{
     @Override
     public ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException {
         try {
-            workerHistory = new ArrayList<Job>(db.getAllJobHistoryWorkerFromDB(worker));
+            ArrayList<Job> workerHistory = new ArrayList<Job>();
+            db.getAllJobHistoryWorkerFromDB(worker);
+            for (Job job : jobs){
+        //        workerHistory.get();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return workerHistory;
+        //return workerHistory;
     }
 
     @Override
