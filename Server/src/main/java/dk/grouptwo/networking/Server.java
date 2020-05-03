@@ -98,17 +98,35 @@ public class Server implements RemoteServer{
 
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
-        return null;
+        try {
+            for (RemoteClient client : clients) {
+                client.loginWorker(CPR,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Employer editEmployer(Employer employer, String password) throws RemoteException {
-        return null;
+        try {
+            for (RemoteClient client : clients) {
+                client.editEmployer(employer,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Worker editWorker(Worker worker, String password) throws RemoteException {
-        return null;
+        try {
+            for (RemoteClient client : clients) {
+                client.editWorker(worker,password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
