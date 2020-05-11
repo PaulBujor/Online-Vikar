@@ -84,9 +84,35 @@ public class WorkerProfileController extends WorkerViewTabController {
     @FXML
     private Label workerProfileNameLabel;
 
+    @FXML
+    private Button profileButton;
+
     public void init(ViewHandler viewHandler, WorkerProfileViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
+        profileButton.setText(viewModel.usernameProperty().get());
+
+        workerProfileCPR.textProperty().bind(viewModel.CPRProperty());
+        workerProfileFirstName.textProperty().bindBidirectional(viewModel.firstNameProperty());
+        workerProfileLastName.textProperty().bindBidirectional(viewModel.lastNameProperty());
+        workerProfileDatePicker.valueProperty().bindBidirectional(viewModel.birthdayProperty());
+        //gender
+        workerProfileCity.textProperty().bindBidirectional(viewModel.cityProperty());
+        workerProfilePostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
+        workerProfileMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
+        //tax card
+        workerProfileLanguages.textProperty().bindBidirectional(viewModel.languagesProperty());
+        workerProfileDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
+        workerProfileEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        workerProfileCurrentPassword.textProperty().bindBidirectional(viewModel.currentPasswordProperty());
+        workerProfileNewPassword.textProperty().bindBidirectional(viewModel.newPasswordProperty());
+        workerProfileConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        workerProfileLicense.textProperty().bindBidirectional(viewModel.licenseTitleProperty());
+        workerProfileCategory.textProperty().bindBidirectional(viewModel.licenseCategoryProperty());
+        workerProfileLicenseNumber.textProperty().bindBidirectional(viewModel.licenseNumberProperty());
+        workerProfileIssueDate.valueProperty().bindBidirectional(viewModel.licenseIssueDateProperty());
+        workerProfileExpiryDate.valueProperty().bindBidirectional(viewModel.licenseExpiryDateProperty());
+
     }
 
     @FXML

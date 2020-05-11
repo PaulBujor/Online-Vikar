@@ -3,6 +3,7 @@ package dk.grouptwo.view.worker;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.worker.FindWorkViewModel;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
@@ -50,9 +51,19 @@ public class FindWorkController extends WorkerViewTabController {
     @FXML
     private TableColumn<?, ?> findWorkLocationColumn;
 
+    @FXML
+    private Button profileButton;
+
     public void init(ViewHandler viewHandler, FindWorkViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
+
+        profileButton.setText(viewModel.usernameProperty().get());
+
+
+
+
+
     }
 
     @FXML

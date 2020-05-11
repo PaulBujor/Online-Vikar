@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public class WorkerProfileViewModel {
 
     private ModelManager model;
+    private StringProperty username;
+    private StringProperty CPR;
     private StringProperty firstName;
     private StringProperty lastName;
     private ObjectProperty<LocalDate> birthday;
@@ -41,6 +43,8 @@ public class WorkerProfileViewModel {
 
     public WorkerProfileViewModel(ModelManager model) {
         this.model = model;
+        username = new SimpleStringProperty();
+        CPR = new SimpleStringProperty();
         firstName = new SimpleStringProperty();
         lastName = new SimpleStringProperty();
         birthday = new SimpleObjectProperty<>();
@@ -66,12 +70,10 @@ public class WorkerProfileViewModel {
     }
 
     public boolean saveChangesWorker() {
-        if (!(newPassword.get().equals(confirmPassword.get())))
-        {
+        if (!(newPassword.get().equals(confirmPassword.get()))) {
             error.set("The passwords do not match.");
             return false;
-        }
-        else if (newPassword.get().length() < 8) {
+        } else if (newPassword.get().length() < 8) {
             error.set("The password should contain at least 8 characters.");
             return false;
         }
@@ -113,9 +115,110 @@ public class WorkerProfileViewModel {
 
     }
 
+
+    public StringProperty usernameProperty() {
+        return username;
+    }
+
+    public StringProperty CPRProperty() {
+        return CPR;
+    }
+
+
     public ObservableList<LicenseTableData> getList() {
         return list;
     }
 
 
+    public StringProperty firstNameProperty() {
+        return firstName;
+    }
+
+
+    public StringProperty lastNameProperty() {
+        return lastName;
+    }
+
+
+    public ObjectProperty<LocalDate> birthdayProperty() {
+        return birthday;
+    }
+
+
+    public StringProperty genderProperty() {
+        return gender;
+    }
+
+
+    public StringProperty cityProperty() {
+        return city;
+    }
+
+
+    public StringProperty postCodeProperty() {
+        return postCode;
+    }
+
+
+    public StringProperty mobilePhoneProperty() {
+        return mobilePhone;
+    }
+
+
+    public StringProperty taxCardProperty() {
+        return taxCard;
+    }
+
+    public StringProperty languagesProperty() {
+        return languages;
+    }
+
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+
+    public StringProperty emailProperty() {
+        return email;
+    }
+
+
+    public StringProperty currentPasswordProperty() {
+        return currentPassword;
+    }
+
+
+    public StringProperty newPasswordProperty() {
+        return newPassword;
+    }
+
+
+    public StringProperty confirmPasswordProperty() {
+        return confirmPassword;
+    }
+
+    public StringProperty licenseTitleProperty() {
+        return licenseTitle;
+    }
+
+    public StringProperty licenseCategoryProperty() {
+        return licenseCategory;
+    }
+
+    public StringProperty licenseNumberProperty() {
+        return licenseNumber;
+    }
+
+    public ObjectProperty<LocalDate> licenseIssueDateProperty() {
+        return licenseIssueDate;
+    }
+
+    public ObjectProperty<LocalDate> licenseExpiryDateProperty() {
+        return licenseExpiryDate;
+    }
+
+    public StringProperty errorProperty() {
+        return error;
+    }
 }

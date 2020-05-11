@@ -1,7 +1,9 @@
 package dk.grouptwo.view.worker;
 
 import dk.grouptwo.view.ViewHandler;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 
 /**
@@ -10,13 +12,18 @@ import javafx.scene.layout.Region;
  * use extends WorkerViewTabController for worker client app controllers
  * (Profile, Find Work, Upcoming and History Controllers)
  */
+
+
 class WorkerViewTabController {
+
+
     private ViewHandler viewHandler;
     private Region root;
 
     public void init(ViewHandler viewHandler, Region root){
         this.viewHandler = viewHandler;
         this.root = root;
+
     }
 
     @FXML
@@ -40,6 +47,9 @@ class WorkerViewTabController {
     }
 
     //todo log out
+
+
+
 
     public void reset() {
 

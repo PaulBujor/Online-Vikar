@@ -1,4 +1,20 @@
 package dk.grouptwo.viewmodel.worker;
 
+import dk.grouptwo.model.ModelManager;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class FindWorkViewModel {
+
+    private ModelManager model;
+    private StringProperty username;
+
+    public FindWorkViewModel(ModelManager model) {
+        this.model = model;
+        username = new SimpleStringProperty();
+    }
+
+    public StringProperty usernameProperty() {
+        return username;
+    }
 }
