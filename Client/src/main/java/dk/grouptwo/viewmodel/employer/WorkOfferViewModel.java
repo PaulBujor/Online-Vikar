@@ -1,11 +1,12 @@
 package dk.grouptwo.viewmodel.employer;
 
 import dk.grouptwo.model.WorkerModel;
+import dk.grouptwo.utility.WorkTableData;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
-public class CreateWorkOfferViewModel {
+public class WorkOfferViewModel {
     WorkerModel model;
     private StringProperty title;
     private DoubleProperty salary;
@@ -18,7 +19,7 @@ public class CreateWorkOfferViewModel {
     private StringProperty location;
     private StringProperty description;
 
-    public CreateWorkOfferViewModel(WorkerModel model) {
+    public WorkOfferViewModel(WorkerModel model) {
         this.model = model;
         title = new SimpleStringProperty("");
         salary = new SimpleDoubleProperty(0);
@@ -32,21 +33,21 @@ public class CreateWorkOfferViewModel {
         description = new SimpleStringProperty("");
     }
 
-    public void create() {
+    public void save() {
         //todo
     }
 
-    public void reset() {
-        title.set("");
-        salary.set(0);
-        startHour.set(0);
-        startMinutes.set(0);
-        startDate.set(null);
-        endHour.set(0);
-        endMinutes.set(0);
-        endDate.set(null);
-        location.set("");
-        description.set("");
+    public void reset(WorkTableData data) {
+        title.set(data.jobTitleProperty().get());
+        salary.set(data.salaryProperty().get());
+        startHour.set(data.startTimeProperty().get().getHour());
+        startMinutes.set(data.startTimeProperty().get().getMinute());
+        startDate.set(data.startTimeProperty().get().toLocalDate());
+        endHour.set(data.endTimeProperty().get().getHour());
+        endMinutes.set(data.endTimeProperty().get().getMinute());
+        endDate.set(data.endTimeProperty().get().toLocalDate());
+        location.set(data.locationProperty().get());
+        description.set(data.getDescription());
     }
 
     public StringProperty titleProperty() {

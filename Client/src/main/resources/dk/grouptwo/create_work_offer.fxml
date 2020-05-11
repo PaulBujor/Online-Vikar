@@ -93,7 +93,7 @@
             <TextArea fx:id="createWorkOfferWorkDescription" prefHeight="106.0" prefWidth="427.0" promptText="Work description" />
             <HBox alignment="CENTER_RIGHT">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#createWorkOfferCreateButtonPressed" prefHeight="30.0" prefWidth="69.0" stylesheets="@css/style.css" text="Create" textFill="WHITE">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#createWorkOffer" prefHeight="30.0" prefWidth="69.0" stylesheets="@css/style.css" text="Create" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

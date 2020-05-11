@@ -3,7 +3,9 @@ package dk.grouptwo.utility;
 import dk.grouptwo.model.objects.Job;
 import javafx.beans.property.*;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class WorkTableData {
 
@@ -75,5 +77,10 @@ public class WorkTableData {
 
     public int getJobId() {
         return jobId;
+    }
+
+    public DoubleProperty workTimeProperty() {
+        return new SimpleDoubleProperty(Math.floor(((double) ChronoUnit.MINUTES.between(startTimeProperty().get(), endTimeProperty().get())) / 60 * 100) / 100);
+
     }
 }

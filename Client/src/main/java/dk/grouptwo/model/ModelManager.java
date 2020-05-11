@@ -173,4 +173,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     }
 
+    //TODO a method getUpcomingWork
+
 }

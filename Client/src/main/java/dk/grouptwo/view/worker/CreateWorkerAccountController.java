@@ -26,6 +26,10 @@ public class CreateWorkerAccountController {
     @FXML
     private TextField createAccountEmployeePostCode;
     @FXML
+    private TextField createAccountEmployeeCountry;
+    @FXML
+    private TextField createAccountEmployeeStreet;
+    @FXML
     private TextField createAccountEmployeeMobilePhone;
     @FXML
     private ComboBox<String> createAccountEmployeeTaxCard;
@@ -52,6 +56,8 @@ public class CreateWorkerAccountController {
         createAccountEmployeeLastName.textProperty().bindBidirectional(viewModel.lastNameProperty());
         createAccountEmployeeDatePicker.valueProperty().bindBidirectional(viewModel.birthdayProperty());
         createAccountEmployeeGender.valueProperty().bindBidirectional(viewModel.genderProperty());
+        createAccountEmployeeCountry.textProperty().bindBidirectional(viewModel.countryProperty());
+        createAccountEmployeeStreet.textProperty().bindBidirectional(viewModel.streetProperty());
         createAccountEmployeeCity.textProperty().bindBidirectional(viewModel.cityProperty());
         createAccountEmployeePostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
         createAccountEmployeeMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
