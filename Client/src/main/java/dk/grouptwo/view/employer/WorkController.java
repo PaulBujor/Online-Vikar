@@ -5,12 +5,13 @@ import dk.grouptwo.utility.WorkTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.WorkViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 import java.time.LocalDateTime;
 
@@ -45,7 +46,7 @@ public class WorkController extends EmployerViewTabController {
     private TableColumn<WorkTableData, String> jobsEmployerColumn;
 
     @FXML
-    private TableColumn<WorkTableData, Double> jobsSalaryColumn;
+    private TableColumn<WorkTableData, Number> jobsSalaryColumn;
 
     @FXML
     private TableColumn<WorkTableData, LocalDateTime> jobsStartColumn;
@@ -69,8 +70,7 @@ public class WorkController extends EmployerViewTabController {
 
         jobsJobTitleColumn.setCellValueFactory(cellData -> cellData.getValue().jobTitleProperty());
         jobsEmployerColumn.setCellValueFactory(cellData -> cellData.getValue().employerProperty());
-        //todo convert double shit
-        //jobsSalaryColumn.setCellValueFactory(cellData -> cellData.getValue().salaryProperty());
+        jobsSalaryColumn.setCellValueFactory(cellData -> cellData.getValue().salaryProperty());
         jobsStartColumn.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
         jobsEndColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
         jobsLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
