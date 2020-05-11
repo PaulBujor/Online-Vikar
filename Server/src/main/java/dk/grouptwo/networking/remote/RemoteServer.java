@@ -32,7 +32,7 @@ public interface RemoteServer extends Remote
     void updateJob(Job job) throws RemoteException;
 
     //Creating accounts
-    void createEmployerAccount(Employer employer,String password,RemoteClient client) throws RemoteException;
+    void createEmployerAccount(Employer employer,String password) throws RemoteException;
     void createWorkerAccount(Worker worker,String password, RemoteClient client) throws RemoteException;
 
     //Broadcast, client updates, dunno havent decided yet, need to test this myself

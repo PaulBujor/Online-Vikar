@@ -18,6 +18,7 @@ public class WorkTableData {
     private ObjectProperty<LocalDateTime> startTime;
     private ObjectProperty<LocalDateTime> endTime;
     private StringProperty location;
+    private String description;
 
 
     public WorkTableData(Job job) {
@@ -30,8 +31,12 @@ public class WorkTableData {
         endTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftEnd());
         location = new SimpleStringProperty(job.getLocation());
         jobId = job.getJobID();
+        description = job.getDescription();
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public StringProperty jobTitleProperty() {
         return jobTitle;
