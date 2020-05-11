@@ -4,6 +4,7 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface Persistence
@@ -21,7 +22,8 @@ public interface Persistence
  Worker loginWorker(String CPR,String password);
 
  //Creating accounts**** //TODO needs testing
-  void createEmployerAccount(Employer employer, String password);
+  void createEmployerAccount(Employer employer, String password)
+      throws SQLException;
   void createWorkerAccount(Worker worker,String password);
 
   ArrayList<Job> getAllJobsFromDB();
