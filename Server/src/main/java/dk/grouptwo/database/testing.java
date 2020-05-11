@@ -12,9 +12,16 @@ public class testing
     /*DatabaseConnection.getInstance().connect();*/
     EvenMoreTesting testing = new EvenMoreTesting();
     Address address = new Address("mars","8700");
+    Address insertAddress = new Address("denmark","Horsens","bilka 92","8700");
     Employer employer = new Employer("test@gmail.com","50505050",address,"518","blyat");
     System.out.println("Testing : ");
-    testing.insertTest(employer,"gucci");
+    /*testing.insertTest(employer,"gucci");*/
     System.out.println("tested...");
+
+    System.out.println(Integer.parseInt(insertAddress.getZip()));
+    System.out.println(String.valueOf(insertAddress.getZip()));
+    System.out.println("Testing adding address:");
+    testing.insertAddressTest(insertAddress);
+    System.out.println("Testing done..");
   }
 }

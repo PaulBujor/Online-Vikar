@@ -1,5 +1,6 @@
 package dk.grouptwo.database;
 
+import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
@@ -34,5 +35,7 @@ public interface Persistence
   ArrayList<Job> getCurrentEmployerJobs(Employer employer);
 
   ArrayList<Worker> getAllAppliedWorkers();
+
+  void insertAddress(Address address);
 
 }

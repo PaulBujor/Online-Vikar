@@ -1,5 +1,6 @@
 package dk.grouptwo.database;
 
+import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
 
 import java.sql.SQLException;
@@ -14,5 +15,9 @@ public class EvenMoreTesting
   public void insertTest(Employer employer, String password) throws SQLException
   {
     persistence.createEmployerAccount(employer,password);
+  }
+
+  public void insertAddressTest(Address address) throws SQLException{
+    persistence.insertAddress(address);
   }
 }
