@@ -19,6 +19,8 @@ public class CreateWorkerAccountViewModel {
     private StringProperty lastName;
     private ObjectProperty<LocalDate> birthday;
     private StringProperty gender;
+    private StringProperty country;
+    private StringProperty street;
     private StringProperty city;
     private StringProperty postCode;
     private StringProperty mobilePhone;
@@ -39,6 +41,8 @@ public class CreateWorkerAccountViewModel {
         gender = new SimpleStringProperty("Gender");
         city = new SimpleStringProperty("");
         postCode = new SimpleStringProperty("");
+        country = new SimpleStringProperty("");
+        street = new SimpleStringProperty("");
         mobilePhone = new SimpleStringProperty("");
         taxCard = new SimpleStringProperty("Tax card");
         languages = new SimpleStringProperty("");
@@ -68,7 +72,7 @@ public class CreateWorkerAccountViewModel {
     public boolean createWorkerAccount() {
         try {
             if (dataValid()) {
-                model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(city.get(), postCode.get()), CPR.get(),
+                model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(),
                         firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get()), password.get());
                 return true;
             }
@@ -115,6 +119,14 @@ public class CreateWorkerAccountViewModel {
 
     public StringProperty genderProperty() {
         return gender;
+    }
+
+    public StringProperty countryProperty() {
+        return country;
+    }
+
+    public StringProperty streetProperty() {
+        return street;
     }
 
     public StringProperty cityProperty() {

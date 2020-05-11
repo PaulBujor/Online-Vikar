@@ -1,22 +1,34 @@
 package dk.grouptwo.view.worker;
 
+import dk.grouptwo.utility.LicenseTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.worker.WorkerProfileViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 
+import java.time.LocalDate;
+
 public class WorkerProfileController extends WorkerViewTabController {
     private WorkerProfileViewModel viewModel;
 
     @FXML
-    private TableView<?> workerProfileLicenseTable;
+    private TableView<LicenseTableData> workerProfileLicenseTable;
 
     @FXML
-    private TableColumn<?, ?> workerProfileLicenseColumn;
+    private TableColumn<LicenseTableData, String> workerProfileLicenseColumn;
 
     @FXML
-    private TableColumn<?, ?> workerProfileCategoryColumn;
+    private TableColumn<LicenseTableData, String> workerProfileCategoryColumn;
+
+    @FXML
+    private TableColumn<LicenseTableData, String> workerProfileLicenseNumberColumn;
+
+    @FXML
+    private TableColumn<LicenseTableData, LocalDate> workerProfileIssueDateColumn;
+
+    @FXML
+    private TableColumn<LicenseTableData, LocalDate> workerProfileIssueExpiryColumn;
 
     @FXML
     private TextField workerProfileCPR;
@@ -108,13 +120,18 @@ public class WorkerProfileController extends WorkerViewTabController {
         workerProfileNewPassword.textProperty().bindBidirectional(viewModel.newPasswordProperty());
         workerProfileConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
         workerProfileErrorLabel.textProperty().bind(viewModel.errorProperty());
-
         workerProfileLicense.textProperty().bindBidirectional(viewModel.licenseTitleProperty());
         workerProfileCategory.textProperty().bindBidirectional(viewModel.licenseCategoryProperty());
         workerProfileLicenseNumber.textProperty().bindBidirectional(viewModel.licenseNumberProperty());
         workerProfileIssueDate.valueProperty().bindBidirectional(viewModel.licenseIssueDateProperty());
         workerProfileExpiryDate.valueProperty().bindBidirectional(viewModel.licenseExpiryDateProperty());
 
+        workerProfileLicenseColumn.setCellValueFactory(cellData -> cellData.getValue().licenseTitleProperty());
+        workerProfileCategoryColumn.setCellValueFactory(cellData -> cellData.getValue().licenseCategoryProperty());
+        workerProfileLicenseNumberColumn.setCellValueFactory(cellData -> cellData.getValue().licenseNumberProperty());
+        workerProfileIssueDateColumn.setCellValueFactory(cellData -> cellData.getValue().licenseIssueDateProperty());
+        workerProfileIssueExpiryColumn.setCellValueFactory(cellData -> cellData.getValue().licenseExpiryDateProperty());
+        workerProfileLicenseTable.setItems(viewModel.getList());
     }
 
     @FXML

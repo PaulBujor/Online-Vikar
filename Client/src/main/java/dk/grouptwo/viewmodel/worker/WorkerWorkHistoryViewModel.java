@@ -29,6 +29,7 @@ public class WorkerWorkHistoryViewModel {
     public WorkerWorkHistoryViewModel(ModelManager model)
     {
         this.model = model;
+        username = new SimpleStringProperty("");
         list = createList();
         hoursWorked = new SimpleDoubleProperty(model.getHoursWorkedThisMonth());
         jobTitle = new SimpleStringProperty("");

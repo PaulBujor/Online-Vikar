@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
@@ -15,8 +17,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.CreateWorkerAccountController">
    <children>
       <Label layoutX="104.0" layoutY="68.0" text="Create account">
@@ -46,7 +46,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <VBox layoutX="104.0" layoutY="136.0" prefHeight="569.0" prefWidth="522.0" spacing="23.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
+      <VBox layoutX="104.0" layoutY="136.0" prefHeight="569.0" prefWidth="522.0" spacing="21.0" AnchorPane.leftAnchor="104.0" AnchorPane.rightAnchor="574.0">
          <children>
             <TextField fx:id="createAccountEmployeeCPRNumber" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CPR Number" />
             <HBox spacing="28.0">
@@ -61,17 +61,23 @@
                   <ComboBox fx:id="createAccountEmployeeGender" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="Male"/>
-                           <String fx:value="Female"/>
-                           <String fx:value="Other"/>
+                           <String fx:value="Male" />
+                           <String fx:value="Female" />
+                           <String fx:value="Other" />
                         </FXCollections>
                      </items>
                   </ComboBox>
                </children>
             </HBox>
+            <HBox layoutX="10.0" layoutY="169.0" spacing="28.0">
+               <children>
+                  <TextField fx:id="createAccountEmployeeCountry" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Country" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField fx:id="createAccountEmployeeCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployeeStreet" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Street" HBox.hgrow="ALWAYS" />
                   <TextField fx:id="createAccountEmployeePostCode" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
@@ -81,9 +87,9 @@
                   <ComboBox fx:id="createAccountEmployeeTaxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
-                           <String fx:value="55%"/>
-                           <String fx:value="A-tax"/>
-                           <String fx:value="B-tax"/>
+                           <String fx:value="55%" />
+                           <String fx:value="A-tax" />
+                           <String fx:value="B-tax" />
                         </FXCollections>
                      </items>
                   </ComboBox>

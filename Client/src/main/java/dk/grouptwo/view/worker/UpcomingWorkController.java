@@ -1,13 +1,18 @@
 package dk.grouptwo.view.worker;
 
+import dk.grouptwo.utility.StringDoubleConverter;
+import dk.grouptwo.utility.WorkTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.worker.UpcomingWorkViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+
+import java.time.LocalDateTime;
 
 public class UpcomingWorkController extends WorkerViewTabController {
     private UpcomingWorkViewModel viewModel;
@@ -31,25 +36,28 @@ public class UpcomingWorkController extends WorkerViewTabController {
     private Text upcomingDetailsWorkDescription;
 
     @FXML
-    private TableView<?> upcomingTable;
+    private TableView<WorkTableData> upcomingTable;
 
     @FXML
-    private TableColumn<?, ?> upcomingJobTitleColumn;
+    private TableColumn<WorkTableData, String> upcomingJobTitleColumn;
 
     @FXML
-    private TableColumn<?, ?> upcomingEmployerColumn;
+    private TableColumn<WorkTableData, String> upcomingEmployerColumn;
 
     @FXML
-    private TableColumn<?, ?> upcomingSalaryColumn;
+    private TableColumn<WorkTableData, Number> upcomingSalaryColumn;
 
     @FXML
-    private TableColumn<?, ?> upcomingStartColumn;
+    private TableColumn<WorkTableData, LocalDateTime> upcomingStartColumn;
 
     @FXML
-    private TableColumn<?, ?> upcomingWorkTimeColumn;
+    private TableColumn<WorkTableData, LocalDateTime> upcomingEndColumn;
 
     @FXML
-    private TableColumn<?, ?> upcomingLocationColumn;
+    private TableColumn<WorkTableData, Number> upcomingWorkTimeColumn;
+
+    @FXML
+    private TableColumn<WorkTableData, String> upcomingLocationColumn;
 
     @FXML
     private Button profileButton;
@@ -58,6 +66,17 @@ public class UpcomingWorkController extends WorkerViewTabController {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
         profileButton.setText(viewModel.usernameProperty().get());
+
+        upcomingDetailsTitle.textProperty().bind(viewModel.jobTitleProperty());
+        upcomingDetailsEmployer.textProperty().bind(viewModel.employerProperty());
+        Bindings.bindBidirectional(upcomingDetailsSalary.textProperty(), viewModel.salaryProperty(), new StringDoubleConverter(0));
+        upcomingDetailsStartEndDates.textProperty().bind(viewModel.startEndDatesProperty());
+        upcomingDetailsLocation.textProperty().bind(viewModel.locationProperty());
+        upcomingDetailsWorkDescription.textProperty().bind(viewModel.descriptionProperty());
+
+
+
+        //TODO setCellValueFactory for table
 
     }
 
