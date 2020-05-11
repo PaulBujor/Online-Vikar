@@ -166,9 +166,10 @@ public class Server implements RemoteServer{
     }
 
     @Override
-    public void createEmployerAccount(Employer employer, String password, RemoteClient client) throws RemoteException {
+    public void createEmployerAccount(Employer employer, String password) throws RemoteException {
         try {
-            client.createEmployerAccount(employer);
+            db.createEmployerAccount(employer,password);
+
             System.out.println(employer + " account created");
         } catch (Exception e) {
             e.printStackTrace();
