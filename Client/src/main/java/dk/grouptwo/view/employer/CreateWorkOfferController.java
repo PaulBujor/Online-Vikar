@@ -36,24 +36,4 @@ public class CreateWorkOfferController extends EmployerViewTabController
 
   @FXML
   private TextArea createWorkOfferWorkDescription;
-
-  @FXML
-  void createWorkOfferCreateButtonPressed() {
-
-  }
-
-  @FXML
-  void createWorkOfferHistoryButtonPressed() {
-
-  }
-
-  @FXML
-  void createWorkOfferJobsButtonPressed() {
-
-  }
-
-  @FXML
-  void createWorkOfferUsernameButtonPressed() {
-
-  }
 }

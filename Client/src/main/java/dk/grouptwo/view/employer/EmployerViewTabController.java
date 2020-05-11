@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
  * (Profile, Work and History Controllers)
  */
 class EmployerViewTabController {
-    private ViewHandler viewHandler;
+    protected ViewHandler viewHandler;
     private Region root;
 
     @FXML private Button username;

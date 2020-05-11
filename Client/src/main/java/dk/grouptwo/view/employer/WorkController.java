@@ -75,11 +75,19 @@ public class WorkController extends EmployerViewTabController {
         jobsEndColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
         jobsLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         jobsTable.setItems(viewModel.getList());
+
+        jobsTable.onMouseClickedProperty().set(evt -> {
+            try {
+                viewModel.selectItem(jobsTable.getSelectionModel().getSelectedItem());
+            } catch (NullPointerException e) {
+                //this should happen when mouse is clicked outside of any items
+            }
+        });
     }
 
     @FXML
     void openOffer() {
-
+        viewHandler.openView("workOffer");
     }
 
     @FXML
