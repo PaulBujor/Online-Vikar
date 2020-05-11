@@ -4,15 +4,19 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database implements Persistence
 {
-  public Database(){
+  public Database()
+  {
 
   }
 
-  @Override public void addJobToDB(Job job)
+  @Override public synchronized void addJobToDB(Job job)
   {
 
   }
@@ -22,9 +26,9 @@ public class Database implements Persistence
 
   }
 
-  @Override public void applyForJob()
+  @Override public Worker applyForJob(Worker worker)
   {
-
+    return null;
   }
 
   @Override public void updateJob()
@@ -43,9 +47,30 @@ public class Database implements Persistence
   }
 
   @Override public void createEmployerAccount(Employer employer,
-      String password)
+      String password) throws SQLException
   {
+    //TODO add adress to the mix
+    String SQL =
+        "INSERT INTO employer(cvr,password,companyname,email,phone)"
 
+            + "VALUES(?,?,?,?,?)";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement posted = conn.prepareStatement(SQL);
+      posted.setString(1, employer.getCVR());
+      posted.setString(2, password);
+      posted.setString(3, employer.getCompanyName());
+      posted.setString(4, employer.getEmail());
+      posted.setString(5, employer.getPhone());
+    /*  posted.setString(6, "testing, should refer to actual address");*/
+      posted.execute();
+      posted.close();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public void createWorkerAccount(Worker worker, String password)

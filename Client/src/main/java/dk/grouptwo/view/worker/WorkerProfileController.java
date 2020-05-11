@@ -31,7 +31,7 @@ public class WorkerProfileController extends WorkerViewTabController {
     private DatePicker workerProfileDatePicker;
 
     @FXML
-    private ComboBox<?> workerProfileGender;
+    private ComboBox<String> workerProfileGender;
 
     @FXML
     private TextField workerProfileCity;
@@ -43,7 +43,7 @@ public class WorkerProfileController extends WorkerViewTabController {
     private TextField workerProfileMobilePhone;
 
     @FXML
-    private ComboBox<?> workerProfileTaxCard;
+    private ComboBox<String> workerProfileTaxCard;
 
     @FXML
     private TextField workerProfileLanguages;
@@ -96,17 +96,19 @@ public class WorkerProfileController extends WorkerViewTabController {
         workerProfileFirstName.textProperty().bindBidirectional(viewModel.firstNameProperty());
         workerProfileLastName.textProperty().bindBidirectional(viewModel.lastNameProperty());
         workerProfileDatePicker.valueProperty().bindBidirectional(viewModel.birthdayProperty());
-        //gender
+        workerProfileGender.valueProperty().bindBidirectional(viewModel.genderProperty());
         workerProfileCity.textProperty().bindBidirectional(viewModel.cityProperty());
         workerProfilePostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
         workerProfileMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
-        //tax card
+        workerProfileTaxCard.valueProperty().bindBidirectional(viewModel.taxCardProperty());
         workerProfileLanguages.textProperty().bindBidirectional(viewModel.languagesProperty());
         workerProfileDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
         workerProfileEmail.textProperty().bindBidirectional(viewModel.emailProperty());
         workerProfileCurrentPassword.textProperty().bindBidirectional(viewModel.currentPasswordProperty());
         workerProfileNewPassword.textProperty().bindBidirectional(viewModel.newPasswordProperty());
         workerProfileConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        workerProfileErrorLabel.textProperty().bind(viewModel.errorProperty());
+
         workerProfileLicense.textProperty().bindBidirectional(viewModel.licenseTitleProperty());
         workerProfileCategory.textProperty().bindBidirectional(viewModel.licenseCategoryProperty());
         workerProfileLicenseNumber.textProperty().bindBidirectional(viewModel.licenseNumberProperty());
