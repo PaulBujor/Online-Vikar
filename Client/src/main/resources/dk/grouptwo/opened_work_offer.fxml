@@ -68,7 +68,7 @@
             <TextField fx:id="workOfferTitle" prefHeight="30.0" prefWidth="427.0" promptText="Title" />
             <HBox alignment="CENTER_LEFT" prefWidth="271.0" spacing="5.0">
                <children>
-                  <TextField fx:id="workOfferTitleSalary" prefHeight="30.0" prefWidth="103.0" promptText="Salary" />
+                  <TextField fx:id="workOfferSalary" prefHeight="30.0" prefWidth="103.0" promptText="Salary" />
                   <Label contentDisplay="CENTER" text="kr per hour" HBox.hgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
@@ -80,17 +80,17 @@
                <children>
                   <TextField fx:id="workOfferStartHour" prefHeight="30.0" prefWidth="38.0" promptText="HH" />
                   <Label text=":" />
-                  <TextField fx:id="createWorkOfferStartMinutes" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="MM" />
-                  <DatePicker fx:id="createWorkOfferStartDatePicker" prefHeight="30.0" prefWidth="109.0" promptText="Select date" />
+                  <TextField fx:id="workOfferStartMinutes" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="MM" />
+                  <DatePicker fx:id="workOfferStartDatePicker" prefHeight="30.0" prefWidth="109.0" promptText="Select date" />
                   <Label text="—" />
-                  <TextField fx:id="createWorkOfferEndHour" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="HH" />
+                  <TextField fx:id="workOfferEndHour" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="HH" />
                   <Label layoutX="53.0" layoutY="18.0" text=":" />
-                  <TextField fx:id="createWorkOfferEndMinutes" layoutX="61.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="MM" />
-                  <DatePicker fx:id="createWorkOfferEndDate" layoutX="104.0" layoutY="10.0" prefHeight="30.0" prefWidth="157.0" promptText="Select date" />
+                  <TextField fx:id="workOfferEndMinutes" layoutX="61.0" layoutY="10.0" prefHeight="30.0" prefWidth="38.0" promptText="MM" />
+                  <DatePicker fx:id="workOfferEndDate" layoutX="104.0" layoutY="10.0" prefHeight="30.0" prefWidth="157.0" promptText="Select date" />
                </children>
             </HBox>
-            <TextField fx:id="createWorkOfferLocation" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="427.0" promptText="Location" />
-            <TextArea fx:id="createWorkOfferWorkDescription" prefHeight="106.0" prefWidth="427.0" promptText="Work description" />
+            <TextField fx:id="workOfferLocation" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="427.0" promptText="Location" />
+            <TextArea fx:id="workOfferWorkDescription" prefHeight="106.0" prefWidth="427.0" promptText="Work description" />
             <HBox alignment="CENTER_RIGHT">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#createWorkOfferSaveButtonPressed" prefHeight="30.0" prefWidth="69.0" stylesheets="@css/style.css" text="Save" textFill="WHITE">

@@ -92,7 +92,7 @@ public class WorkController extends EmployerViewTabController {
 
     @FXML
     void createWorkOffer() {
-
+        viewHandler.openView("createWorkOffer");
     }
 
     public void reset() {

@@ -88,6 +88,9 @@ public class ViewHandler {
             case "workOffer":
                 root = loadWorkOfferView("opened_work_offer.fxml");
                 break;
+            case "createWorkOffer":
+                root = loadCreateWorkOfferView("create_work_offer.fxml");
+                break;
 
             default:
                 System.out.println("non existent");
@@ -338,6 +341,23 @@ public class ViewHandler {
         }
         workOfferController.reset(viewModelFactory.getWorkViewModel().getSelectedWorkOffer());
         return workOfferController.getRoot();
+    }
+
+    private Region loadCreateWorkOfferView(String fxmlFile) {
+        Region root = null;
+        if (createWorkOfferController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                createWorkOfferController = loader.getController();
+                createWorkOfferController.init(this, viewModelFactory.getCreateWorkOfferViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            createWorkOfferController.reset();
+        }
+        return createWorkOfferController.getRoot();
     }
 
 }

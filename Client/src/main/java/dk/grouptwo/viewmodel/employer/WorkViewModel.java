@@ -46,7 +46,12 @@ public class WorkViewModel {
     }
 
     public void reset() {
-
+        jobTitle.set("");
+        employer.set("");
+        salary.set(0);
+        startEndDates.set("");
+        location.set("");
+        description.set("");
     }
 
     public EmployerModel getModel() {
