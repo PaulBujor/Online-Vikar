@@ -16,6 +16,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.worker.WorkerProfileController">
    <children>
       <AnchorPane style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -94,7 +96,15 @@
             <HBox spacing="28.0">
                <children>
                   <DatePicker fx:id="workerProfileDatePicker" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Date of birth" HBox.hgrow="ALWAYS" />
-                  <ComboBox fx:id="workerProfileGender" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="workerProfileGender" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select gender" HBox.hgrow="ALWAYS" >
+                  <items>
+                     <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Male"/>
+                        <String fx:value="Female"/>
+                        <String fx:value="Other"/>
+                     </FXCollections>
+                  </items>
+                  </ComboBox>
                </children>
             </HBox>
             <HBox spacing="28.0">
@@ -106,7 +116,15 @@
             <HBox spacing="28.0">
                <children>
                   <TextField fx:id="workerProfileMobilePhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
-                  <ComboBox fx:id="workerProfileTaxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" />
+                  <ComboBox fx:id="workerProfileTaxCard" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Select tax card" HBox.hgrow="ALWAYS" >
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:value="55%"/>
+                           <String fx:value="A-tax"/>
+                           <String fx:value="B-tax"/>
+                        </FXCollections>
+                     </items>
+                  </ComboBox>
                </children>
             </HBox>
             <TextField fx:id="workerProfileLanguages" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="392.0" promptText="Languages" />

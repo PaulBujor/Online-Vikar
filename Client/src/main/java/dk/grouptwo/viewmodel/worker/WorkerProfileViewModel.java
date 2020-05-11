@@ -43,28 +43,28 @@ public class WorkerProfileViewModel {
 
     public WorkerProfileViewModel(ModelManager model) {
         this.model = model;
-        username = new SimpleStringProperty();
-        CPR = new SimpleStringProperty();
-        firstName = new SimpleStringProperty();
-        lastName = new SimpleStringProperty();
-        birthday = new SimpleObjectProperty<>();
-        gender = new SimpleStringProperty();
-        city = new SimpleStringProperty();
-        postCode = new SimpleStringProperty();
-        mobilePhone = new SimpleStringProperty();
-        taxCard = new SimpleStringProperty();
-        languages = new SimpleStringProperty();
-        description = new SimpleStringProperty();
-        email = new SimpleStringProperty();
-        currentPassword = new SimpleStringProperty();
-        newPassword = new SimpleStringProperty();
-        confirmPassword = new SimpleStringProperty();
-        this.licenseTitle = new SimpleStringProperty();
-        this.licenseCategory = new SimpleStringProperty();
-        this.licenseNumber = new SimpleStringProperty();
-        this.licenseIssueDate = new SimpleObjectProperty<LocalDate>();
-        this.licenseExpiryDate = new SimpleObjectProperty<LocalDate>();
-        error = new SimpleStringProperty();
+        username = new SimpleStringProperty("");
+        CPR = new SimpleStringProperty("");
+        firstName = new SimpleStringProperty("");
+        lastName = new SimpleStringProperty("");
+        birthday = new SimpleObjectProperty<>(null);
+        gender = new SimpleStringProperty("Gender");
+        city = new SimpleStringProperty("");
+        postCode = new SimpleStringProperty("");
+        mobilePhone = new SimpleStringProperty("");
+        taxCard = new SimpleStringProperty("");
+        languages = new SimpleStringProperty("");
+        description = new SimpleStringProperty("");
+        email = new SimpleStringProperty("");
+        currentPassword = new SimpleStringProperty("");
+        newPassword = new SimpleStringProperty("");
+        confirmPassword = new SimpleStringProperty("");
+        this.licenseTitle = new SimpleStringProperty("");
+        this.licenseCategory = new SimpleStringProperty("");
+        this.licenseNumber = new SimpleStringProperty("");
+        this.licenseIssueDate = new SimpleObjectProperty<LocalDate>(null);
+        this.licenseExpiryDate = new SimpleObjectProperty<LocalDate>(null);
+        error = new SimpleStringProperty("");
         list = createList();
 
     }
