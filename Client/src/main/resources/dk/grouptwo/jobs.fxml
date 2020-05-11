@@ -141,7 +141,7 @@
             <TableColumn fx:id="jobsEmployerColumn" prefWidth="111.0" text="Employer" />
             <TableColumn fx:id="jobsSalaryColumn" prefWidth="93.0" text="Salary" />
             <TableColumn fx:id="jobsStartColumn" prefWidth="90.0" text="Start" />
-            <TableColumn fx:id="jobsWorkTimeColumn" prefWidth="93.0" text="Work Time" />
+            <TableColumn fx:id="jobsEndColumn" prefWidth="93.0" text="Work Time" />
             <TableColumn fx:id="jobsLocationColumn" prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
