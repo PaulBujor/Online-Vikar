@@ -2,6 +2,8 @@ package dk.grouptwo.view.employer;
 
 import dk.grouptwo.view.ViewHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 
 /**
@@ -11,8 +13,10 @@ import javafx.scene.layout.Region;
  * (Profile, Work and History Controllers)
  */
 class EmployerViewTabController {
-    private ViewHandler viewHandler;
+    protected ViewHandler viewHandler;
     private Region root;
+
+    @FXML private Button username;
 
     public void init(ViewHandler viewHandler, Region root){
         this.viewHandler = viewHandler;
