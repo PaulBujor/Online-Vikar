@@ -12,6 +12,7 @@ public class ViewModelFactory {
     private WorkerProfileViewModel workerProfileViewModel;
     private WorkerWorkHistoryViewModel workerWorkHistoryViewModel;
     private SignInWorkerViewModel signInWorkerViewModel;
+    private WorkOfferViewModel workOfferViewModel;
 
     //employer view models
     private CreateEmployerAccountViewModel createEmployerAccountViewModel;
@@ -72,5 +73,9 @@ public class ViewModelFactory {
 
     public SignInEmployerViewModel getSignInEmployerViewModel() {
         return signInEmployerViewModel;
+    }
+
+    public WorkOfferViewModel getWorkOfferViewModel() {
+        return workOfferViewModel;
     }
 }

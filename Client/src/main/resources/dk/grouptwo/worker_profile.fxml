@@ -123,6 +123,9 @@
                <columns>
                   <TableColumn fx:id="workerProfileLicenseColumn" prefWidth="77.0" text="License" />
                   <TableColumn fx:id="workerProfileCategoryColumn" prefWidth="75.0" text="Category" />
+                  <TableColumn fx:id="workerProfileLicenseNumberColumn" prefWidth="75.0" text="License Number" />
+                  <TableColumn fx:id="workerProfileIssueDateColumn" prefWidth="75.0" text="Issue Date" />
+                  <TableColumn fx:id="workerProfileIssueExpiryColumn" prefWidth="75.0" text="Expiry Date" />
                </columns>
             </TableView>
             <HBox prefWidth="530.0">

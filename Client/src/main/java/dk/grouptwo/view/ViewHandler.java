@@ -27,6 +27,7 @@ public class ViewHandler {
     private WorkController workController;
     private EmployerWorkHistoryController employerWorkHistoryController;
     private SignInEmployerController signInEmployerController;
+    private WorkOfferController workOfferController;
 
     private ViewModelFactory viewModelFactory;
     private Scene currentScene;
@@ -83,6 +84,9 @@ public class ViewHandler {
                 break;
             case "employerHistory":
                 root = loadEmployerHistoryView("employer_history.fxml");
+                break;
+            case "workOffer":
+                root = loadWorkOfferView("opened_work_offer.fxml");
                 break;
 
             default:
@@ -318,6 +322,22 @@ public class ViewHandler {
             employerWorkHistoryController.reset();
         }
         return employerWorkHistoryController.getRoot();
+    }
+
+    private Region loadWorkOfferView(String fxmlFile) {
+        Region root = null;
+        if (workOfferController == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/grouptwo/" + fxmlFile));
+                root = loader.load();
+                workOfferController = loader.getController();
+                workOfferController.init(this, viewModelFactory.getWorkOfferViewModel(), root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        workOfferController.reset(viewModelFactory.getWorkViewModel().getSelectedWorkOffer());
+        return workOfferController.getRoot();
     }
 
 }

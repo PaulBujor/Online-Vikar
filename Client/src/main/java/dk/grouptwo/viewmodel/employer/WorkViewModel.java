@@ -45,6 +45,10 @@ public class WorkViewModel {
         return selectedItem;
     }
 
+    public void reset() {
+
+    }
+
     public EmployerModel getModel() {
         return model;
     }

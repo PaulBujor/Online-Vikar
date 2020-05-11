@@ -95,4 +95,8 @@ public class WorkController extends EmployerViewTabController {
 
     }
 
+    public void reset() {
+        viewModel.reset();
+    }
+
 }
