@@ -36,8 +36,6 @@ public class UpcomingWorkViewModel {
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
 
-
-
     }
 
     //TODO table
