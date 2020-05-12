@@ -73,7 +73,30 @@ public class Database implements Persistence
 
   @Override public void createWorkerAccount(Worker worker, String password)
   {
-
+    //TODO adding address
+    String SQL =
+        "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description)"
+            + "VALUES(?,?,?,?,?,?,?,?,?)";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement posted = conn.prepareStatement(SQL);
+      posted.setString(1, worker.getCPR());
+      posted.setString(2, password);
+      posted.setString(3, worker.getFirstName());
+      posted.setString(4, worker.getLastName());
+      posted.setString(5, worker.getTaxCard());
+      posted.setString(6, worker.getEmail());
+      posted.setString(7, worker.getPhone());
+      posted.setString(8, worker.getLanguages());
+      posted.setString(9, worker.getDescription());
+      posted.execute();
+      posted.close();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public ArrayList<Job> getAllJobsFromDB()
@@ -107,33 +130,37 @@ public class Database implements Persistence
   {
     ArrayList<Worker> workers = new ArrayList<>();
 
-    try {
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       Statement stmt = conn.createStatement();
       //TODO might need to change SQL
       String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM works WHERE jobid =? )";
       PreparedStatement pstmt = conn.prepareStatement(SQL);
-      pstmt.setString(1,jobID);
+      pstmt.setString(1, jobID);
       ResultSet rs = pstmt.executeQuery();
-      while (rs.next()){
+      while (rs.next())
+      {
         //TODO subject to change
-        Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null);
-        process(rs,tmpWorker);
+        Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
+            null, null);
+        process(rs, tmpWorker);
         workers.add(tmpWorker);
       }
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return workers;
   }
 
-
   @Override public int insertAddress(Address address)
   {
     if (!getAllAddress().contains(address))
     {
-      String SQL = "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
+      String SQL =
+          "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
       try
       {
         Connection conn = DatabaseConnection.getInstance().connect();
@@ -152,26 +179,28 @@ public class Database implements Persistence
       }
     }
     String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?";
-    int id =0;
-    try{ //TODO fix this mess
+    int id = 0;
+    try
+    { //TODO fix this mess
       Connection conn = DatabaseConnection.getInstance().connect();
-     Statement stmt = conn.createStatement();
-     PreparedStatement pstmt = conn.prepareStatement(SQL);
-     pstmt.setString(1,address.getCountry());
-     pstmt.setString(2,address.getCity());
-     pstmt.setString(3,address.getStreet());
-     pstmt.setString(4,address.getZip());
+      Statement stmt = conn.createStatement();
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, address.getCountry());
+      pstmt.setString(2, address.getCity());
+      pstmt.setString(3, address.getStreet());
+      pstmt.setString(4, address.getZip());
       ResultSet rs = stmt.executeQuery(SQL);
-      while (rs.next()){
-         id = rs.getInt("addressID");
+      while (rs.next())
+      {
+        id = rs.getInt("addressID");
       }
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return id;
   }
-
 
   public ArrayList<Address> getAllAddress()
   {
@@ -218,12 +247,12 @@ public class Database implements Persistence
     worker.setDescription(rs.getString("description"));
 
   }
+
   private void process(ResultSet rs, Employer employer) throws SQLException
   {
     employer.setCompanyName(rs.getString("companyname"));
     employer.setEmail(rs.getString("email"));
     employer.setPhone(rs.getString("phone"));
   }
-
 
 }
