@@ -1,5 +1,6 @@
 package dk.grouptwo.view.employer;
 
+import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.view.ViewHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,11 +17,12 @@ class EmployerViewTabController {
     protected ViewHandler viewHandler;
     private Region root;
 
-    @FXML private Button username;
+    @FXML private Button profileButton;
 
     public void init(ViewHandler viewHandler, Region root){
         this.viewHandler = viewHandler;
         this.root = root;
+        profileButton.setText(ModelManager.getEmployerName());
     }
 
     @FXML
