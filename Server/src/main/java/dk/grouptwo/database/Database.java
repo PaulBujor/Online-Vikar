@@ -1,11 +1,13 @@
 package dk.grouptwo.database;
 
+import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -107,5 +109,32 @@ public class Database implements Persistence
   @Override public ArrayList<Worker> getAllAppliedWorkers()
   {
     return null;
+  }
+
+  @Override public void insertAddress(Address address)
+  {
+    String SQL = "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
+    try{
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement posted = conn.prepareStatement(SQL);
+posted.setString(1,address.getCountry());
+posted.setString(2,address.getCity());
+posted.setString(3,address.getStreet());
+posted.setInt(4, Integer.parseInt(address.getZip()));
+posted.execute();
+posted.close();
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+  }
+
+  private void process(ResultSet rs, Address address) throws SQLException
+  {
+    address.setCountry(rs.getString("country"));
+    address.setCity(rs.getString("city"));
+    address.setStreet(rs.getString("street"));
+    address.setZip(rs.getString("zip"));
+
   }
 }
