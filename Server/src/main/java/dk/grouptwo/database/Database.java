@@ -102,9 +102,30 @@ public class Database implements Persistence
     return null;
   }
 
-  @Override public ArrayList<Worker> getAllAppliedWorkers()
+  //not sure about the argument
+  @Override public ArrayList<Worker> getAllAppliedWorkers(String jobID)
   {
-    return null;
+    ArrayList<Worker> workers = new ArrayList<>();
+
+    try {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      Statement stmt = conn.createStatement();
+      //TODO might need to change SQL
+      String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM works WHERE jobid =? )";
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1,jobID);
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next()){
+        //TODO subject to change
+        Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null);
+        process(rs,tmpWorker);
+        workers.add(tmpWorker);
+      }
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+    return workers;
   }
 
 
@@ -185,4 +206,24 @@ public class Database implements Persistence
     address.setZip(rs.getString("zip"));
 
   }
+
+  private void process(ResultSet rs, Worker worker) throws SQLException
+  {
+    worker.setFirstName(rs.getString("firstname"));
+    worker.setLastName(rs.getString("lastname"));
+    worker.setTaxCard(rs.getString("taxcard"));
+    worker.setEmail(rs.getString("email"));
+    worker.setPhone(rs.getString("phone"));
+    worker.setLanguages(rs.getString("languages"));
+    worker.setDescription(rs.getString("description"));
+
+  }
+  private void process(ResultSet rs, Employer employer) throws SQLException
+  {
+    employer.setCompanyName(rs.getString("companyname"));
+    employer.setEmail(rs.getString("email"));
+    employer.setPhone(rs.getString("phone"));
+  }
+
+
 }

@@ -34,7 +34,7 @@ public interface Persistence
   ArrayList<Job> getUpcomingJobsWorkerFromDB(Worker worker);
   ArrayList<Job> getCurrentEmployerJobs(Employer employer);
 
-  ArrayList<Worker> getAllAppliedWorkers();
+  ArrayList<Worker> getAllAppliedWorkers(String jobID);
 
   int insertAddress(Address address);
 

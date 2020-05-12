@@ -12,6 +12,7 @@ public class Worker extends Account {
     private String description;
     private ArrayList<License> licenses;
 
+
     public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description) {
         super(email, phone, address);
         this.CPR = CPR;
