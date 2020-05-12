@@ -90,6 +90,8 @@ public class CreateEmployerAccountViewModel {
         return company;
     }
 
+    public StringProperty countryProperty() { return country; }
+
     public StringProperty cityProperty() {
         return city;
     }

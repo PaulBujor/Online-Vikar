@@ -50,23 +50,28 @@
          <children>
             <HBox spacing="28.0">
                <children>
-                  <TextField fx:id="createAccountEmployerCVR" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CVR" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployerCVR" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="CVR" styleClass="text-field" HBox.hgrow="ALWAYS" />
                   <TextField fx:id="createAccountEmployerCompany" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Company" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox spacing="28.0">
                <children>
-                  <TextField fx:id="createAccountEmployerCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployerCountry" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Country" HBox.hgrow="ALWAYS" />
                   <TextField fx:id="createAccountEmployerPostCode" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Post code" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="63.0" spacing="28.0">
                <children>
-                  <TextField fx:id="createAccountEmployerAddress" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Address" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="createAccountEmployerMobilePhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployerAddress" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Street" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployerCity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="City" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <TextField fx:id="createAccountEmployerEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
+            <HBox spacing="28.0">
+               <children>
+                  <TextField fx:id="createAccountEmployerMobilePhone" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Mobile phone" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="createAccountEmployerEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Email address" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
             <HBox spacing="28.0">
                <children>
                   <TextField fx:id="createAccountEmployerPassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />

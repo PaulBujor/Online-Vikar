@@ -36,11 +36,19 @@ public class UpcomingWorkViewModel {
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
 
-
-
     }
 
     //TODO table
+
+    public ObservableList<WorkTableData> getList()
+    {
+        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+        //TODO get upcoming work from somewhere
+
+        return null;
+
+
+    }
 
     public StringProperty jobTitleProperty() {
         return jobTitle;
