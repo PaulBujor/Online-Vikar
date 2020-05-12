@@ -151,5 +151,7 @@ public class WorkerProfileController extends WorkerViewTabController {
 
     public void reset() {
 
+
+
     }
 }

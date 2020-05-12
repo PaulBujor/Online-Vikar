@@ -12,6 +12,7 @@ public class CreateEmployerAccountViewModel {
     private AccountManagement model;
     private StringProperty CVR;
     private StringProperty company;
+    private StringProperty country;
     private StringProperty city;
     private StringProperty postCode;
     private StringProperty address;
@@ -25,6 +26,7 @@ public class CreateEmployerAccountViewModel {
         this.model = model;
         CVR = new SimpleStringProperty("");
         company = new SimpleStringProperty("");
+        country = new SimpleStringProperty("");
         city = new SimpleStringProperty("");
         postCode = new SimpleStringProperty("");
         address = new SimpleStringProperty("");
@@ -56,7 +58,7 @@ public class CreateEmployerAccountViewModel {
     public boolean createEmployerAccount() {
         try {
             if (validData()) {
-                model.registerAccountEmployer(new Employer(email.get(), mobilePhone.get(), new Address(city.get(), address.get(), postCode.get()), CVR.get(), company.get()), password.get());
+                model.registerAccountEmployer(new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get()), password.get());
                 return true;
             }
             return false;
@@ -86,6 +88,8 @@ public class CreateEmployerAccountViewModel {
     public StringProperty companyProperty() {
         return company;
     }
+
+    public StringProperty countryProperty() { return country; }
 
     public StringProperty cityProperty() {
         return city;
