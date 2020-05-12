@@ -36,6 +36,10 @@ public interface Persistence
 
   ArrayList<Worker> getAllAppliedWorkers();
 
-  void insertAddress(Address address);
+  int insertAddress(Address address);
+
+  //TODO THIS IS FOR TESTING PURPOSES:
+
+ ArrayList<Address> getAllAddress();
 
 }

@@ -17,11 +17,23 @@ public class testing
     System.out.println("Testing : ");
     /*testing.insertTest(employer,"gucci");*/
     System.out.println("tested...");
-
+/*
     System.out.println(Integer.parseInt(insertAddress.getZip()));
     System.out.println(String.valueOf(insertAddress.getZip()));
     System.out.println("Testing adding address:");
     testing.insertAddressTest(insertAddress);
-    System.out.println("Testing done..");
+    System.out.println("Testing done..");*/
+/*
+    System.out.println("Testing if getting getting all addresses");
+    testing.getAllAddresses();
+    System.out.println("Test done");
+
+    if(testing.getAllAddresses().contains(insertAddress)){
+      System.out.println("true");
+    }*/
+ /*   testing.insertAddressTest(insertAddress);
+    testing.insertAddressTest(insertAddress);*/
+
+    System.out.println(testing.insertAddressTest(insertAddress));
   }
 }

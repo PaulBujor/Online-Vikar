@@ -4,6 +4,7 @@ import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EvenMoreTesting
 {
@@ -17,7 +18,10 @@ public class EvenMoreTesting
     persistence.createEmployerAccount(employer,password);
   }
 
-  public void insertAddressTest(Address address) throws SQLException{
-    persistence.insertAddress(address);
+  public int insertAddressTest(Address address) throws SQLException{
+    return persistence.insertAddress(address);
+  }
+  public ArrayList<Address> getAllAddresses() throws SQLException{
+     return persistence.getAllAddress();
   }
 }
