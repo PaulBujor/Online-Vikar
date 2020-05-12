@@ -91,6 +91,11 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         return employer;
     }
 
+    public Worker getWorker()
+    {
+        return worker;
+    }
+
     @Override
     public Job getJobById(int jobId) {
         for (Job job : jobs) {
@@ -128,7 +133,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logOutWorker() {
         worker = null;
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package dk.grouptwo.viewmodel.worker;
 
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.License;
+import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.LicenseTableData;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -23,7 +24,9 @@ public class WorkerProfileViewModel {
     private StringProperty lastName;
     private ObjectProperty<LocalDate> birthday;
     private StringProperty gender;
+    private StringProperty country;
     private StringProperty city;
+    private StringProperty street;
     private StringProperty postCode;
     private StringProperty mobilePhone;
     private StringProperty taxCard;
@@ -49,6 +52,8 @@ public class WorkerProfileViewModel {
         lastName = new SimpleStringProperty("");
         birthday = new SimpleObjectProperty<>(null);
         gender = new SimpleStringProperty("Gender");
+        country = new SimpleStringProperty("");
+        street = new SimpleStringProperty("");
         city = new SimpleStringProperty("");
         postCode = new SimpleStringProperty("");
         mobilePhone = new SimpleStringProperty("");
@@ -115,6 +120,33 @@ public class WorkerProfileViewModel {
 
     }
 
+    public void reset() {
+        Worker worker = model.getWorker();
+        CPR.set(worker.getCPR());
+        firstName.set(worker.getFirstName());
+        lastName.set(worker.getLastName());
+        birthday.set(worker.getBirthday());
+        gender.set(worker.getGender());
+        country.set(worker.getAddress().getCountry());
+        city.set(worker.getAddress().getCity());
+        postCode.set(worker.getAddress().getZip());
+        street.set(worker.getAddress().getStreet());
+        mobilePhone.set(worker.getPhone());
+        email.set(worker.getEmail());
+        taxCard.set(worker.getTaxCard());
+        languages.set(worker.getLanguages());
+        description.set(worker.getDescription());
+        currentPassword.set("");
+        newPassword.set("");
+        confirmPassword.set("");
+        licenseTitle.set("");
+        licenseNumber.set("");
+        licenseCategory.set("");
+        licenseIssueDate.set(null);
+        licenseExpiryDate.set(null);
+        error.set("");
+    }
+
 
     public StringProperty usernameProperty() {
         return username;
@@ -124,46 +156,45 @@ public class WorkerProfileViewModel {
         return CPR;
     }
 
-
     public ObservableList<LicenseTableData> getList() {
         return list;
     }
-
 
     public StringProperty firstNameProperty() {
         return firstName;
     }
 
-
     public StringProperty lastNameProperty() {
         return lastName;
     }
-
 
     public ObjectProperty<LocalDate> birthdayProperty() {
         return birthday;
     }
 
-
     public StringProperty genderProperty() {
         return gender;
     }
 
+    public StringProperty countryProperty() {
+        return country;
+    }
 
     public StringProperty cityProperty() {
         return city;
     }
 
+    public StringProperty streetProperty() {
+        return street;
+    }
 
     public StringProperty postCodeProperty() {
         return postCode;
     }
 
-
     public StringProperty mobilePhoneProperty() {
         return mobilePhone;
     }
-
 
     public StringProperty taxCardProperty() {
         return taxCard;
@@ -173,26 +204,21 @@ public class WorkerProfileViewModel {
         return languages;
     }
 
-
     public StringProperty descriptionProperty() {
         return description;
     }
-
 
     public StringProperty emailProperty() {
         return email;
     }
 
-
     public StringProperty currentPasswordProperty() {
         return currentPassword;
     }
 
-
     public StringProperty newPasswordProperty() {
         return newPassword;
     }
-
 
     public StringProperty confirmPasswordProperty() {
         return confirmPassword;

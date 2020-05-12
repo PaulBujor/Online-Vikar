@@ -99,16 +99,25 @@ public class WorkerProfileController extends WorkerViewTabController {
     @FXML
     private Button profileButton;
 
+    @FXML
+    private TextField workerProfileCountry;
+
+    @FXML
+    private TextField workerProfileStreet;
+
     public void init(ViewHandler viewHandler, WorkerProfileViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
         profileButton.setText(viewModel.usernameProperty().get());
+        workerProfileNameLabel.setText(viewModel.usernameProperty().get());
 
         workerProfileCPR.textProperty().bind(viewModel.CPRProperty());
         workerProfileFirstName.textProperty().bindBidirectional(viewModel.firstNameProperty());
         workerProfileLastName.textProperty().bindBidirectional(viewModel.lastNameProperty());
         workerProfileDatePicker.valueProperty().bindBidirectional(viewModel.birthdayProperty());
         workerProfileGender.valueProperty().bindBidirectional(viewModel.genderProperty());
+        workerProfileCountry.textProperty().bindBidirectional(viewModel.countryProperty());
+        workerProfileStreet.textProperty().bindBidirectional(viewModel.streetProperty());
         workerProfileCity.textProperty().bindBidirectional(viewModel.cityProperty());
         workerProfilePostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
         workerProfileMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
@@ -150,8 +159,6 @@ public class WorkerProfileController extends WorkerViewTabController {
     }
 
     public void reset() {
-
-
-
+        viewModel.reset();
     }
 }

@@ -73,7 +73,7 @@ public class CreateWorkerAccountViewModel {
         try {
             if (dataValid()) {
                 model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(),
-                        firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get()), password.get());
+                        firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get()), password.get());
                 return true;
             }
             return false;
