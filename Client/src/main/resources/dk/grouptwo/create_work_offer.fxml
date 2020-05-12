@@ -19,7 +19,7 @@
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToProfile" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="profileButton" alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToProfile" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
@@ -64,6 +64,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
+      <Label fx:id="error" layoutX="135.0" layoutY="63.0" text="error" textFill="RED" />
       <VBox layoutX="135.0" layoutY="101.0" prefWidth="476.0" spacing="23.0" AnchorPane.leftAnchor="135.0">
          <children>
             <TextField fx:id="createWorkOfferTitle" prefHeight="30.0" prefWidth="427.0" promptText="Title" />
@@ -132,6 +133,5 @@
             </HBox>
          </children>
       </VBox>
-      <Label fx:id="error" layoutX="135.0" layoutY="63.0" text="error" textFill="RED" />
    </children>
 </AnchorPane>

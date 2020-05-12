@@ -12,8 +12,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class ModelManager implements AccountManagement, EmployerModel, WorkerModel {
-
-
     private ArrayList<Job> jobs;
     private ArrayList<Job> workHistory;
     private Worker worker;
@@ -40,6 +38,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
+        setWorkerName(worker.getFirstName());
     }
 
     @Override
@@ -63,6 +62,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
+        setEmployerName(employer.getCompanyName());
     }
 
     @Override
@@ -194,4 +194,24 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     //TODO a method getUpcomingWork
 
+
+    //static for username button
+    private static String employerName;
+    private static String workerName;
+
+    public static String getEmployerName() {
+        return employerName;
+    }
+
+    public static String getWorkerName() {
+        return workerName;
+    }
+
+    public static void setEmployerName(String employerName) {
+        ModelManager.employerName = employerName;
+    }
+
+    public static void setWorkerName(String workerName) {
+        ModelManager.workerName = workerName;
+    }
 }

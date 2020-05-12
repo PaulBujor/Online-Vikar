@@ -5,10 +5,7 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Database implements Persistence
@@ -52,10 +49,9 @@ public class Database implements Persistence
       String password) throws SQLException
   {
     //TODO add adress to the mix
-    String SQL =
-        "INSERT INTO employer(cvr,password,companyname,email,phone)"
+    String SQL = "INSERT INTO employer(cvr,password,companyname,email,phone)"
 
-            + "VALUES(?,?,?,?,?)";
+        + "VALUES(?,?,?,?,?)";
     try
     {
       Connection conn = DatabaseConnection.getInstance().connect();
@@ -65,7 +61,7 @@ public class Database implements Persistence
       posted.setString(3, employer.getCompanyName());
       posted.setString(4, employer.getEmail());
       posted.setString(5, employer.getPhone());
-    /*  posted.setString(6, "testing, should refer to actual address");*/
+      /*  posted.setString(6, "testing, should refer to actual address");*/
       posted.execute();
       posted.close();
     }
@@ -111,22 +107,74 @@ public class Database implements Persistence
     return null;
   }
 
-  @Override public void insertAddress(Address address)
+
+  @Override public int insertAddress(Address address)
   {
-    String SQL = "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
-    try{
+    if (!getAllAddress().contains(address))
+    {
+      String SQL = "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
+      try
+      {
+        Connection conn = DatabaseConnection.getInstance().connect();
+        PreparedStatement posted = conn.prepareStatement(SQL);
+        posted.setString(1, address.getCountry());
+        posted.setString(2, address.getCity());
+        posted.setString(3, address.getStreet());
+        posted.setInt(4, Integer.parseInt(address.getZip()));
+        posted.execute();
+        posted.close();
+      }
+      catch (SQLException e)
+      {
+
+        e.printStackTrace();
+      }
+    }
+    String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?";
+    int id =0;
+    try{ //TODO fix this mess
       Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement posted = conn.prepareStatement(SQL);
-posted.setString(1,address.getCountry());
-posted.setString(2,address.getCity());
-posted.setString(3,address.getStreet());
-posted.setInt(4, Integer.parseInt(address.getZip()));
-posted.execute();
-posted.close();
+     Statement stmt = conn.createStatement();
+     PreparedStatement pstmt = conn.prepareStatement(SQL);
+     pstmt.setString(1,address.getCountry());
+     pstmt.setString(2,address.getCity());
+     pstmt.setString(3,address.getStreet());
+     pstmt.setString(4,address.getZip());
+      ResultSet rs = stmt.executeQuery(SQL);
+      while (rs.next()){
+         id = rs.getInt("addressID");
+      }
     }
     catch (SQLException e){
       e.printStackTrace();
     }
+    return id;
+  }
+
+
+  public ArrayList<Address> getAllAddress()
+  {
+    ArrayList<Address> addresses = new ArrayList<>();
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      Statement stmt = conn.createStatement();
+      String SQL = "Select * FROM address";
+      ResultSet rs = stmt.executeQuery(SQL);
+
+      while (rs.next())
+      {
+        Address tmpAddress = new Address();
+        process(rs, tmpAddress);
+        addresses.add(tmpAddress);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    System.out.println(addresses.toString());
+    return addresses;
   }
 
   private void process(ResultSet rs, Address address) throws SQLException

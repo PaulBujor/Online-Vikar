@@ -21,6 +21,5 @@ public interface EmployerModel {
     public Employer getEmployer();
 
 
-
-
+    ArrayList<Job> getJobHistory();
 }

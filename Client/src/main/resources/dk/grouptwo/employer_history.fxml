@@ -92,10 +92,10 @@
          <columns>
             <TableColumn fx:id="employerHistoryJobTitleColumn" prefWidth="77.0" text="Job Title" />
             <TableColumn fx:id="employerHistoryStatusColumn" prefWidth="88.0" text="Status" />
-            <TableColumn fx:id="employerHistoryNoEmployesColumn" prefWidth="98.0" text="No. employees" />
+            <TableColumn fx:id="employerHistoryNoEmployeesColumn" prefWidth="98.0" text="No. employees" />
             <TableColumn fx:id="employerHistorySalaryColumn" prefWidth="77.60003662109375" text="Salary" />
             <TableColumn fx:id="employerHistoryStartColumn" prefWidth="106.39996337890625" text="Start" />
-            <TableColumn fx:id="employerHistoryWorkTimeColumn" prefWidth="93.0" text="Work Time" />
+            <TableColumn fx:id="employerHistoryEndColumn" prefWidth="93.0" text="Work Time" />
             <TableColumn fx:id="employerHistoryLocationColumn" prefWidth="105.0" text="Location" />
          </columns>
       </TableView>
@@ -108,7 +108,7 @@
          <children>
             <VBox alignment="CENTER" layoutY="52.0" prefHeight="713.0" prefWidth="120.0" spacing="40.0" style="-fx-background-color: #00affe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToProfile" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="profileButton" alignment="CENTER" contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#switchToProfile" opacity="0.9" prefHeight="111.0" prefWidth="137.0" stylesheets="@css/style.css" text="username" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

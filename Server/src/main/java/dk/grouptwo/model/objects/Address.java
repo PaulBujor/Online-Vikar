@@ -8,6 +8,8 @@ public class Address implements Serializable {
     private String street;
     private String zip;
 
+    public Address(){}
+
     public Address(String country, String city, String street, String zip) {
         this.country = country;
         this.city = city;
@@ -57,5 +59,17 @@ public class Address implements Serializable {
 
     public void setZip(String zip) {
         this.zip = zip;
+    }
+
+    public String toString(){
+return country +" "+city+" "+ street+" "+zip;
+    }
+
+    public boolean equals(Object obj){
+        if(!(obj instanceof Address)){
+            return false;
+        }
+        Address other = (Address) obj;
+        return other.country.equals(country) && other.city.equals(city) && other.street.equals(street) && other.zip.equals(zip);
     }
 }
