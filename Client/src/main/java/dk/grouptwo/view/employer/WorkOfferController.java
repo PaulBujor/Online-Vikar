@@ -40,7 +40,22 @@ public class WorkOfferController extends EmployerViewTabController {
     private DatePicker workOfferEndDate;
 
     @FXML
-    private TextField workOfferLocation;
+    private TextField workersNeeded;
+
+    @FXML
+    private TextField country;
+
+    @FXML
+    private TextField city;
+
+    @FXML
+    private TextField postCode;
+
+    @FXML
+    private TextField street;
+
+    @FXML
+    private TextArea error;
 
     @FXML
     private TextArea workOfferWorkDescription;
@@ -59,8 +74,13 @@ public class WorkOfferController extends EmployerViewTabController {
         Bindings.bindBidirectional(workOfferEndHour.textProperty(), viewModel.endHourProperty(), new StringIntegerConverter(0));
         Bindings.bindBidirectional(workOfferEndMinutes.textProperty(), viewModel.endMinutesProperty(), new StringIntegerConverter(0));
         workOfferEndDate.valueProperty().bindBidirectional(viewModel.endDateProperty());
-        workOfferLocation.textProperty().bindBidirectional(viewModel.locationProperty());
-        workOfferWorkDescription.textProperty().bindBidirectional(viewModel.locationProperty());
+        country.textProperty().bindBidirectional(viewModel.countryProperty());
+        city.textProperty().bindBidirectional(viewModel.cityProperty());
+        postCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
+        street.textProperty().bindBidirectional(viewModel.streetProperty());
+        workOfferWorkDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
+        Bindings.bindBidirectional(workersNeeded.textProperty(), viewModel.workersNeededProperty(), new StringIntegerConverter(0));
+        error.textProperty().bind(viewModel.errorProperty());
         //todo above
     }
 

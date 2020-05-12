@@ -1,12 +1,16 @@
 package dk.grouptwo.viewmodel.employer;
 
-import dk.grouptwo.model.WorkerModel;
+import dk.grouptwo.model.EmployerModel;
+import dk.grouptwo.model.objects.Address;
+import dk.grouptwo.model.objects.Job;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class CreateWorkOfferViewModel {
-    WorkerModel model;
+    private EmployerModel model;
     private StringProperty title;
     private DoubleProperty salary;
     private IntegerProperty startHour;
@@ -15,10 +19,15 @@ public class CreateWorkOfferViewModel {
     private IntegerProperty endHour;
     private IntegerProperty endMinutes;
     private ObjectProperty<LocalDate> endDate;
-    private StringProperty location;
+    private StringProperty country;
+    private StringProperty postCode;
+    private StringProperty city;
+    private StringProperty street;
     private StringProperty description;
+    private IntegerProperty workersNeeded;
+    private StringProperty error;
 
-    public CreateWorkOfferViewModel(WorkerModel model) {
+    public CreateWorkOfferViewModel(EmployerModel model) {
         this.model = model;
         title = new SimpleStringProperty("");
         salary = new SimpleDoubleProperty(0);
@@ -28,12 +37,32 @@ public class CreateWorkOfferViewModel {
         endHour = new SimpleIntegerProperty(0);
         endMinutes = new SimpleIntegerProperty(0);
         endDate = new SimpleObjectProperty<>(null);
-        location = new SimpleStringProperty("");
+        country = new SimpleStringProperty("");
+        city = new SimpleStringProperty("");
+        street = new SimpleStringProperty("");
+        postCode = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
+        workersNeeded = new SimpleIntegerProperty(0);
+        error = new SimpleStringProperty("");
     }
 
-    public void create() {
-        //todo
+    public boolean validData() {
+        //todo validate data
+        return true;
+    }
+
+    public boolean create() {
+        try {
+            if (validData()) {
+                model.createWorkOffer(new Job(title.get(), description.get(), salary.get(), workersNeeded.get(), LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())),
+                        LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())), new Address(country.get(), city.get(), street.get(), postCode.get()), "Pending", model.getEmployer()));
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            error.set(e.getMessage());
+            return false;
+        }
     }
 
     public void reset() {
@@ -45,8 +74,12 @@ public class CreateWorkOfferViewModel {
         endHour.set(0);
         endMinutes.set(0);
         endDate.set(null);
-        location.set("");
+        country.set("");
+        city.set("");
+        postCode.set("");
+        street.set("");
         description.set("");
+        error.set("");
     }
 
     public StringProperty titleProperty() {
@@ -81,11 +114,31 @@ public class CreateWorkOfferViewModel {
         return endDate;
     }
 
-    public StringProperty locationProperty() {
-        return location;
-    }
-
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    public StringProperty countryProperty() {
+        return country;
+    }
+
+    public StringProperty postCodeProperty() {
+        return postCode;
+    }
+
+    public StringProperty cityProperty() {
+        return city;
+    }
+
+    public StringProperty streetProperty() {
+        return street;
+    }
+
+    public IntegerProperty workersNeededProperty() {
+        return workersNeeded;
+    }
+
+    public StringProperty errorProperty() {
+        return error;
     }
 }

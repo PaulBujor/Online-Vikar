@@ -67,6 +67,7 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
 
+        employerHistoryDetailsTitle
     }
 
     @FXML

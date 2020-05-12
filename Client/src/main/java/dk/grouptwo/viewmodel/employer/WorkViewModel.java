@@ -19,6 +19,7 @@ public class WorkViewModel {
     private StringProperty location;
     private StringProperty description;
     private WorkTableData selectedItem;
+    private StringProperty error;
 
     public WorkViewModel(EmployerModel model) {
         this.model = model;
@@ -28,6 +29,7 @@ public class WorkViewModel {
         startEndDates = new SimpleStringProperty("");
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
+        error = new SimpleStringProperty("");
         list = FXCollections.observableArrayList();
     }
 
@@ -52,6 +54,7 @@ public class WorkViewModel {
         startEndDates.set("");
         location.set("");
         description.set("");
+
     }
 
     public EmployerModel getModel() {

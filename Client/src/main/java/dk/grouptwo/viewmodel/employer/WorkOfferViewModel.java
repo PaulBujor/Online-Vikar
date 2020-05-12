@@ -16,8 +16,13 @@ public class WorkOfferViewModel {
     private IntegerProperty endHour;
     private IntegerProperty endMinutes;
     private ObjectProperty<LocalDate> endDate;
-    private StringProperty location;
+    private StringProperty country;
+    private StringProperty postCode;
+    private StringProperty city;
+    private StringProperty street;
     private StringProperty description;
+    private IntegerProperty workersNeeded;
+    private StringProperty error;
 
     public WorkOfferViewModel(WorkerModel model) {
         this.model = model;
@@ -29,8 +34,13 @@ public class WorkOfferViewModel {
         endHour = new SimpleIntegerProperty(0);
         endMinutes = new SimpleIntegerProperty(0);
         endDate = new SimpleObjectProperty<>(null);
-        location = new SimpleStringProperty("");
+        country = new SimpleStringProperty("");
+        city = new SimpleStringProperty("");
+        street = new SimpleStringProperty("");
+        postCode = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
+        workersNeeded = new SimpleIntegerProperty(0);
+        error = new SimpleStringProperty("");
     }
 
     public void save() {
@@ -46,8 +56,13 @@ public class WorkOfferViewModel {
         endHour.set(data.endTimeProperty().get().getHour());
         endMinutes.set(data.endTimeProperty().get().getMinute());
         endDate.set(data.endTimeProperty().get().toLocalDate());
-        location.set(data.locationProperty().get());
+        country.set(data.getAddress().getCountry());
+        city.set(data.getAddress().getCity());
+        postCode.set(data.getAddress().getZip());
+        street.set(data.getAddress().getStreet());
         description.set(data.getDescription());
+        workersNeeded.set(data.numberOfWorkersProperty().get());
+        error.set("");
     }
 
     public StringProperty titleProperty() {
@@ -82,11 +97,31 @@ public class WorkOfferViewModel {
         return endDate;
     }
 
-    public StringProperty locationProperty() {
-        return location;
-    }
-
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    public StringProperty countryProperty() {
+        return country;
+    }
+
+    public StringProperty postCodeProperty() {
+        return postCode;
+    }
+
+    public StringProperty cityProperty() {
+        return city;
+    }
+
+    public StringProperty streetProperty() {
+        return street;
+    }
+
+    public IntegerProperty workersNeededProperty() {
+        return workersNeeded;
+    }
+
+    public StringProperty errorProperty() {
+        return error;
     }
 }

@@ -2,12 +2,11 @@ package dk.grouptwo.networking;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Worker;
-import dk.grouptwo.utility.Encryptor;
 
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 
-public class LocalClientTest extends Client {
+public class LocalConnectionTest extends Connection {
     @Override
     public Employer loginEmployer(String CVR, String password)
             throws RemoteException, NoSuchAlgorithmException {

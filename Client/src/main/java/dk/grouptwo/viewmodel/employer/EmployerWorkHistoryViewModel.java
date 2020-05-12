@@ -1,5 +1,6 @@
 package dk.grouptwo.viewmodel.employer;
 
+import dk.grouptwo.model.EmployerModel;
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
@@ -12,12 +13,11 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class EmployerWorkHistoryViewModel {
-
-    private ModelManager model;
+    private EmployerModel model;
     private ObservableList<WorkTableData> listHistory;
     private ObservableList<WorkersTableData> listWorkers;
 
-    public EmployerWorkHistoryViewModel (ModelManager model) {
+    public EmployerWorkHistoryViewModel (EmployerModel model) {
         this.model = model;
         listHistory = createListHistory();
         listWorkers = createListWorkers();

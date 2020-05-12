@@ -304,9 +304,8 @@ public class ViewHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            employerProfileController.reset();
         }
+        employerProfileController.reset();
         return employerProfileController.getRoot();
     }
 

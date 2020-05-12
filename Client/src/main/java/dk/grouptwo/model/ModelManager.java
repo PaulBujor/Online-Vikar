@@ -1,19 +1,15 @@
 package dk.grouptwo.model;
 
 import dk.grouptwo.model.objects.*;
-import dk.grouptwo.networking.Client;
-import dk.grouptwo.networking.LocalClientTest;
-import dk.grouptwo.networking.remote.RemoteClient;
-import javafx.beans.property.DoubleProperty;
+import dk.grouptwo.networking.Connection;
+import dk.grouptwo.networking.LocalConnectionTest;
 
 import java.rmi.RemoteException;
 import java.security.InvalidParameterException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 public class ModelManager implements AccountManagement, EmployerModel, WorkerModel {
 
@@ -22,12 +18,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private ArrayList<Job> workHistory;
     private Worker worker;
     private Employer employer;
-    private Client client = new LocalClientTest();
+    private Connection connection = new LocalConnectionTest();
 
     @Override
     public void registerAccountWorker(Worker worker, String password) throws Exception {
         try {
-            client.createWorkerAccount(worker, password);
+            connection.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
@@ -38,7 +34,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInWorker(String CPR, String password) throws Exception {
         try {
-            worker = client.loginWorker(CPR, password);
+            worker = connection.loginWorker(CPR, password);
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -49,7 +45,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void registerAccountEmployer(Employer employer, String password) throws Exception {
         try {
-            client.createEmployerAccount(employer, password);
+            connection.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
@@ -61,7 +57,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInEmployer(String CVR, String password) throws Exception {
         try {
-            employer = client.loginEmployer(CVR, password);
+            employer = connection.loginEmployer(CVR, password);
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -70,18 +66,60 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void editEmployer(Employer employer, String password) {
+    public void editEmployer(Employer employer, String password) throws Exception {
         try {
-            client.editEmployer(employer, password);
+            connection.editEmployer(employer, password);
         } catch (RemoteException e) {
             throw new IllegalArgumentException("Error saving edited data.");
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
     }
 
     @Override
+    public void editEmployer(Employer employer, String password, String newPassword) throws Exception {
+        try {
+            connection.editEmployer(employer, password, newPassword);
+        } catch (RemoteException e) {
+            throw new IllegalArgumentException("Error saving edited data.");
+        } catch (NoSuchAlgorithmException e) {
+            throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
+        }
+    }
+
+    public Employer getEmployer() {
+        return employer;
+    }
+
+    @Override
+    public Job getJobById(int jobId) {
+        for (Job job : jobs) {
+            if (job.getJobID() == jobId)
+                return job;
+        }
+        return null;
+    }
+
+    @Override
+    public double getHoursWorkedThisMonth() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        int minutes = 0;
+
+        for (Job job : workHistory) {
+            if (job.getShiftStart().getMonth().equals(currentDate.getMonth())) {
+                minutes += ChronoUnit.MINUTES.between(job.getShiftEnd(), job.getShiftStart());
+            }
+        }
+        return (double) minutes / 60;
+    }
+
+    //todo
+
+
+    @Override
     public void editWorker(Worker worker, String password) {
         try {
-            worker = client.editWorker(worker, password);
+            worker = connection.editWorker(worker, password);
         } catch (RemoteException e) {
             throw new InvalidParameterException("Error saving edited data.");
         }
@@ -108,7 +146,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void createWorkOffer(Job job) {
         jobs.add(job);
         try {
-            client.addJob(job);
+            connection.addJob(job);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -118,7 +156,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void cancelWorkOffer(Job job) {
         jobs.remove(job);
         try {
-            client.removeJob(job);
+            connection.removeJob(job);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -148,29 +186,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public ArrayList<License> getLicenses() {
         return worker.getLicenses();
-    }
-
-    @Override
-    public Job getJobById(int jobId) {
-        for (Job job : jobs) {
-            if (job.getJobID() == jobId)
-                return job;
-        }
-        return null;
-    }
-
-    @Override
-    public double getHoursWorkedThisMonth() {
-        LocalDateTime currentDate = LocalDateTime.now();
-        int minutes = 0;
-
-        for (Job job : workHistory) {
-            if (job.getShiftStart().getMonth().equals(currentDate.getMonth())) {
-                minutes += ChronoUnit.MINUTES.between(job.getShiftEnd(), job.getShiftStart());
-            }
-        }
-        return (double) minutes/60;
-
     }
 
     //TODO a method getUpcomingWork

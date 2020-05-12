@@ -49,11 +49,28 @@ public class EmployerProfileController extends EmployerViewTabController {
     public void init(ViewHandler viewHandler, EmployerProfileViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
+
+        employerProfileCVR.textProperty().bindBidirectional(viewModel.CVRProperty());
+        employerProfileCompany.textProperty().bindBidirectional(viewModel.companyProperty());
+        employerProfileCompanyNameLabel.textProperty().bind(viewModel.companyProperty());
+        employerProfileCity.textProperty().bindBidirectional(viewModel.cityProperty());
+        employerProfilePostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
+        employerProfileAddress.textProperty().bindBidirectional(viewModel.addressProperty());
+        employerProfileMobilePhone.textProperty().bindBidirectional(viewModel.mobilePhoneProperty());
+        employerProfileEmail.textProperty().bindBidirectional(viewModel.emailProperty());
+        employerProfileCurrentPassword.textProperty().bindBidirectional(viewModel.currentPasswordProperty());
+        employerProfileNewPassword.textProperty().bindBidirectional(viewModel.newPasswordProperty());
+        employerProfileConfirmPassword.textProperty().bindBidirectional(viewModel.confirmPasswordProperty());
+        employerProfileErrorLabel.textProperty().bindBidirectional(viewModel.errorProperty());
     }
 
     @FXML
     void employerProfileSaveButtonPressed() {
         viewModel.saveChangesEmployer();
+    }
+
+    public void reset() {
+        viewModel.reset();
     }
 
 

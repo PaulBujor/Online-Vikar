@@ -16,13 +16,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 //maybe singleton
-public class Client implements RemoteClient {
+public class Connection implements RemoteClient {
 
     private RemoteServer server;
     private boolean connected;
 
 
-    public Client() {
+    public Connection() {
         connected = false;
     }
 
@@ -42,6 +42,42 @@ public class Client implements RemoteClient {
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Employer loginEmployer(String CVR, String password)
+            throws RemoteException, NoSuchAlgorithmException {
+        return server.loginEmployer(CVR, Encryptor.encrypt(password)));
+    }
+
+    @Override
+    public Worker loginWorker(String CPR, String password)
+            throws RemoteException, NoSuchAlgorithmException {
+        return server.loginWorker(CPR, Encryptor.encrypt(password)));
+    }
+
+    @Override
+    public void createEmployerAccount(Employer employer,
+                                      String password) throws RemoteException, NoSuchAlgorithmException {
+        server.createEmployerAccount(employer, Encryptor.encrypt(password)));
+    }
+
+    @Override
+    public void createWorkerAccount(Worker worker, String password)
+            throws RemoteException, NoSuchAlgorithmException {
+        server.createWorkerAccount(worker, Encryptor.encrypt(password)));
+    }
+
+    @Override
+    public Employer editEmployer(Employer employer, String password)
+            throws RemoteException, NoSuchAlgorithmException {
+        return server.editEmployer(employer, Encryptor.encrypt(password));
+    }
+
+    @Override
+    public Employer editEmployer(Employer employer, String password, String newPassword)
+            throws RemoteException, NoSuchAlgorithmException {
+        return server.editEmployer(employer, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
     }
 
     public boolean isConnected() {
@@ -70,30 +106,6 @@ public class Client implements RemoteClient {
     }
 
     @Override
-    public Employer loginEmployer(String CVR, String password)
-            throws RemoteException, NoSuchAlgorithmException {
-        return server.loginEmployer(CVR, Encryptor.toHexString(Encryptor.getSHA(password)));
-    }
-
-    @Override
-    public Worker loginWorker(String CPR, String password)
-            throws RemoteException, NoSuchAlgorithmException {
-        return server.loginWorker(CPR, Encryptor.toHexString(Encryptor.getSHA(password)));
-    }
-
-    @Override
-    public void createEmployerAccount(Employer employer,
-                                      String password) throws RemoteException, NoSuchAlgorithmException {
-        server.createEmployerAccount(employer, Encryptor.toHexString(Encryptor.getSHA(password)), this);
-    }
-
-    @Override
-    public void createWorkerAccount(Worker worker, String password)
-            throws RemoteException, NoSuchAlgorithmException {
-        server.createWorkerAccount(worker, Encryptor.toHexString(Encryptor.getSHA(password)), this);
-    }
-
-    @Override
     public ArrayList<Job> getAllJobs() throws RemoteException {
         return server.getAllJobsFromDB();
     }
@@ -115,11 +127,6 @@ public class Client implements RemoteClient {
         return server.getUpcomingJobsWorkerFromDB();
     }
 
-    @Override
-    public Employer editEmployer(Employer employer, String password)
-            throws RemoteException {
-        return server.editEmployer(employer, password);
-    }
 
     @Override
     public Worker editWorker(Worker worker, String password)

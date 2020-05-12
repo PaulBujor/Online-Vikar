@@ -16,7 +16,9 @@ public interface AccountManagement {
 
     public void logInEmployer(String CVR, String password) throws Exception;
 
-    public void editEmployer(Employer employer, String password);
+    public void editEmployer(Employer employer, String password) throws Exception;
+
+    public void editEmployer(Employer employer, String password, String newPassword) throws Exception;
 
     public void editWorker(Worker worker, String password);
 
@@ -25,5 +27,7 @@ public interface AccountManagement {
     public void logOutEmployer();
 
     public ArrayList<Job> getJobHistory();
+
+    public Employer getEmployer();
 
 }

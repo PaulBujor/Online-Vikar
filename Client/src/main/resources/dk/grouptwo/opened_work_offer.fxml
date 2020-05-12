@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -63,6 +64,7 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
+      <Label fx:id="error" layoutX="135.0" layoutY="63.0" text="Label" textFill="RED" />
       <VBox layoutX="135.0" layoutY="101.0" prefWidth="476.0" spacing="23.0" AnchorPane.leftAnchor="135.0">
          <children>
             <TextField fx:id="workOfferTitle" prefHeight="30.0" prefWidth="427.0" promptText="Title" />
@@ -74,6 +76,12 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="workersNeeded" prefHeight="25.0" prefWidth="34.0">
+                     <HBox.margin>
+                        <Insets left="45.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label text="workers needed" />
                </children>
             </HBox>
             <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="63.0" prefWidth="271.0" spacing="5.0">
@@ -89,7 +97,30 @@
                   <DatePicker fx:id="workOfferEndDate" layoutX="104.0" layoutY="10.0" prefHeight="30.0" prefWidth="157.0" promptText="Select date" />
                </children>
             </HBox>
-            <TextField fx:id="workOfferLocation" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="427.0" promptText="Location" />
+            <HBox>
+               <children>
+                  <TextField fx:id="country" prefHeight="30.0" prefWidth="110.0" promptText="Country">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="city" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="110.0" promptText="City">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="postCode" layoutX="101.0" layoutY="10.0" prefHeight="30.0" prefWidth="50.0" promptText="ZIP">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <TextField fx:id="street" layoutX="192.0" layoutY="10.0" prefHeight="30.0" prefWidth="175.0" promptText="Street">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
             <TextArea fx:id="workOfferWorkDescription" prefHeight="106.0" prefWidth="427.0" promptText="Work description" />
             <HBox alignment="CENTER_RIGHT">
                <children>

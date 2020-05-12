@@ -1,5 +1,6 @@
 package dk.grouptwo.utility;
 
+import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Job;
 import javafx.beans.property.*;
 
@@ -17,7 +18,7 @@ public class WorkTableData {
     private DoubleProperty salary;
     private ObjectProperty<LocalDateTime> startTime;
     private ObjectProperty<LocalDateTime> endTime;
-    private StringProperty location;
+    private Address address;
     private String description;
 
 
@@ -29,7 +30,7 @@ public class WorkTableData {
         salary = new SimpleDoubleProperty(job.getSalary());
         startTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftStart());
         endTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftEnd());
-        location = new SimpleStringProperty(job.getLocation());
+        address = job.getLocation();
         jobId = job.getJobID();
         description = job.getDescription();
     }
@@ -72,7 +73,11 @@ public class WorkTableData {
     }
 
     public StringProperty locationProperty() {
-        return location;
+        return new SimpleStringProperty(address.toString());
+    }
+
+    public Address getAddress() {
+        return address;
     }
 
     public int getJobId() {

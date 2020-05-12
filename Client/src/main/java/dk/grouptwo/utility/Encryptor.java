@@ -34,4 +34,8 @@ public class Encryptor {
 
         return hexString.toString();
     }
+
+    public static String encrypt(String password) throws NoSuchAlgorithmException {
+        return toHexString(getSHA(password));
+    }
 }

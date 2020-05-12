@@ -39,10 +39,26 @@ public class CreateWorkOfferController extends EmployerViewTabController {
     private DatePicker createWorkOfferEndDate;
 
     @FXML
-    private TextField createWorkOfferLocation;
+    private TextField workersNeeded;
+
+    @FXML
+    private TextField country;
+
+    @FXML
+    private TextField city;
+
+    @FXML
+    private TextField postCode;
+
+    @FXML
+    private TextField street;
+
+    @FXML
+    private TextArea error;
 
     @FXML
     private TextArea createWorkOfferWorkDescription;
+
 
     public void init(ViewHandler viewHandler, CreateWorkOfferViewModel viewModel, Region root) {
         super.init(viewHandler, root);
@@ -56,12 +72,19 @@ public class CreateWorkOfferController extends EmployerViewTabController {
         Bindings.bindBidirectional(createWorkOfferEndHour.textProperty(), viewModel.endHourProperty(), new StringIntegerConverter(0));
         Bindings.bindBidirectional(createWorkOfferEndMinutes.textProperty(), viewModel.endMinutesProperty(), new StringIntegerConverter(0));
         createWorkOfferEndDate.valueProperty().bindBidirectional(viewModel.endDateProperty());
-        createWorkOfferLocation.textProperty().bindBidirectional(viewModel.locationProperty());
-        createWorkOfferWorkDescription.textProperty().bindBidirectional(viewModel.locationProperty());
+        country.textProperty().bindBidirectional(viewModel.countryProperty());
+        city.textProperty().bindBidirectional(viewModel.cityProperty());
+        postCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
+        street.textProperty().bindBidirectional(viewModel.streetProperty());
+        createWorkOfferWorkDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
+        Bindings.bindBidirectional(workersNeeded.textProperty(), viewModel.workersNeededProperty(), new StringIntegerConverter(0));
+        error.textProperty().bind(viewModel.errorProperty());
     }
 
-    @FXML private void createWorkOffer() {
-        viewModel.create();
+    @FXML
+    private void createWorkOffer() {
+        if (viewModel.create())
+            viewHandler.openView("employerWork");
     }
 
     public void reset() {
