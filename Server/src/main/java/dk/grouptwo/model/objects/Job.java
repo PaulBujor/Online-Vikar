@@ -8,27 +8,35 @@ public class Job implements Serializable {
     private int jobID;
     private String jobTitle;
     private String description;
-    private String category;
     private double salary;
     private int workersNeeded;
     private LocalDateTime shiftStart;
     private LocalDateTime shiftEnd;
     private String status;
+    private Address location;
     private Employer employer;
-    private ArrayList<Worker> workers;
 
-    public Job(int jobID, String jobTitle, String description, String category, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Employer employer) {
-        this.jobID = jobID;
+
+    private ArrayList<Worker> selectedWorkers;
+    private ArrayList<Worker> applicants;
+
+    public Job(String jobTitle, String description, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, Address location, String status, Employer employer) {
         this.jobTitle = jobTitle;
         this.description = description;
-        this.category = category;
         this.salary = salary;
         this.workersNeeded = workersNeeded;
         this.shiftStart = shiftStart;
         this.shiftEnd = shiftEnd;
         this.status = status;
+        this.location = location;
         this.employer = employer;
-        workers = new ArrayList<Worker>();
+        selectedWorkers = new ArrayList<Worker>();
+        applicants = new ArrayList<Worker>();
+    }
+
+    public Job(int jobID, String jobTitle, String description, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Address location, Employer employer) {
+        this(jobTitle, description, salary, workersNeeded, shiftStart, shiftEnd, location, status, employer);
+        this.jobID = jobID;
     }
 
     public int getJobID() {
@@ -53,14 +61,6 @@ public class Job implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public double getSalary() {
@@ -111,15 +111,35 @@ public class Job implements Serializable {
         this.employer = employer;
     }
 
-    public ArrayList<Worker> getWorkers() {
-        return workers;
+    public ArrayList<Worker> getSelectedWorkers() {
+        return selectedWorkers;
     }
 
     public void addWorker(Worker worker) {
-        workers.add(worker);
+        selectedWorkers.add(worker);
     }
 
     public void removeWorker(Worker worker) {
-        workers.remove(worker);
+        selectedWorkers.remove(worker);
+    }
+
+    public Address getLocation() {
+        return location;
+    }
+
+    public void setLocation(Address location) {
+        this.location = location;
+    }
+
+    public ArrayList<Worker> getApplicants() {
+        return applicants;
+    }
+
+    public void setApplicants(ArrayList<Worker> applicants) {
+        this.applicants = applicants;
+    }
+
+    public void setSelectedWorkers(ArrayList<Worker> selectedWorkers) {
+        this.selectedWorkers = selectedWorkers;
     }
 }
