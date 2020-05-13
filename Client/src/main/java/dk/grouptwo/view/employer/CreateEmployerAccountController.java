@@ -21,6 +21,8 @@ public class CreateEmployerAccountController {
     @FXML
     private TextField createAccountEmployerCompany;
     @FXML
+    private Label createAccountEmployerCountry;
+    @FXML
     private TextField createAccountEmployerCity;
     @FXML
     private TextField createAccountEmployerPostCode;
@@ -44,6 +46,7 @@ public class CreateEmployerAccountController {
 
         createAccountEmployerCVR.textProperty().bindBidirectional(viewModel.CVRProperty());
         createAccountEmployerCompany.textProperty().bindBidirectional(viewModel.companyProperty());
+        createAccountEmployerCountry.textProperty().bindBidirectional(viewModel.countryProperty());
         createAccountEmployerCity.textProperty().bindBidirectional(viewModel.cityProperty());
         createAccountEmployerPostCode.textProperty().bindBidirectional(viewModel.postCodeProperty());
         createAccountEmployerAddress.textProperty().bindBidirectional(viewModel.addressProperty());
@@ -61,7 +64,7 @@ public class CreateEmployerAccountController {
 
     @FXML
     public void createAccountEmployerNextButtonPressed(ActionEvent actionEvent) {
-        if(viewModel.createEmployerAccount())
+        if (viewModel.createEmployerAccount())
             viewHandler.openView("signInEmployer");
     }
 

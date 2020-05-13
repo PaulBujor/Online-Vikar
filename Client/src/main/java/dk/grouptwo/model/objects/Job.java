@@ -31,6 +31,7 @@ public class Job implements Serializable {
         this.location = location;
         this.employer = employer;
         selectedWorkers = new ArrayList<Worker>();
+        applicants = new ArrayList<Worker>();
     }
 
     public Job(int jobID, String jobTitle, String description, double salary, int workersNeeded, LocalDateTime shiftStart, LocalDateTime shiftEnd, String status, Address location, Employer employer) {
@@ -136,5 +137,9 @@ public class Job implements Serializable {
 
     public void setApplicants(ArrayList<Worker> applicants) {
         this.applicants = applicants;
+    }
+
+    public void setSelectedWorkers(ArrayList<Worker> selectedWorkers) {
+        this.selectedWorkers = selectedWorkers;
     }
 }

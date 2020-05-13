@@ -90,8 +90,7 @@ public class WorkOfferController extends EmployerViewTabController {
 
     @FXML
     void createWorkOfferSaveButtonPressed() {
-        viewModel.save();
+        if (viewModel.save())
+            viewHandler.openView("employerWork");
     }
-
-
 }
