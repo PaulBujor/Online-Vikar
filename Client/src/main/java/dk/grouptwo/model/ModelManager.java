@@ -141,9 +141,20 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getJobHistory() {
-        return null;
-        //TODO return not null
+    public ArrayList<Job> getWorkerJobHistory() {
+        try {
+            return connection.getWorkerJobHistory(worker);
+        } catch (RemoteException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<Job> getEmployerJobHistory() {
+        try {
+            return connection.getEmployerWorkHistory(worker);
+        } catch (RemoteException e) {
+            return null;
+        }
     }
 
     @Override

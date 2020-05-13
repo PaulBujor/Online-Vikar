@@ -1,5 +1,6 @@
 package dk.grouptwo.model;
 
+import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
 
@@ -18,5 +19,6 @@ public interface WorkerModel {
 
     double getHoursWorkedThisMonth();
 
+    ArrayList<Job> getWorkerJobHistory();
 
 }

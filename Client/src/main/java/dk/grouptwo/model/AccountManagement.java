@@ -26,7 +26,7 @@ public interface AccountManagement {
 
     public void logOutEmployer();
 
-    public ArrayList<Job> getJobHistory();
+    public ArrayList<Job> getWorkerJobHistory();
 
     public Employer getEmployer();
 
