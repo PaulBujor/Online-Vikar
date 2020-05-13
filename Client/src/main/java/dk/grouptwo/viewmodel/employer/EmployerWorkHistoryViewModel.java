@@ -29,7 +29,7 @@ public class EmployerWorkHistoryViewModel {
     public EmployerWorkHistoryViewModel (EmployerModel model) {
         this.model = model;
         listHistory = createListHistory();
-        listWorkers = createListWorkers();
+        listWorkers = FXCollections.observableArrayList();
 
         jobTitle = new SimpleStringProperty("");
         salary = new SimpleDoubleProperty(0);
@@ -47,11 +47,6 @@ public class EmployerWorkHistoryViewModel {
             list.add(new WorkTableData(job));
         }
         return list;
-    }
-
-    public ObservableList<WorkersTableData> createListWorkers()
-    {
-        return FXCollections.observableArrayList();
     }
 
     public void selectJob(WorkTableData workTableData)

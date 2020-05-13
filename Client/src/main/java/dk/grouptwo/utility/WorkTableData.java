@@ -35,6 +35,19 @@ public class WorkTableData {
         description = job.getDescription();
     }
 
+    public void update(Job job) {
+        jobTitle = new SimpleStringProperty(job.getJobTitle());
+        status = new SimpleStringProperty(job.getStatus());
+        employer = new SimpleStringProperty(job.getEmployer().getCompanyName());
+        numberOfWorkers = new SimpleIntegerProperty(job.getSelectedWorkers().size());
+        salary = new SimpleDoubleProperty(job.getSalary());
+        startTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftStart());
+        endTime = new SimpleObjectProperty<LocalDateTime>(job.getShiftEnd());
+        address = job.getLocation();
+        jobId = job.getJobID();
+        description = job.getDescription();
+    }
+
     public String getDescription() {
         return description;
     }

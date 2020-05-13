@@ -1,13 +1,20 @@
 package dk.grouptwo.viewmodel.employer;
 
+import dk.grouptwo.model.EmployerModel;
 import dk.grouptwo.model.WorkerModel;
+import dk.grouptwo.model.objects.Address;
+import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
 import javafx.beans.property.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class WorkOfferViewModel {
-    WorkerModel model;
+    private EmployerModel model;
     private StringProperty title;
     private DoubleProperty salary;
     private IntegerProperty startHour;
@@ -24,7 +31,10 @@ public class WorkOfferViewModel {
     private IntegerProperty workersNeeded;
     private StringProperty error;
 
-    public WorkOfferViewModel(WorkerModel model) {
+    private Job job;
+    private WorkTableData data;
+
+    public WorkOfferViewModel(EmployerModel model) {
         this.model = model;
         title = new SimpleStringProperty("");
         salary = new SimpleDoubleProperty(0);
@@ -43,8 +53,35 @@ public class WorkOfferViewModel {
         error = new SimpleStringProperty("");
     }
 
-    public void save() {
+    public boolean validData() {
         //todo
+        return true;
+    }
+
+    public boolean save() {
+        try {
+            if(validData()) {
+                job.setJobTitle(title.get());
+                job.setSalary(salary.get());
+                job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
+                job.setShiftEnd(LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())));
+                job.setLocation(new Address(country.get(), city.get(), street.get(), postCode.get()));
+                job.setDescription(description.get());
+                job.setWorkersNeeded(workersNeeded.get());
+                job.setSelectedWorkers(getSelectedWorkers());
+                model.updateWorkOffer(job);
+                data.update(job); //updates the table data system-wide
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            error.set(e.getMessage());
+            return false;
+        }
+    }
+
+    public ArrayList<Worker> getSelectedWorkers() {
+        return new ArrayList<Worker>();//todo
     }
 
     public void reset(WorkTableData data) {
@@ -63,6 +100,8 @@ public class WorkOfferViewModel {
         description.set(data.getDescription());
         workersNeeded.set(data.numberOfWorkersProperty().get());
         error.set("");
+        job = model.getJobById(data.getJobId());
+        this.data = data;
     }
 
     public StringProperty titleProperty() {
