@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.employer.WorkOfferController">
@@ -59,7 +62,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="276.0" text="Worf offer" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
+      <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="276.0" text="Work offer" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
             <Font name="System Bold" size="33.0" />
          </font>
@@ -76,7 +79,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="workersNeeded" prefHeight="25.0" prefWidth="34.0">
+                  <TextField fx:id="workersNeeded" prefHeight="30.0" prefWidth="34.0">
                      <HBox.margin>
                         <Insets left="45.0" />
                      </HBox.margin>
@@ -121,7 +124,7 @@
                   </TextField>
                </children>
             </HBox>
-            <TextArea fx:id="workOfferWorkDescription" prefHeight="106.0" prefWidth="427.0" promptText="Work description" />
+            <TextArea fx:id="workOfferWorkDescription" prefHeight="88.0" prefWidth="476.0" promptText="Work description" />
             <HBox alignment="CENTER_RIGHT">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#createWorkOfferSaveButtonPressed" prefHeight="30.0" prefWidth="69.0" stylesheets="@css/style.css" text="Save" textFill="WHITE">
@@ -133,5 +136,22 @@
             </HBox>
          </children>
       </VBox>
+      <TableView layoutX="639.0" layoutY="101.0" prefHeight="299.0" prefWidth="546.0" AnchorPane.leftAnchor="639.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="101.0">
+        <columns>
+          <TableColumn prefWidth="355.0" text="Worker's full name" />
+          <TableColumn prefWidth="190.0" text="Select worker" />
+        </columns>
+      </TableView>
+      <Rectangle fill="WHITE" height="310.0" layoutX="639.0" layoutY="423.0" stroke="BLACK" strokeType="INSIDE" width="546.0" />
+      <Label layoutX="655.0" layoutY="406.0" style="-fx-background-color: white;" text="Worker's details" textFill="#008fcc">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="655.0" layoutY="446.0" text="Date of birth">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
