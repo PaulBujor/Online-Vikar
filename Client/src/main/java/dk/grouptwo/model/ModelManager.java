@@ -243,6 +243,17 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
+    public Worker getWorkerByJob(int jobID, String CPR) {
+        Job job = getJobById(jobID);
+        for (Worker worker : job.getApplicants())
+        {
+            if (worker.getCPR().equals(CPR))
+                return worker;
+        }
+        return null;
+    }
+
+    @Override
     public ArrayList<Job> getJobs() {
         return connection.getJobs();
     }

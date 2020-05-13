@@ -7,8 +7,11 @@ import dk.grouptwo.utility.WorkersTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.WorkOfferViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
@@ -67,7 +70,7 @@ public class WorkOfferController extends EmployerViewTabController {
     private TableColumn<WorkersTableData, String> workOfferFullNameColumn;
 
     @FXML
-    private TableColumn<WorkersTableData, CheckBox> workOfferSelectColumn;
+    private TableColumn<WorkersTableData, Boolean> workOfferSelectColumn;
 
     @FXML
     private Text workOfferDateOfBirth;
@@ -107,8 +110,17 @@ public class WorkOfferController extends EmployerViewTabController {
         Bindings.bindBidirectional(workersNeeded.textProperty(), viewModel.workersNeededProperty(), new StringIntegerConverter(0));
         error.textProperty().bind(viewModel.errorProperty());
 
-        workOfferDateOfBirth.textProperty().bindBidirectional();
-        //todo above
+        workOfferDateOfBirth.textProperty().bind(viewModel.workerDateOfBirthProperty());
+        workOfferGender.textProperty().bind(viewModel.workerGenderProperty());
+        workOfferLanguages.textProperty().bind(viewModel.workerLanguagesProperty());
+        workOfferWorkerDescription.textProperty().bind(viewModel.workerDescriptionProperty());
+        workOfferLicenses.textProperty().bind(viewModel.workerLicensesProperty());
+
+        workOfferFullNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        workOfferSelectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedForWorkProperty());
+        workOfferSelectColumn.setCellFactory(x -> new CheckBoxTableCell<>());
+        //todo needs testing
+        workOfferTable.setItems(viewModel.getList());
     }
 
     public void reset(WorkTableData data) {
@@ -123,7 +135,13 @@ public class WorkOfferController extends EmployerViewTabController {
 
     @FXML
     void workOfferWorkerSelected() {
-        WorkersTableData workersTableData = workOfferTable.getSelectionModel().getSelectedItem();
-        viewModel.se
+        try {
+            WorkersTableData workersTableData = workOfferTable.getSelectionModel().getSelectedItem();
+            viewModel.selectWorker(workersTableData);
+        } catch (NullPointerException e)
+        {
+            //
+        }
+
     }
 }

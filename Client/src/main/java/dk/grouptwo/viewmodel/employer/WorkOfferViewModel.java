@@ -78,6 +78,7 @@ public class WorkOfferViewModel {
     }
 
     public boolean save() {
+        //TODO add selected workers (get selected ones from table data, convert to worker, and add to selected ArrayList in Job)
         try {
             if(validData()) {
                 job.setJobTitle(title.get());
@@ -137,7 +138,19 @@ public class WorkOfferViewModel {
 
     public void selectWorker(WorkersTableData workersTableData)
     {
-        Worker worker = model.getJobById()
+        Worker worker = model.getWorkerByJob(job.getJobID(), workersTableData.CPRProperty().get());
+        try {
+            workerDateOfBirth.set(worker.getBirthday().toString());
+            workerGender.set(worker.getGender());
+            workerLanguages.set(worker.getLanguages());
+            workerDescription.set(worker.getDescription());
+            workerLicenses.set(worker.getLicenses().toString());
+        }
+        catch (NullPointerException e)
+        {
+            //
+        }
+
     }
 
     public StringProperty titleProperty() {
@@ -198,5 +211,29 @@ public class WorkOfferViewModel {
 
     public StringProperty errorProperty() {
         return error;
+    }
+
+    public ObservableList<WorkersTableData> getList() {
+        return list;
+    }
+
+    public StringProperty workerDateOfBirthProperty() {
+        return workerDateOfBirth;
+    }
+
+    public StringProperty workerGenderProperty() {
+        return workerGender;
+    }
+
+    public StringProperty workerLanguagesProperty() {
+        return workerLanguages;
+    }
+
+    public StringProperty workerDescriptionProperty() {
+        return workerDescription;
+    }
+
+    public StringProperty workerLicensesProperty() {
+        return workerLicenses;
     }
 }

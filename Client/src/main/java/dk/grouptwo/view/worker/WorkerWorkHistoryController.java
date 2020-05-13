@@ -102,7 +102,7 @@ public class WorkerWorkHistoryController extends WorkerViewTabController {
             WorkTableData workTableData = workHistoryTable.getSelectionModel().getSelectedItem();
             viewModel.selectJob(workTableData);
         }
-        catch (Exception e)
+        catch (NullPointerException e)
         {
             //
         }

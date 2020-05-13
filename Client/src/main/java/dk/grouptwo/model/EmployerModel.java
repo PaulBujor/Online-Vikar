@@ -23,4 +23,6 @@ public interface EmployerModel {
     ArrayList<Job> getEmployerJobHistory() throws Exception;
 
     ArrayList<Job> getEmployerJobs();
+
+    Worker getWorkerByJob(int jobID, String CPR);
 }
