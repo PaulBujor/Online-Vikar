@@ -3,6 +3,7 @@ package dk.grouptwo.networking.remote;
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 
+import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
 
 
@@ -11,21 +12,17 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public interface RemoteServer extends Remote {
-    //TODO need to test everything to see how it works, missing methods, maybe need some editing and so on..
-    //This should register workers to get updates for job changes
     void registerClient(RemoteClient clientToRegister) throws RemoteException;
-
-
-    //Adding and removing jobs
-    //TODO might not need remoteCLient
-    void addJob(Job job, RemoteClient client) throws RemoteException;
-
-    void removeJob(Job job, RemoteClient client) throws RemoteException;
 
     //Logins
     Employer loginEmployer(String CVR, String password) throws RemoteException;
 
     Worker loginWorker(String CPR, String password) throws RemoteException;
+
+    //Creating accounts
+    void createEmployerAccount(Employer employer, String password) throws RemoteException;
+
+    void createWorkerAccount(Worker worker, String password) throws RemoteException;
 
     //Edit profiles
     Employer editEmployer(Employer employer, String password) throws RemoteException;
@@ -37,25 +34,23 @@ public interface RemoteServer extends Remote {
     Worker editWorker(Worker worker, String password, String newPassword) throws RemoteException;
 
     //Apply and update job
-    void applyForJob(Job job, RemoteClient client) throws RemoteException;
+    void applyForJob(Job job, Worker worker) throws RemoteException;
+
+    //client used for callback, might not be needed if exceptions are handled nicely
+    void addJob(Job job, RemoteClient client) throws RemoteException;
+
+    void removeJob(Job job, RemoteClient client) throws RemoteException;
 
     void updateJob(Job job, RemoteClient client) throws RemoteException;
 
-    //Creating accounts
-    void createEmployerAccount(Employer employer, String password) throws RemoteException;
+    //get jobs
+    ArrayList<Job> getUpcomingJobs(Worker worker) throws RemoteException;
 
-    void createWorkerAccount(Worker worker, String password) throws RemoteException;
+    ArrayList<Job> getWorkerJobHistory(Worker worker) throws RemoteException;
 
-    //Broadcast, client updates, dunno havent decided yet, need to test this myself
-    ArrayList<Job> getAllJobsFromDB() throws RemoteException;
+    ArrayList<Job> getEmployerWorkHistory(Employer employer) throws RemoteException;
 
-    ArrayList<Job> getAllJobHistoryWorkerFromDB() throws RemoteException;
+    void addLicense(License license, Worker worker) throws RemoteException;
 
-    ArrayList<Job> getAllJobHistoryEmployerFromDB() throws RemoteException;
-
-    ArrayList<Job> getUpcomingJobsWorkerFromDB() throws RemoteException;
-
-    //Getting jobs of the employer
-    ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException;
-
+    void removeLicense(License license) throws RemoteException;
 }

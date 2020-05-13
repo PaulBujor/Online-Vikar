@@ -150,7 +150,11 @@ public class WorkerProfileController extends WorkerViewTabController {
 
     @FXML
     void workerProfileRemoveButtonPressed() {
-        //viewModel.removeLicense();
+        try {
+            viewModel.removeLicense(workerProfileLicenseTable.getSelectionModel().getSelectedItem());
+        } catch (NullPointerException e) {
+            //
+        }
     }
 
     @FXML

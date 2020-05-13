@@ -1,8 +1,12 @@
 package dk.grouptwo.viewmodel.worker;
 
+import dk.grouptwo.model.AccountManagement;
 import dk.grouptwo.model.ModelManager;
+import dk.grouptwo.model.objects.Address;
+import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.utility.EmailValidator;
 import dk.grouptwo.utility.LicenseTableData;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -17,7 +21,7 @@ import java.util.ArrayList;
 
 public class WorkerProfileViewModel {
 
-    private ModelManager model;
+    private AccountManagement model;
     private StringProperty username;
     private StringProperty CPR;
     private StringProperty firstName;
@@ -44,7 +48,7 @@ public class WorkerProfileViewModel {
     private StringProperty error;
     private ObservableList<LicenseTableData> list;
 
-    public WorkerProfileViewModel(ModelManager model) {
+    public WorkerProfileViewModel(AccountManagement model) {
         this.model = model;
         username = new SimpleStringProperty("");
         CPR = new SimpleStringProperty("");
@@ -71,10 +75,47 @@ public class WorkerProfileViewModel {
         this.licenseExpiryDate = new SimpleObjectProperty<LocalDate>(null);
         error = new SimpleStringProperty("");
         list = createList();
+    }
 
+    private boolean dataValid() {
+        if (CPR.get().equals("") || firstName.get().equals("") || lastName.get().equals("") || gender.get().equals("") || city.get().equals("") ||
+                postCode.get().equals("") || mobilePhone.get().equals("") || taxCard.get().equals("") || languages.get().equals("") || description.get().equals("") || email.get().equals("") ||
+                currentPassword.get().equals("")) {
+            error.set("All fields should be filled.");
+            return false;
+        } else if (!(newPassword.get().equals(confirmPassword.get()))) {
+            error.set("The passwords do not match.");
+            return false;
+        } else if (!(EmailValidator.emailCheck(email.get()))) {
+            error.set("Wrong email format.");
+            return false;
+        }
+        if (newPassword.get().length() > 0 && newPassword.get().length() < 8) {
+            error.set("New password must be at least 8 characters long");
+            return false;
+        }
+        return true;
     }
 
     public boolean saveChangesWorker() {
+        try {
+            if (dataValid()) {
+                Worker worker = model.getWorker();
+                worker.setEmail(email.get());
+                worker.setPhone(mobilePhone.get());
+                worker.setAddress(new Address(country.get(), city.get(), street.get(), postCode.get()));
+                worker.setFirstName(firstName.getName());
+                worker.setLastName(lastName.get());
+                worker.setTaxCard(taxCard.get());
+                worker.setLanguages(languages.get());
+                worker.setDescription(description.get());
+                worker.setBirthday(birthday.get());
+                worker.setGender(gender.get());
+                if (!newPassword.get().equals(""))
+                    model.editWorker();
+            }
+        }
+
         if (!(newPassword.get().equals(confirmPassword.get()))) {
             error.set("The passwords do not match.");
             return false;
@@ -86,9 +127,9 @@ public class WorkerProfileViewModel {
     }
 
     public void addLicense() {
-        License license = new License(licenseTitle.get(), licenseCategory.get(), licenseNumber.get(), licenseIssueDate.get(), licenseExpiryDate.get());
         if (!(licenseTitle.get().equals("") || licenseCategory.get().equals("") || licenseNumber.get().equals("") || licenseIssueDate.get().toString().equals("") || licenseExpiryDate.get().toString().equals(""))) {
             try {
+                License license = new License(licenseTitle.get(), licenseCategory.get(), licenseNumber.get(), licenseIssueDate.get(), licenseExpiryDate.get());
                 Platform.runLater(() -> {
                     list.add(new LicenseTableData(license));
                 });
@@ -103,9 +144,12 @@ public class WorkerProfileViewModel {
     }
 
     public void removeLicense(LicenseTableData licenseTableData) {
-        //Controller getSelectionItem
-        model.deleteLicense(licenseTableData.licenseNumberProperty().get());
-
+        try {
+            model.deleteLicense(licenseTableData.licenseNumberProperty().get());
+            Platform.runLater(() -> list.remove(licenseTableData));
+        } catch (Exception e) {
+            //
+        }
     }
 
     private ObservableList<LicenseTableData> createList() {
