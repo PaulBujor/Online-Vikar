@@ -3,14 +3,14 @@ package dk.grouptwo.view.employer;
 import dk.grouptwo.utility.StringDoubleConverter;
 import dk.grouptwo.utility.StringIntegerConverter;
 import dk.grouptwo.utility.WorkTableData;
+import dk.grouptwo.utility.WorkersTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.WorkOfferViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 public class WorkOfferController extends EmployerViewTabController {
     private WorkOfferViewModel viewModel;
@@ -60,6 +60,31 @@ public class WorkOfferController extends EmployerViewTabController {
     @FXML
     private TextArea workOfferWorkDescription;
 
+    @FXML
+    private TableView<WorkersTableData> workOfferTable;
+
+    @FXML
+    private TableColumn<WorkersTableData, String> workOfferFullNameColumn;
+
+    @FXML
+    private TableColumn<WorkersTableData, CheckBox> workOfferSelectColumn;
+
+    @FXML
+    private Text workOfferDateOfBirth;
+
+    @FXML
+    private Text workOfferGender;
+
+    @FXML
+    private Text workOfferLanguages;
+
+    @FXML
+    private Text workOfferWorkerDescription;
+
+    @FXML
+    private Text workOfferLicenses;
+
+
     //TODO add select worker table and functionality
 
     public void init(ViewHandler viewHandler, WorkOfferViewModel viewModel, Region root) {
@@ -81,6 +106,8 @@ public class WorkOfferController extends EmployerViewTabController {
         workOfferWorkDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
         Bindings.bindBidirectional(workersNeeded.textProperty(), viewModel.workersNeededProperty(), new StringIntegerConverter(0));
         error.textProperty().bind(viewModel.errorProperty());
+
+        workOfferDateOfBirth.textProperty().bindBidirectional();
         //todo above
     }
 
@@ -92,5 +119,11 @@ public class WorkOfferController extends EmployerViewTabController {
     void createWorkOfferSaveButtonPressed() {
         if (viewModel.save())
             viewHandler.openView("employerWork");
+    }
+
+    @FXML
+    void workOfferWorkerSelected() {
+        WorkersTableData workersTableData = workOfferTable.getSelectionModel().getSelectedItem();
+        viewModel.se
     }
 }

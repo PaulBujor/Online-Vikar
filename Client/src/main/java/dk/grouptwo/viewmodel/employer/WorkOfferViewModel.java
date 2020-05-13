@@ -8,6 +8,7 @@ import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
 import dk.grouptwo.utility.WorkersTableData;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
@@ -33,7 +34,7 @@ public class WorkOfferViewModel {
     private IntegerProperty workersNeeded;
 
     private ObservableList<WorkersTableData> list;
-    private ObjectProperty<LocalDate> workerDateOfBirth;
+    private StringProperty workerDateOfBirth;
     private StringProperty workerGender;
     private StringProperty workerLanguages;
     private StringProperty workerDescription;
@@ -61,11 +62,12 @@ public class WorkOfferViewModel {
         description = new SimpleStringProperty("");
         workersNeeded = new SimpleIntegerProperty(0);
 
-        workerDateOfBirth = new SimpleObjectProperty<>(null);
+        workerDateOfBirth = new SimpleStringProperty("");
         workerGender = new SimpleStringProperty("");
         workerLanguages = new SimpleStringProperty("");
         workerDescription = new SimpleStringProperty("");
         workerLicenses = new SimpleStringProperty("");
+        list = createList();
 
         error = new SimpleStringProperty("");
     }
@@ -119,6 +121,23 @@ public class WorkOfferViewModel {
         error.set("");
         job = model.getJobById(data.getJobId());
         this.data = data;
+    }
+
+    public ObservableList<WorkersTableData> createList()
+    {
+        ObservableList<WorkersTableData> list = FXCollections.observableArrayList();
+        ArrayList<Worker> workers = job.getApplicants();
+
+        for (Worker worker: workers)
+        {
+            list.add(new WorkersTableData(worker));
+        }
+        return list;
+    }
+
+    public void selectWorker(WorkersTableData workersTableData)
+    {
+        Worker worker = model.getJobById()
     }
 
     public StringProperty titleProperty() {
