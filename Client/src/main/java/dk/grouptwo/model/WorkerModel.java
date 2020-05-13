@@ -24,4 +24,6 @@ public interface WorkerModel {
     ArrayList<Job> getJobs();
 
     ArrayList<Job> getUpcomingJobs() throws Exception;
+
+    Job getJobById(int jobId);
 }

@@ -28,8 +28,7 @@ public class WorkerWorkHistoryViewModel {
     private StringProperty description;
 
 
-    public WorkerWorkHistoryViewModel(WorkerModel model)
-    {
+    public WorkerWorkHistoryViewModel(WorkerModel model) {
         this.model = model;
         username = new SimpleStringProperty("");
         list = createList();
@@ -42,19 +41,16 @@ public class WorkerWorkHistoryViewModel {
         description = new SimpleStringProperty("");
     }
 
-    private  ObservableList<WorkTableData> createList()
-    {
+    private ObservableList<WorkTableData> createList() {
         ObservableList<WorkTableData> list = FXCollections.observableArrayList();
         ArrayList<Job> jobs = model.getWorkerJobHistory();
-        for (Job job: jobs)
-        {
+        for (Job job : jobs) {
             list.add(new WorkTableData(job));
         }
         return list;
     }
 
-    public void selectJob(WorkTableData workTableData)
-    {
+    public void selectJob(WorkTableData workTableData) {
         Job job = model.getJobById(workTableData.getJobId());
         jobTitle.set(job.getJobTitle());
         employer.set(job.getEmployer().getCompanyName());
