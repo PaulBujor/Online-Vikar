@@ -74,10 +74,22 @@ public class UpcomingWorkController extends WorkerViewTabController {
         upcomingDetailsLocation.textProperty().bind(viewModel.locationProperty());
         upcomingDetailsWorkDescription.textProperty().bind(viewModel.descriptionProperty());
 
+        upcomingJobTitleColumn.setCellValueFactory(cellData -> cellData.getValue().jobTitleProperty());
+        upcomingEmployerColumn.setCellValueFactory(cellData -> cellData.getValue().employerProperty());
+        upcomingSalaryColumn.setCellValueFactory(cellData -> cellData.getValue().salaryProperty());
+        upcomingStartColumn.setCellValueFactory(cellData -> cellData.getValue().startTimeProperty());
+        upcomingEndColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
+        upcomingWorkTimeColumn.setCellValueFactory(cellData -> cellData.getValue().workTimeProperty());
+        upcomingLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
+        upcomingTable.setItems(viewModel.getList());
 
-
-        //TODO setCellValueFactory for table
-
+        upcomingTable.onMouseClickedProperty().set(evt -> {
+            try {
+                viewModel.selectItem(upcomingTable.getSelectionModel().getSelectedItem());
+            } catch (NullPointerException e) {
+                //
+            }
+        });
     }
 
     @FXML

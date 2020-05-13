@@ -2,6 +2,7 @@ package dk.grouptwo.networking;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
@@ -17,10 +18,8 @@ import java.util.ArrayList;
 
 //maybe singleton
 public class Connection implements RemoteClient {
-
     private RemoteServer server;
     private boolean connected;
-
 
     public Connection() {
         connected = false;
@@ -42,6 +41,10 @@ public class Connection implements RemoteClient {
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 
     public Employer loginEmployer(String CVR, String password)
@@ -84,52 +87,66 @@ public class Connection implements RemoteClient {
         return server.editWorker(worker, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
     }
 
-    public boolean isConnected() {
-        return connected;
-    }
-
-    @Override
     public void addJob(Job job) throws RemoteException {
         server.addJob(job, this);
-
     }
 
-    @Override
     public void removeJob(Job job) throws RemoteException {
         server.removeJob(job, this);
     }
 
-    @Override
     public void updateJob(Job job) throws RemoteException {
         server.updateJob(job, this);
     }
 
+    public void applyForAJob(Job job, Worker worker) throws RemoteException {
+        server.applyForJob(job, worker);
+    }
+
+    public ArrayList<Job> getUpcomingJobs(Worker worker) throws RemoteException {
+        return server.getUpcomingJobs(worker);
+    }
+
+    public ArrayList<Job> getWorkerJobHistory(Worker worker) throws RemoteException {
+        return server.getWorkerJobHistory(worker);
+    }
+
+    public ArrayList<Job> getEmployerWorkHistory(Employer employer) throws RemoteException {
+        return server.getEmployerWorkHistory(employer);
+    }
+
+    //todo
+    public void addLicense(License license, Worker worker) throws RemoteException {
+        server.addLicense(license, worker);
+    }
+
+    public void removeLicense(License license) throws RemoteException {
+        server.removeLicense(license);
+    }
+
+    public ArrayList<Job> getEmployerJobs(Employer employer) {
+        return null;
+    }
+
+    public ArrayList<Job> getJobs() {
+        return null;
+    }
+
+    //REMOTE
+    //todo
+
     @Override
-    public void applyForAJob(Job job) throws RemoteException {
-        server.applyForJob(job, this);
+    public void _addJob(Job job) throws RemoteException {
+        System.out.println(job);
     }
 
     @Override
-    public ArrayList<Job> getAllJobs() throws RemoteException {
-        return server.getAllJobsFromDB();
+    public void _removeJob(Job job) throws RemoteException {
+        System.out.println(job);
     }
 
     @Override
-    public ArrayList<Job> getAllJobHistoryWorker()
-            throws RemoteException {
-        return server.getAllJobHistoryWorkerFromDB();
+    public void _updateJob(Job job) throws RemoteException {
+        System.out.println(job);
     }
-
-    @Override
-    public ArrayList<Job> getAllJobHistoryEmployer()
-            throws RemoteException {
-        return server.getAllJobHistoryEmployerFromDB();
-    }
-
-    @Override
-    public ArrayList<Job> getUpcomingJobsWorker() throws RemoteException {
-        return server.getUpcomingJobsWorkerFromDB();
-    }
-
-
 }

@@ -9,16 +9,19 @@ import java.util.ArrayList;
 
 public interface WorkerModel {
 
-    void applyForJob(Worker worker);
+    void applyForJob(int jobID) throws Exception;
 
-    void addLicense(License license);
+    void addLicense(License license) throws Exception;
 
-    void deleteLicense(String licenseNumber);
+    void deleteLicense(String licenseNumber) throws Exception;
 
     ArrayList<License> getLicenses();
 
     double getHoursWorkedThisMonth();
 
-    ArrayList<Job> getWorkerJobHistory();
+    ArrayList<Job> getWorkerJobHistory() throws Exception;
 
+    ArrayList<Job> getJobs();
+
+    ArrayList<Job> getUpcomingJobs() throws Exception;
 }
