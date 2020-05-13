@@ -111,9 +111,13 @@ public class WorkerProfileViewModel {
                 worker.setDescription(description.get());
                 worker.setBirthday(birthday.get());
                 worker.setGender(gender.get());
-                if (!newPassword.get().equals(""))
-                    model.editWorker();
+                if (newPassword.get().equals(""))
+                    model.editWorker(worker, currentPassword.get());
+                else
+                    model.editWorker(worker, currentPassword.get(), newPassword.get());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         if (!(newPassword.get().equals(confirmPassword.get()))) {
@@ -130,11 +134,10 @@ public class WorkerProfileViewModel {
         if (!(licenseTitle.get().equals("") || licenseCategory.get().equals("") || licenseNumber.get().equals("") || licenseIssueDate.get().toString().equals("") || licenseExpiryDate.get().toString().equals(""))) {
             try {
                 License license = new License(licenseTitle.get(), licenseCategory.get(), licenseNumber.get(), licenseIssueDate.get(), licenseExpiryDate.get());
+                model.addLicense(license);
                 Platform.runLater(() -> {
                     list.add(new LicenseTableData(license));
                 });
-                model.addLicense(license);
-                //TODO check exception if license exists
             } catch (Exception e) {
                 error.set(e.getMessage());
             }

@@ -160,11 +160,11 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getWorkerJobHistory() throws Exception {
+    public ArrayList<Job> getWorkerJobHistory() {
         try {
             return connection.getWorkerJobHistory(worker);
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            return null;
         }
     }
 

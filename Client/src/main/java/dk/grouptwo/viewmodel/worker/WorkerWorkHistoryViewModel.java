@@ -1,6 +1,7 @@
 package dk.grouptwo.viewmodel.worker;
 
 import dk.grouptwo.model.ModelManager;
+import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
 import javafx.beans.property.DoubleProperty;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 public class WorkerWorkHistoryViewModel {
 
-    private ModelManager model;
+    private WorkerModel model;
     private StringProperty username;
     private ObservableList<WorkTableData> list;
     private DoubleProperty hoursWorked;
@@ -26,7 +27,7 @@ public class WorkerWorkHistoryViewModel {
     private StringProperty description;
 
 
-    public WorkerWorkHistoryViewModel(ModelManager model)
+    public WorkerWorkHistoryViewModel(WorkerModel model)
     {
         this.model = model;
         username = new SimpleStringProperty("");

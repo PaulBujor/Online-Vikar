@@ -19,7 +19,7 @@ public interface WorkerModel {
 
     double getHoursWorkedThisMonth();
 
-    ArrayList<Job> getWorkerJobHistory() throws Exception;
+    ArrayList<Job> getWorkerJobHistory();
 
     ArrayList<Job> getJobs();
 
