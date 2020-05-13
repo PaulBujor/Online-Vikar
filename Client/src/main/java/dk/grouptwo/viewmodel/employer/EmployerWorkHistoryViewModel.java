@@ -41,7 +41,7 @@ public class EmployerWorkHistoryViewModel {
     private ObservableList<WorkTableData> createListHistory()
     {
         ObservableList<WorkTableData> list = FXCollections.observableArrayList();
-        ArrayList<Job> jobs = model.getJobHistory();
+        ArrayList<Job> jobs = model.getEmployerJobHistory();
         for (Job job: jobs)
         {
             list.add(new WorkTableData(job));
