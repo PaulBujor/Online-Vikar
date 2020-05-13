@@ -13,6 +13,7 @@ public class testing
     EvenMoreTesting testing = new EvenMoreTesting();
     Address address = new Address("mars","8700");
     Address insertAddress = new Address("denmark","Horsens","bilka 92","8700");
+    Address insertAddressNew = new Address("slowmark","horshit","samagon vej 92","DK-8700");
     Employer employer = new Employer("test@gmail.com","50505050",address,"518","blyat");
     System.out.println("Testing : ");
     /*testing.insertTest(employer,"gucci");*/
@@ -34,6 +35,9 @@ public class testing
  /*   testing.insertAddressTest(insertAddress);
     testing.insertAddressTest(insertAddress);*/
 
-    System.out.println(testing.insertAddressTest(insertAddress));
+/*    System.out.println(testing.insertAddressTest(insertAddress));*/
+   /* System.out.println(testing.getAllAddresses());*/
+
+    System.out.println(testing.insertAddressTest(insertAddressNew));
   }
 }

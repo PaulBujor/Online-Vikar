@@ -168,7 +168,7 @@ public class Database implements Persistence
         posted.setString(1, address.getCountry());
         posted.setString(2, address.getCity());
         posted.setString(3, address.getStreet());
-        posted.setInt(4, Integer.parseInt(address.getZip()));
+        posted.setString(4,address.getZip());
         posted.execute();
         posted.close();
       }
@@ -178,18 +178,17 @@ public class Database implements Persistence
         e.printStackTrace();
       }
     }
-    String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?";
+    String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?"/*+"VALUES(?,?,?,?)"*/;
     int id = 0;
     try
     { //TODO fix this mess
       Connection conn = DatabaseConnection.getInstance().connect();
-      Statement stmt = conn.createStatement();
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
-      pstmt.setString(1, address.getCountry());
-      pstmt.setString(2, address.getCity());
-      pstmt.setString(3, address.getStreet());
-      pstmt.setString(4, address.getZip());
-      ResultSet rs = stmt.executeQuery(SQL);
+      PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+      preparedStatement.setString(1,address.getCountry());
+      preparedStatement.setString(2,address.getCity());
+      preparedStatement.setString(3,address.getStreet());
+      preparedStatement.setString(4,address.getZip());
+      ResultSet rs = preparedStatement.executeQuery();
       while (rs.next())
       {
         id = rs.getInt("addressID");
