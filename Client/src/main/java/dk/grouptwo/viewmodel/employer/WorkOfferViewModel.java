@@ -6,7 +6,10 @@ import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
+import dk.grouptwo.utility.WorkersTableData;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +32,14 @@ public class WorkOfferViewModel {
     private StringProperty street;
     private StringProperty description;
     private IntegerProperty workersNeeded;
+
+    private ObservableList<WorkersTableData> list;
+    private StringProperty workerDateOfBirth;
+    private StringProperty workerGender;
+    private StringProperty workerLanguages;
+    private StringProperty workerDescription;
+    private StringProperty workerLicenses;
+
     private StringProperty error;
 
     private Job job;
@@ -50,6 +61,14 @@ public class WorkOfferViewModel {
         postCode = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
         workersNeeded = new SimpleIntegerProperty(0);
+
+        workerDateOfBirth = new SimpleStringProperty("");
+        workerGender = new SimpleStringProperty("");
+        workerLanguages = new SimpleStringProperty("");
+        workerDescription = new SimpleStringProperty("");
+        workerLicenses = new SimpleStringProperty("");
+        list = createList();
+
         error = new SimpleStringProperty("");
     }
 
@@ -59,6 +78,7 @@ public class WorkOfferViewModel {
     }
 
     public boolean save() {
+        //TODO add selected workers (get selected ones from table data, convert to worker, and add to selected ArrayList in Job)
         try {
             if(validData()) {
                 job.setJobTitle(title.get());
@@ -102,6 +122,35 @@ public class WorkOfferViewModel {
         error.set("");
         job = model.getJobById(data.getJobId());
         this.data = data;
+    }
+
+    public ObservableList<WorkersTableData> createList()
+    {
+        ObservableList<WorkersTableData> list = FXCollections.observableArrayList();
+        ArrayList<Worker> workers = job.getApplicants();
+
+        for (Worker worker: workers)
+        {
+            list.add(new WorkersTableData(worker));
+        }
+        return list;
+    }
+
+    public void selectWorker(WorkersTableData workersTableData)
+    {
+        Worker worker = model.getWorkerByJob(job.getJobID(), workersTableData.CPRProperty().get());
+        try {
+            workerDateOfBirth.set(worker.getBirthday().toString());
+            workerGender.set(worker.getGender());
+            workerLanguages.set(worker.getLanguages());
+            workerDescription.set(worker.getDescription());
+            workerLicenses.set(worker.getLicenses().toString());
+        }
+        catch (NullPointerException e)
+        {
+            //
+        }
+
     }
 
     public StringProperty titleProperty() {
@@ -162,5 +211,29 @@ public class WorkOfferViewModel {
 
     public StringProperty errorProperty() {
         return error;
+    }
+
+    public ObservableList<WorkersTableData> getList() {
+        return list;
+    }
+
+    public StringProperty workerDateOfBirthProperty() {
+        return workerDateOfBirth;
+    }
+
+    public StringProperty workerGenderProperty() {
+        return workerGender;
+    }
+
+    public StringProperty workerLanguagesProperty() {
+        return workerLanguages;
+    }
+
+    public StringProperty workerDescriptionProperty() {
+        return workerDescription;
+    }
+
+    public StringProperty workerLicensesProperty() {
+        return workerLicenses;
     }
 }

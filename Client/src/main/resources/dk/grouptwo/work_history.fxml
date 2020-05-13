@@ -146,7 +146,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <TableView fx:id="workHistoryTable" layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="100.0">
+      <TableView fx:id="workHistoryTable" layoutX="127.0" layoutY="50.0" onMouseClicked="#workerHistoryJobSelected" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="100.0">
          <columns>
             <TableColumn fx:id="workHistoryJobTitleColumn" prefWidth="77.0" text="Job Title" />
             <TableColumn fx:id="workHistoryStatusColumn" prefWidth="88.0" text="Status" />

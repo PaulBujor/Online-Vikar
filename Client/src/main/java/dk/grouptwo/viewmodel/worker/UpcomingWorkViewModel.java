@@ -1,7 +1,9 @@
 package dk.grouptwo.viewmodel.worker;
 
 import dk.grouptwo.model.ModelManager;
+import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 
 public class UpcomingWorkViewModel {
 
-    private ModelManager model;
+    private WorkerModel model;
     private StringProperty username;
     private StringProperty jobTitle;
     private StringProperty employer;
@@ -25,7 +27,7 @@ public class UpcomingWorkViewModel {
     private ObservableList<WorkTableData> list;
 
 
-    public UpcomingWorkViewModel(ModelManager model)
+    public UpcomingWorkViewModel(WorkerModel model)
     {
         this.model = model;
         username = new SimpleStringProperty();
@@ -35,19 +37,33 @@ public class UpcomingWorkViewModel {
         startEndDates = new SimpleStringProperty("");
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
-
+        list = createList();
     }
 
-    //TODO table
+    private ObservableList<WorkTableData> createList() {
+        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+        try {
+            ArrayList<Job> jobs = model.getUpcomingJobs();
+            for(Job job : jobs)
+                list.add(new WorkTableData(job));
+        } catch (Exception e) {
+            //
+        }
+        return list;
+    }
 
     public ObservableList<WorkTableData> getList()
     {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
-        //TODO get upcoming work from somewhere
+        return list;
+    }
 
-        return null;
-
-
+    public void selectItem(WorkTableData data) {
+        jobTitle.set(data.jobTitleProperty().get());
+        employer.set(data.employerProperty().get());
+        salary.set(data.salaryProperty().get());
+        startEndDates.set(data.startTimeProperty().get() + " - " + data.endTimeProperty().get());
+        location.set(data.locationProperty().get());
+        description.set(data.getDescription());
     }
 
     public StringProperty jobTitleProperty() {

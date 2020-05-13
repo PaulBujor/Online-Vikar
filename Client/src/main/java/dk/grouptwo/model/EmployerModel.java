@@ -10,15 +10,19 @@ import java.util.ArrayList;
 
 public interface EmployerModel {
 
-    public void createWorkOffer(Job job);
+    public void createWorkOffer(Job job) throws Exception;
 
-    public void cancelWorkOffer(Job job);
+    public void cancelWorkOffer(Job job) throws Exception;
 
-    public void updateWorkOffer(Job job);
+    public void updateWorkOffer(Job job) throws Exception;
 
     public Job getJobById(int jobId);
 
     public Employer getEmployer();
 
-    ArrayList<Job> getEmployerJobHistory();
+    ArrayList<Job> getEmployerJobHistory() throws Exception;
+
+    ArrayList<Job> getEmployerJobs();
+
+    Worker getWorkerByJob(int jobID, String CPR);
 }

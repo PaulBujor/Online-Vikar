@@ -2,6 +2,7 @@ package dk.grouptwo.model;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
 
 import java.util.ArrayList;
@@ -20,14 +21,23 @@ public interface AccountManagement {
 
     public void editEmployer(Employer employer, String password, String newPassword) throws Exception;
 
-    public void editWorker(Worker worker, String password);
+    public void editWorker(Worker worker, String password) throws Exception;
+
+    public void editWorker(Worker worker, String password, String newPassword) throws Exception;
 
     public void logOutWorker();
 
     public void logOutEmployer();
 
-    public ArrayList<Job> getWorkerJobHistory();
+    public ArrayList<Job> getWorkerJobHistory() throws Exception;
 
     public Employer getEmployer();
 
+    ArrayList<License> getLicenses();
+
+    Worker getWorker();
+
+    void deleteLicense(String licenseNumber) throws Exception;
+
+    void addLicense(License license) throws Exception;
 }

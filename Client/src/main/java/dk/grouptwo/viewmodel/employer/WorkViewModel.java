@@ -1,6 +1,7 @@
 package dk.grouptwo.viewmodel.employer;
 
 import dk.grouptwo.model.EmployerModel;
+import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -8,6 +9,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 
 public class WorkViewModel {
     private EmployerModel model;
@@ -30,7 +33,20 @@ public class WorkViewModel {
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
         error = new SimpleStringProperty("");
-        list = FXCollections.observableArrayList();
+        list = createList();
+    }
+
+    private ObservableList<WorkTableData> createList()
+    {
+        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+        try {
+            ArrayList<Job> jobs = model.getEmployerJobs();
+            for (Job job : jobs)
+                list.add(new WorkTableData(job));
+        } catch (Exception e) {
+            //
+        }
+        return list;
     }
 
     public void selectItem(WorkTableData item) {

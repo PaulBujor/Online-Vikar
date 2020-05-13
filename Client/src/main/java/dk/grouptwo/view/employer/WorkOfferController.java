@@ -3,14 +3,17 @@ package dk.grouptwo.view.employer;
 import dk.grouptwo.utility.StringDoubleConverter;
 import dk.grouptwo.utility.StringIntegerConverter;
 import dk.grouptwo.utility.WorkTableData;
+import dk.grouptwo.utility.WorkersTableData;
 import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.WorkOfferViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 public class WorkOfferController extends EmployerViewTabController {
     private WorkOfferViewModel viewModel;
@@ -60,6 +63,31 @@ public class WorkOfferController extends EmployerViewTabController {
     @FXML
     private TextArea workOfferWorkDescription;
 
+    @FXML
+    private TableView<WorkersTableData> workOfferTable;
+
+    @FXML
+    private TableColumn<WorkersTableData, String> workOfferFullNameColumn;
+
+    @FXML
+    private TableColumn<WorkersTableData, Boolean> workOfferSelectColumn;
+
+    @FXML
+    private Text workOfferDateOfBirth;
+
+    @FXML
+    private Text workOfferGender;
+
+    @FXML
+    private Text workOfferLanguages;
+
+    @FXML
+    private Text workOfferWorkerDescription;
+
+    @FXML
+    private Text workOfferLicenses;
+
+
     //TODO add select worker table and functionality
 
     public void init(ViewHandler viewHandler, WorkOfferViewModel viewModel, Region root) {
@@ -81,7 +109,18 @@ public class WorkOfferController extends EmployerViewTabController {
         workOfferWorkDescription.textProperty().bindBidirectional(viewModel.descriptionProperty());
         Bindings.bindBidirectional(workersNeeded.textProperty(), viewModel.workersNeededProperty(), new StringIntegerConverter(0));
         error.textProperty().bind(viewModel.errorProperty());
-        //todo above
+
+        workOfferDateOfBirth.textProperty().bind(viewModel.workerDateOfBirthProperty());
+        workOfferGender.textProperty().bind(viewModel.workerGenderProperty());
+        workOfferLanguages.textProperty().bind(viewModel.workerLanguagesProperty());
+        workOfferWorkerDescription.textProperty().bind(viewModel.workerDescriptionProperty());
+        workOfferLicenses.textProperty().bind(viewModel.workerLicensesProperty());
+
+        workOfferFullNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+        workOfferSelectColumn.setCellValueFactory(cellData -> cellData.getValue().selectedForWorkProperty());
+        workOfferSelectColumn.setCellFactory(x -> new CheckBoxTableCell<>());
+        //todo needs testing
+        workOfferTable.setItems(viewModel.getList());
     }
 
     public void reset(WorkTableData data) {
@@ -92,5 +131,17 @@ public class WorkOfferController extends EmployerViewTabController {
     void createWorkOfferSaveButtonPressed() {
         if (viewModel.save())
             viewHandler.openView("employerWork");
+    }
+
+    @FXML
+    void workOfferWorkerSelected() {
+        try {
+            WorkersTableData workersTableData = workOfferTable.getSelectionModel().getSelectedItem();
+            viewModel.selectWorker(workersTableData);
+        } catch (NullPointerException e)
+        {
+            //
+        }
+
     }
 }
