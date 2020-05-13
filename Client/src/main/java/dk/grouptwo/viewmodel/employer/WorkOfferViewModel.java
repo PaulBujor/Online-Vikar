@@ -6,7 +6,9 @@ import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
+import dk.grouptwo.utility.WorkersTableData;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +31,14 @@ public class WorkOfferViewModel {
     private StringProperty street;
     private StringProperty description;
     private IntegerProperty workersNeeded;
+
+    private ObservableList<WorkersTableData> list;
+    private ObjectProperty<LocalDate> workerDateOfBirth;
+    private StringProperty workerGender;
+    private StringProperty workerLanguages;
+    private StringProperty workerDescription;
+    private StringProperty workerLicenses;
+
     private StringProperty error;
 
     private Job job;
@@ -50,6 +60,13 @@ public class WorkOfferViewModel {
         postCode = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
         workersNeeded = new SimpleIntegerProperty(0);
+
+        workerDateOfBirth = new SimpleObjectProperty<>(null);
+        workerGender = new SimpleStringProperty("");
+        workerLanguages = new SimpleStringProperty("");
+        workerDescription = new SimpleStringProperty("");
+        workerLicenses = new SimpleStringProperty("");
+
         error = new SimpleStringProperty("");
     }
 

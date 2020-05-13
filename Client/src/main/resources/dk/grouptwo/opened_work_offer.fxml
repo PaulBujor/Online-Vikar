@@ -13,8 +13,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.employer.WorkOfferController">
    <children>
@@ -142,16 +142,113 @@
           <TableColumn prefWidth="190.0" text="Select worker" />
         </columns>
       </TableView>
-      <Rectangle fill="WHITE" height="310.0" layoutX="639.0" layoutY="423.0" stroke="BLACK" strokeType="INSIDE" width="546.0" />
-      <Label layoutX="655.0" layoutY="406.0" style="-fx-background-color: white;" text="Worker's details" textFill="#008fcc">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="655.0" layoutY="446.0" text="Date of birth">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
+      <AnchorPane layoutX="639.0" layoutY="419.0" prefHeight="333.0" prefWidth="546.0" style="-fx-border-color: black;" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="639.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="419.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="16.0" layoutY="-17.0" prefHeight="34.0" prefWidth="186.0" style="-fx-background-color: white;" text="Worker's details" textFill="#008fcc" AnchorPane.topAnchor="-17.0">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <VBox layoutX="20.0" layoutY="30.0" prefHeight="306.0" prefWidth="524.0" spacing="15.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="29.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <HBox prefHeight="25.0" prefWidth="261.0">
+                           <children>
+                              <Label minWidth="105.0" text="Date of birth:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </Label>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="154.515625">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="25.0" prefWidth="262.0">
+                           <children>
+                              <Label minWidth="64.0" prefHeight="25.0" prefWidth="58.0" text="Gender:">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets right="5.0" />
+                                 </padding>
+                              </Label>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="198.515625">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="25.0" prefWidth="524.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="144.0" text="Known languages:">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="379.515625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <VBox>
+                     <children>
+                        <Label text="Personal description:">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="523.9999999999999">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="70.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Licenses:">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="523.9999999999999">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

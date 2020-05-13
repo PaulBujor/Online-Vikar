@@ -10,6 +10,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class WorkerWorkHistoryViewModel {
@@ -49,6 +50,17 @@ public class WorkerWorkHistoryViewModel {
             list.add(new WorkTableData(job));
         }
         return list;
+    }
+
+    public void selectJob(WorkTableData workTableData)
+    {
+        Job job = model.getJobById(workTableData.getJobId());
+        jobTitle.set(job.getJobTitle());
+        employer.set(job.getEmployer().getCompanyName());
+        salary.setValue(job.getSalary());
+        startEndDates.set(job.getShiftStart() + " - " + job.getShiftEnd());
+        location.set(job.getLocation().toString());
+        description.set(job.getDescription());
     }
 
     public StringProperty usernameProperty() {

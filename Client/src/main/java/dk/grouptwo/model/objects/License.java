@@ -57,4 +57,9 @@ public class License implements Serializable {
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
+
+    public String toString()
+    {
+        return getType();
+    }
 }

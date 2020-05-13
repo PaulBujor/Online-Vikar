@@ -95,6 +95,20 @@ public class WorkerWorkHistoryController extends WorkerViewTabController {
 
     }
 
+    @FXML
+    public void workerHistoryJobSelected()
+    {
+        try {
+            WorkTableData workTableData = workHistoryTable.getSelectionModel().getSelectedItem();
+            viewModel.selectJob(workTableData);
+        }
+        catch (Exception e)
+        {
+            //
+        }
+
+
+    }
 
 
 
