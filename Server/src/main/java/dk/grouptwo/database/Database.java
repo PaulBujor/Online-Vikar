@@ -140,9 +140,18 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     }
   }
 
-  @Override public Worker applyForJob(Job job,Worker worker)
+  @Override public void applyForJob(Job job,Worker worker)
   {
-    return null;
+ String SQL = "INSERT INTO applied (cvr,jobID)" + "VALUES(?,?)";
+ try{
+   Connection conn = DatabaseConnection.getInstance().connect();
+   PreparedStatement pstm= conn.prepareStatement(SQL);
+   pstm.setString(1,worker.getCPR());
+   pstm.setInt(1,getJobID(job));
+ }
+ catch (SQLException e){
+   e.printStackTrace();
+ }
   }
 
   @Override public void updateJob()
@@ -288,7 +297,7 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     return  jobs;
   }
 
-  //not sure about the argument
+
   @Override public ArrayList<Worker> getAllAppliedWorkers(Job job)
   {
     ArrayList<Worker> workers = new ArrayList<>();
