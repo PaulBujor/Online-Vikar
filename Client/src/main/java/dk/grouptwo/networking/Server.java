@@ -4,6 +4,7 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 import dk.grouptwo.utility.Encryptor;
@@ -45,6 +46,11 @@ public class Server implements RemoteServer {
         server.registerWorkerClient(client);
     }
 
+    @Override
+    public void registerEmployerClient(RemoteEmployerClient client, ArrayList<Job> jobs) throws RemoteException {
+        server.registerEmployerClient(client, jobs);
+    }
+
     public boolean isConnected() {
         return connected;
     }
@@ -69,28 +75,28 @@ public class Server implements RemoteServer {
         server.createWorkerAccount(worker, Encryptor.encrypt(password));
     }
 
-    public Employer editEmployer(Employer employer, String password)
+    public void editEmployer(Employer employer, String password)
             throws RemoteException, NoSuchAlgorithmException {
-        return server.editEmployer(employer, Encryptor.encrypt(password));
+        server.editEmployer(employer, Encryptor.encrypt(password));
     }
 
-    public Employer editEmployer(Employer employer, String password, String newPassword)
+    public void editEmployer(Employer employer, String password, String newPassword)
             throws RemoteException, NoSuchAlgorithmException {
-        return server.editEmployer(employer, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
+        server.editEmployer(employer, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
     }
 
-    public Worker editWorker(Worker worker, String password)
+    public void editWorker(Worker worker, String password)
             throws RemoteException, NoSuchAlgorithmException {
-        return server.editWorker(worker, Encryptor.encrypt(password));
+        server.editWorker(worker, Encryptor.encrypt(password));
     }
 
-    public Worker editWorker(Worker worker, String password, String newPassword)
+    public void editWorker(Worker worker, String password, String newPassword)
             throws RemoteException, NoSuchAlgorithmException {
-        return server.editWorker(worker, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
+        server.editWorker(worker, Encryptor.encrypt(password), Encryptor.encrypt(newPassword));
     }
 
-    public void addJob(Job job) throws RemoteException {
-        server.addJob(job);
+    public void addJob(Job job, RemoteEmployerClient employerClient) throws RemoteException {
+        server.addJob(job, employerClient);
     }
 
     public void removeJob(Job job) throws RemoteException {
