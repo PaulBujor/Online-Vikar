@@ -10,4 +10,4 @@ public interface RemoteWorkerClient extends Remote {
     public void updateJob(Job job);
 
     public void removeJob(Job job);
-}
+

@@ -4,10 +4,11 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.utility.PropertyChangeSubject;
 
 import java.util.ArrayList;
 
-public interface AccountManagement {
+public interface AccountManagement extends PropertyChangeSubject {
 
     public void registerAccountWorker(Worker worker, String password) throws Exception;
 

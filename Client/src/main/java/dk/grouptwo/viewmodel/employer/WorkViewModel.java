@@ -3,6 +3,7 @@ package dk.grouptwo.viewmodel.employer;
 import dk.grouptwo.model.EmployerModel;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,9 +11,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class WorkViewModel {
+public class WorkViewModel implements PropertyChangeListener {
     private EmployerModel model;
     private ObservableList<WorkTableData> list;
     private StringProperty jobTitle;
@@ -26,6 +29,7 @@ public class WorkViewModel {
 
     public WorkViewModel(EmployerModel model) {
         this.model = model;
+        model.addListener(this);
         jobTitle = new SimpleStringProperty("");
         employer = new SimpleStringProperty("");
         salary = new SimpleDoubleProperty(0);
@@ -57,6 +61,12 @@ public class WorkViewModel {
         location.set(item.locationProperty().get());
         description.set(item.getDescription());
         selectedItem = item;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("moveToHistory"))
+            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
     }
 
     public WorkTableData getSelectedWorkOffer() {

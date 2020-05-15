@@ -4,6 +4,7 @@ import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,9 +12,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class FindWorkViewModel {
+public class FindWorkViewModel implements PropertyChangeListener {
 
     private WorkerModel model;
     private StringProperty username;
@@ -27,6 +30,7 @@ public class FindWorkViewModel {
 
     public FindWorkViewModel(WorkerModel model) {
         this.model = model;
+        model.addListener(this);
         username = new SimpleStringProperty();
         jobTitle = new SimpleStringProperty("");
         employer = new SimpleStringProperty("");
@@ -88,6 +92,14 @@ public class FindWorkViewModel {
 
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("addJob"))
+            Platform.runLater(() -> list.add(new WorkTableData((Job) evt.getNewValue())));
+        else if (evt.getPropertyName().equals("moveToUpcoming"))
+            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
     }
 
 }

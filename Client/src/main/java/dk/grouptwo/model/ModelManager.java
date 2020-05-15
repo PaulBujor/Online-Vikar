@@ -7,14 +7,19 @@ import dk.grouptwo.networking.WorkerClient;
 import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
+import dk.grouptwo.utility.PropertyChangeSubject;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-public class ModelManager implements AccountManagement, EmployerModel, WorkerModel {
+public class ModelManager implements AccountManagement, EmployerModel, WorkerModel, PropertyChangeListener {
+    private PropertyChangeSupport property = new PropertyChangeSupport(this);
     private ArrayList<Job> jobs;
     private ArrayList<Job> workHistory;
 
@@ -34,6 +39,78 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
 
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch (evt.getPropertyName()) {
+            case "updateJob":
+                Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
+                Job newJob = (Job) evt.getNewValue();
+                if (worker != null) {
+                    if (newJob.getSelectedWorkers().contains(worker)) {
+                        jobs.remove(prevJob);
+                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                            if (!workHistory.contains(newJob)) {
+                                workHistory.add(newJob);
+                                property.firePropertyChange("moveToHistory", prevJob, newJob);
+                            }
+                        } else {
+                            if (!upcomingJobs.contains(newJob)) {
+                                upcomingJobs.add(newJob);
+                                property.firePropertyChange("moveToUpcoming", prevJob, newJob);
+                            }
+                        }
+                    } else if (prevJob.getSelectedWorkers().contains(worker) && !newJob.getSelectedWorkers().contains(worker)) {
+                        upcomingJobs.remove(prevJob);
+                        jobs.add(newJob);
+                        property.firePropertyChange("workerCancelled", prevJob, newJob);
+                        property.firePropertyChange("addJob", prevJob, newJob);
+                    } else {
+                        if(newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                            jobs.remove(prevJob);
+                            property.firePropertyChange("removeFromJobs", prevJob, newJob);
+                        }
+                    }
+                } else if (employer != null) {
+                    if(newJob.getStatus().equals("completed")) {
+                        jobs.remove(prevJob);
+                        workHistory.add(newJob);
+                        property.firePropertyChange("moveToHistory", prevJob, newJob);
+                    }
+                }
+                break;
+            case "addJob":
+                jobs.add((Job) evt.getNewValue());
+                property.firePropertyChange("addJob", 0, evt.getNewValue());
+                break;
+            case "removeJob": //could change to cancel todo
+                jobs.remove(evt.getNewValue());
+                property.firePropertyChange("removeJob", 0, evt.getNewValue());
+                break;
+        }
+    }
+
+    @Override
+    public void addListener(PropertyChangeListener listener) {
+        property.addPropertyChangeListener(listener);
+    }
+
+    @Override
+    public void removeListener(PropertyChangeListener listener) {
+        property.removePropertyChangeListener(listener);
+
+    }
+
+    @Override
+    public void addListener(String eventID, PropertyChangeListener listener) {
+        property.addPropertyChangeListener(eventID, listener);
+    }
+
+    @Override
+    public void removeListener(String eventID, PropertyChangeListener listener) {
+        property.removePropertyChangeListener(eventID, listener);
+    }
+
     @Override
     public void registerAccountWorker(Worker worker, String password) throws Exception {
         try {
@@ -49,7 +126,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void logInWorker(String CPR, String password) throws Exception {
         try {
             worker = server.loginWorker(CPR, password);
-            workerClient = new WorkerClient(this);
+            workerClient = new WorkerClient();
             server.registerWorkerClient(workerClient);
             upcomingJobs = server.getUpcomingJobs(worker);
             workHistory = server.getWorkerJobHistory(worker);
@@ -78,7 +155,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             employer = server.loginEmployer(CVR, password);
             jobs = server.getEmployerJobs(employer);
-            employerClient = new EmployerClient(this);
+            employerClient = new EmployerClient();
             server.registerEmployerClient(employerClient, jobs);
             setEmployerName(employer.getCompanyName());
         } catch (RemoteException e) {
@@ -252,13 +329,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public ArrayList<Job> getEmployerJobs() {
-        try {
-            return server.getEmployerJobs(employer);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-            //todo
-        }
+        return jobs;
     }
 
     @Override
@@ -273,13 +344,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public ArrayList<Job> getJobs() {
-        try {
-            return server.getJobs();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return null;
-            //todo
-        }
+        return jobs;
     }
 
     @Override

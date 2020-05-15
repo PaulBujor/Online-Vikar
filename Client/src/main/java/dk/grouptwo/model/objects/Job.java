@@ -140,11 +140,16 @@ public class Job implements Serializable {
             applicants.add(worker);
     }
 
-    public void setApplicants(ArrayList<Worker> applicants) {
-        this.applicants = applicants;
+    public void removeApplicant(Worker worker) {
+        applicants.remove(worker);
     }
 
-    public void setSelectedWorkers(ArrayList<Worker> selectedWorkers) {
-        this.selectedWorkers = selectedWorkers;
+    public void addSelectedworker(Worker worker) {
+        if (!selectedWorkers.contains(worker))
+            selectedWorkers.add(worker);
+    }
+
+    public void removeSelectedWorker(Worker worker) {
+        selectedWorkers.remove(worker);
     }
 }
