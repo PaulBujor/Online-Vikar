@@ -21,11 +21,10 @@ public class Main {
     }*/
 
     public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-       /* startRegistry();*/
         RemoteServer server = new Server();
         Registry registry = LocateRegistry.createRegistry(1099);
 
-        registry.bind("Server",server);
-        System.out.println("Server started..");
+        registry.bind("Server", server);
+        System.out.println("Server started...");
     }
 }

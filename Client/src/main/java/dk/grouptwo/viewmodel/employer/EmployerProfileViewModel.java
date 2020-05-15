@@ -81,10 +81,11 @@ public class EmployerProfileViewModel {
     public boolean saveChangesEmployer() {
         try {
             if (validData()) {
+                Employer employer = new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get());
                 if (newPassword.get().equals(""))
-                    model.editEmployer(new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get()), currentPassword.get());
+                    model.editEmployer(employer, currentPassword.get());
                 else
-                    model.editEmployer(new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get()), currentPassword.get(), newPassword.get());
+                    model.editEmployer(employer, currentPassword.get(), newPassword.get());
                 return true;
             }
             return false;

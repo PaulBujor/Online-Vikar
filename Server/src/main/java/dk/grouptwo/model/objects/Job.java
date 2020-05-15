@@ -135,6 +135,10 @@ public class Job implements Serializable {
         return applicants;
     }
 
+    public void addApplicant(Worker worker) {
+        applicants.add(worker);
+    }
+
     public void setApplicants(ArrayList<Worker> applicants) {
         this.applicants = applicants;
     }

@@ -100,17 +100,7 @@ public class WorkerProfileViewModel {
     public boolean saveChangesWorker() {
         try {
             if (dataValid()) {
-                Worker worker = model.getWorker();
-                worker.setEmail(email.get());
-                worker.setPhone(mobilePhone.get());
-                worker.setAddress(new Address(country.get(), city.get(), street.get(), postCode.get()));
-                worker.setFirstName(firstName.getName());
-                worker.setLastName(lastName.get());
-                worker.setTaxCard(taxCard.get());
-                worker.setLanguages(languages.get());
-                worker.setDescription(description.get());
-                worker.setBirthday(birthday.get());
-                worker.setGender(gender.get());
+                Worker worker = new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(), firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get());
                 if (newPassword.get().equals(""))
                     model.editWorker(worker, currentPassword.get());
                 else

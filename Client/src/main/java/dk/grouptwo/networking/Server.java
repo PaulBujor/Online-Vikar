@@ -4,8 +4,8 @@ import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
-import dk.grouptwo.networking.remote.RemoteClient;
 import dk.grouptwo.networking.remote.RemoteServer;
+import dk.grouptwo.networking.remote.RemoteWorkerClient;
 import dk.grouptwo.utility.Encryptor;
 
 import java.rmi.NotBoundException;
@@ -17,15 +17,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 //maybe singleton
-public class Connection implements RemoteClient {
+public class Server implements RemoteServer {
     private RemoteServer server;
     private boolean connected;
 
-    public Connection() {
-        connected = false;
-    }
+//    public Server() {
+//        connected = false;
+//    }
 
-    public void StartClient(String host, int port) {
+    public Server(String host, int port) {
         try {
             Registry registry = null;
             try {
@@ -35,12 +35,14 @@ public class Connection implements RemoteClient {
             }
             UnicastRemoteObject.exportObject(this, 0);
             server = (RemoteServer) registry.lookup("Server");
-
-            server.registerClient(this);
             connected = true;
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void registerWorkerClient(RemoteWorkerClient client) throws RemoteException {
+        server.registerWorkerClient(client);
     }
 
     public boolean isConnected() {
@@ -88,18 +90,18 @@ public class Connection implements RemoteClient {
     }
 
     public void addJob(Job job) throws RemoteException {
-        server.addJob(job, this);
+        server.addJob(job);
     }
 
     public void removeJob(Job job) throws RemoteException {
-        server.removeJob(job, this);
+        server.removeJob(job);
     }
 
     public void updateJob(Job job) throws RemoteException {
-        server.updateJob(job, this);
+        server.updateJob(job);
     }
 
-    public void applyForAJob(Job job, Worker worker) throws RemoteException {
+    public void applyForJob(Job job, Worker worker) throws RemoteException {
         server.applyForJob(job, worker);
     }
 
@@ -111,8 +113,8 @@ public class Connection implements RemoteClient {
         return server.getWorkerJobHistory(worker);
     }
 
-    public ArrayList<Job> getEmployerWorkHistory(Employer employer) throws RemoteException {
-        return server.getEmployerWorkHistory(employer);
+    public ArrayList<Job> getEmployerJobHistory(Employer employer) throws RemoteException {
+        return server.getEmployerJobHistory(employer);
     }
 
     //todo
@@ -130,23 +132,5 @@ public class Connection implements RemoteClient {
 
     public ArrayList<Job> getJobs() {
         return null;
-    }
-
-    //REMOTE
-    //todo
-
-    @Override
-    public void _addJob(Job job) throws RemoteException {
-        System.out.println(job);
-    }
-
-    @Override
-    public void _removeJob(Job job) throws RemoteException {
-        System.out.println(job);
-    }
-
-    @Override
-    public void _updateJob(Job job) throws RemoteException {
-        System.out.println(job);
     }
 }

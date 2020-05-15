@@ -20,7 +20,7 @@ public interface EmployerModel {
 
     public Employer getEmployer();
 
-    ArrayList<Job> getEmployerJobHistory() throws Exception;
+    ArrayList<Job> getWorkHistory() throws Exception;
 
     ArrayList<Job> getEmployerJobs();
 

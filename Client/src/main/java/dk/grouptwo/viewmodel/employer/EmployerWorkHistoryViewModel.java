@@ -42,7 +42,7 @@ public class EmployerWorkHistoryViewModel {
     {
         ObservableList<WorkTableData> list = FXCollections.observableArrayList();
         try {
-            ArrayList<Job> jobs = model.getEmployerJobHistory();
+            ArrayList<Job> jobs = model.getWorkHistory();
             for (Job job : jobs)
                 list.add(new WorkTableData(job));
         } catch (Exception e) {

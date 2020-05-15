@@ -50,7 +50,11 @@ public class FindWorkViewModel {
     }
 
     public void apply(WorkTableData data) {
-        model.applyForJob(data.getJobId());
+        try {
+            model.applyForJob(data.getJobId());
+        } catch (Exception e) {
+//            error.set(e.getMessage());
+        }
     }
 
     public ObservableList<WorkTableData> getList()
