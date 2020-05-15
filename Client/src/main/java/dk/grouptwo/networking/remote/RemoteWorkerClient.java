@@ -7,7 +7,8 @@ import java.rmi.Remote;
 public interface RemoteWorkerClient extends Remote {
     public void addJob(Job job);
 
-    public void moveToUpcoming(Job job);
+    public void updateJob(Job job);
 
-    public void moveToHistory(Job job);
+    public void removeJob(Job job);
 }
+

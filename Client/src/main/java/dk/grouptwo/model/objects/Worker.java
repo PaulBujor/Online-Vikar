@@ -104,4 +104,11 @@ public class Worker extends Account {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Worker))
+            return false;
+        Worker other = (Worker) obj;
+        return CPR.equals(other.CPR);
+    }
 }

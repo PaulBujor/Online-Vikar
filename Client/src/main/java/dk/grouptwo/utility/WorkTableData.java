@@ -99,6 +99,12 @@ public class WorkTableData {
 
     public DoubleProperty workTimeProperty() {
         return new SimpleDoubleProperty(Math.floor(((double) ChronoUnit.MINUTES.between(startTimeProperty().get(), endTimeProperty().get())) / 60 * 100) / 100);
+    }
 
+    public boolean equals(Object obj) {
+        if(!(obj instanceof WorkTableData))
+            return false;
+        WorkTableData other = (WorkTableData) obj;
+        return jobId == other.jobId;
     }
 }

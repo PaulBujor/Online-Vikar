@@ -3,11 +3,12 @@ package dk.grouptwo.model;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.utility.PropertyChangeSubject;
 
 import java.util.ArrayList;
 
 
-public interface WorkerModel {
+public interface WorkerModel extends PropertyChangeSubject {
 
     void applyForJob(int jobID) throws Exception;
 

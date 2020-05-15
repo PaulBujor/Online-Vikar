@@ -3,6 +3,7 @@ package dk.grouptwo.viewmodel.worker;
 import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,9 +11,11 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
-public class WorkerWorkHistoryViewModel {
+public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
 
     private WorkerModel model;
     private StringProperty username;
@@ -28,6 +31,7 @@ public class WorkerWorkHistoryViewModel {
 
     public WorkerWorkHistoryViewModel(WorkerModel model) {
         this.model = model;
+        model.addListener(this);
         username = new SimpleStringProperty("");
         list = createList();
         hoursWorked = new SimpleDoubleProperty(model.getHoursWorkedThisMonth());
@@ -93,5 +97,14 @@ public class WorkerWorkHistoryViewModel {
 
     public StringProperty descriptionProperty() {
         return description;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("moveToHistory"))
+            Platform.runLater(() -> {
+                list.add(new WorkTableData((Job) evt.getNewValue()));
+                hoursWorked.set(model.getHoursWorkedThisMonth());
+            });
     }
 }
