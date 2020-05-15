@@ -15,8 +15,13 @@ public interface Persistence
   void removeJobFromDB(Job job);
 
   // maybe Worker instead of void
-  Worker applyForJob(Job job, Worker worker);
+
+  void  applyForJob(Job job,Worker worker);
+  void updateJob();
+
+
   void updateJob(Job job);
+
 
  //Login checks
  Employer loginEmployer(String CVR,String password);
@@ -34,7 +39,7 @@ public interface Persistence
   ArrayList<Job> getUpcomingJobsWorkerFromDB(Worker worker);
   ArrayList<Job> getCurrentEmployerJobs(Employer employer);
 
-  ArrayList<Worker> getAllAppliedWorkers(String jobID);
+  ArrayList<Worker> getAllAppliedWorkers(Job job);
 
   int insertAddress(Address address);
 
