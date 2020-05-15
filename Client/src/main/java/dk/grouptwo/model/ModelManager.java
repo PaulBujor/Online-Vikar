@@ -17,13 +17,22 @@ import java.util.ArrayList;
 public class ModelManager implements AccountManagement, EmployerModel, WorkerModel {
     private ArrayList<Job> jobs;
     private ArrayList<Job> workHistory;
+
+    //worker
+    private ArrayList<Job> upcomingJobs;
     private Worker worker;
+
+    //employer
     private Employer employer;
+
+    //network
     private String host = "localhost";
     private int port = 1099;
     private RemoteServer server = new Server(host, port);
     private RemoteWorkerClient workerClient;
     private RemoteEmployerClient employerClient;
+
+    //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
 
     @Override
     public void registerAccountWorker(Worker worker, String password) throws Exception {
@@ -42,6 +51,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             worker = server.loginWorker(CPR, password);
             workerClient = new WorkerClient(this);
             server.registerWorkerClient(workerClient);
+            upcomingJobs = server.getUpcomingJobs(worker);
+            workHistory = server.getWorkerJobHistory(worker);
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -174,27 +185,15 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getWorkerJobHistory() {
-        try {
-            return server.getWorkerJobHistory(worker);
-        } catch (RemoteException e) {
-            return null;
-        }
-    }
-
-    public ArrayList<Job> getEmployerJobHistory() throws Exception {
-        try {
-            return server.getEmployerJobHistory(employer);
-        } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
-        }
+    public ArrayList<Job> getWorkHistory() {
+        return workHistory;
     }
 
     @Override
     public void createWorkOffer(Job job) throws Exception {
         jobs.add(job);
         try {
-            server.addJob(job);
+            server.addJob(job, employerClient);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -285,11 +284,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public ArrayList<Job> getUpcomingJobs() throws Exception {
-        try {
-            return server.getUpcomingJobs(worker);
-        } catch (RemoteException e) {
-            throw new Exception("No jobs could be found");
-        }
+        return upcomingJobs;
     }
 
     //static for username button

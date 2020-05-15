@@ -1,6 +1,5 @@
 package dk.grouptwo.viewmodel.worker;
 
-import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.utility.WorkTableData;
@@ -11,7 +10,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class WorkerWorkHistoryViewModel {
@@ -43,7 +41,7 @@ public class WorkerWorkHistoryViewModel {
 
     private ObservableList<WorkTableData> createList() {
         ObservableList<WorkTableData> list = FXCollections.observableArrayList();
-        ArrayList<Job> jobs = model.getWorkerJobHistory();
+        ArrayList<Job> jobs = model.getWorkHistory();
         for (Job job : jobs) {
             list.add(new WorkTableData(job));
         }
