@@ -9,39 +9,41 @@ import dk.grouptwo.model.objects.Worker;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public interface RemoteServer extends Remote {
-    void registerClient(RemoteClient clientToRegister) throws RemoteException;
+    //    void registerClient(RemoteClient clientToRegister) throws RemoteException;
+    public void registerWorkerClient(RemoteWorkerClient client) throws RemoteException;
 
     //Logins
-    Employer loginEmployer(String CVR, String password) throws RemoteException;
+    Employer loginEmployer(String CVR, String password) throws RemoteException, NoSuchAlgorithmException;
 
-    Worker loginWorker(String CPR, String password) throws RemoteException;
+    Worker loginWorker(String CPR, String password) throws RemoteException, NoSuchAlgorithmException;
 
     //Creating accounts
-    void createEmployerAccount(Employer employer, String password) throws RemoteException;
+    void createEmployerAccount(Employer employer, String password) throws RemoteException, NoSuchAlgorithmException;
 
-    void createWorkerAccount(Worker worker, String password) throws RemoteException;
+    void createWorkerAccount(Worker worker, String password) throws RemoteException, NoSuchAlgorithmException;
 
     //Edit profiles
-    Employer editEmployer(Employer employer, String password) throws RemoteException;
+    Employer editEmployer(Employer employer, String password) throws RemoteException, NoSuchAlgorithmException;
 
-    Employer editEmployer(Employer employer, String password, String newPassword) throws RemoteException;
+    Employer editEmployer(Employer employer, String password, String newPassword) throws RemoteException, NoSuchAlgorithmException;
 
-    Worker editWorker(Worker worker, String password) throws RemoteException;
+    Worker editWorker(Worker worker, String password) throws RemoteException, NoSuchAlgorithmException;
 
-    Worker editWorker(Worker worker, String password, String newPassword) throws RemoteException;
+    Worker editWorker(Worker worker, String password, String newPassword) throws RemoteException, NoSuchAlgorithmException;
 
     //Apply and update job
     void applyForJob(Job job, Worker worker) throws RemoteException;
 
     //client used for callback, might not be needed if exceptions are handled nicely
-    void addJob(Job job, RemoteClient client) throws RemoteException;
+    void addJob(Job job) throws RemoteException;
 
-    void removeJob(Job job, RemoteClient client) throws RemoteException;
+    void removeJob(Job job) throws RemoteException;
 
-    void updateJob(Job job, RemoteClient client) throws RemoteException;
+    void updateJob(Job job) throws RemoteException;
 
     //get jobs
     ArrayList<Job> getUpcomingJobs(Worker worker) throws RemoteException;
@@ -53,4 +55,8 @@ public interface RemoteServer extends Remote {
     void addLicense(License license, Worker worker) throws RemoteException;
 
     void removeLicense(License license) throws RemoteException;
+
+    ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException;
+
+    ArrayList<Job> getJobs() throws RemoteException;
 }

@@ -29,8 +29,6 @@ public interface AccountManagement {
 
     public void logOutEmployer();
 
-    public ArrayList<Job> getWorkerJobHistory() throws Exception;
-
     public Employer getEmployer();
 
     ArrayList<License> getLicenses();

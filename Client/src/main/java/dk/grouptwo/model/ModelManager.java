@@ -1,12 +1,12 @@
 package dk.grouptwo.model;
 
 import dk.grouptwo.model.objects.*;
-import dk.grouptwo.networking.Connection;
-import dk.grouptwo.networking.LocalConnectionTest;
+import dk.grouptwo.networking.Server;
+import dk.grouptwo.networking.WorkerClient;
+import dk.grouptwo.networking.remote.RemoteServer;
+import dk.grouptwo.networking.remote.RemoteWorkerClient;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.security.InvalidParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -17,12 +17,15 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private ArrayList<Job> workHistory;
     private Worker worker;
     private Employer employer;
-    private Connection connection = new LocalConnectionTest();
+    private String host = "localhost";
+    private int port = 1099;
+    private RemoteServer server = new Server(host, port);
+    private RemoteWorkerClient workerClient;
 
     @Override
     public void registerAccountWorker(Worker worker, String password) throws Exception {
         try {
-            connection.createWorkerAccount(worker, password);
+            server.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
@@ -33,7 +36,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInWorker(String CPR, String password) throws Exception {
         try {
-            worker = connection.loginWorker(CPR, password);
+            worker = server.loginWorker(CPR, password);
+            workerClient = new WorkerClient(this);
+            server.registerWorkerClient(workerClient);
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -45,7 +50,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void registerAccountEmployer(Employer employer, String password) throws Exception {
         try {
-            connection.createEmployerAccount(employer, password);
+            server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
@@ -57,7 +62,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInEmployer(String CVR, String password) throws Exception {
         try {
-            employer = connection.loginEmployer(CVR, password);
+            employer = server.loginEmployer(CVR, password);
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -69,7 +74,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editEmployer(Employer employer, String password) throws Exception {
         try {
-            connection.editEmployer(employer, password);
+            server.editEmployer(employer, password);
         } catch (RemoteException e) {
             throw new IllegalArgumentException("Error saving edited data.");
         } catch (NoSuchAlgorithmException e) {
@@ -80,7 +85,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editEmployer(Employer employer, String password, String newPassword) throws Exception {
         try {
-            connection.editEmployer(employer, password, newPassword);
+            server.editEmployer(employer, password, newPassword);
         } catch (RemoteException e) {
             throw new IllegalArgumentException("Error saving edited data.");
         } catch (NoSuchAlgorithmException e) {
@@ -91,7 +96,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editWorker(Worker worker, String password) throws Exception {
         try {
-            worker = connection.editWorker(worker, password);
+            worker = server.editWorker(worker, password);
         } catch (RemoteException e) {
             throw new Exception("Error saving edited data.");
         } catch (NoSuchAlgorithmException e) {
@@ -102,7 +107,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editWorker(Worker worker, String password, String newPassword) throws Exception {
         try {
-            worker = connection.editWorker(worker, password, newPassword);
+            worker = server.editWorker(worker, password, newPassword);
         } catch (RemoteException e) {
             throw new Exception("Error saving edited data.");
         } catch (NoSuchAlgorithmException e) {
@@ -162,7 +167,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public ArrayList<Job> getWorkerJobHistory() {
         try {
-            return connection.getWorkerJobHistory(worker);
+            return server.getWorkerJobHistory(worker);
         } catch (RemoteException e) {
             return null;
         }
@@ -170,7 +175,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     public ArrayList<Job> getEmployerJobHistory() throws Exception {
         try {
-            return connection.getEmployerWorkHistory(employer);
+            return server.getEmployerWorkHistory(employer);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -180,7 +185,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void createWorkOffer(Job job) throws Exception {
         jobs.add(job);
         try {
-            connection.addJob(job);
+            server.addJob(job);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -190,7 +195,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void cancelWorkOffer(Job job) throws Exception {
         jobs.remove(job);
         try {
-            connection.removeJob(job);
+            server.removeJob(job);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -199,7 +204,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void updateWorkOffer(Job job) throws Exception {
         try {
-            connection.updateJob(job);
+            server.updateJob(job);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -208,7 +213,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void applyForJob(int jobID) throws Exception {
         try {
-            connection.applyForAJob(getJobById(jobID), worker);
+            server.applyForJob(getJobById(jobID), worker);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -217,7 +222,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void addLicense(License license) throws Exception {
         try {
-            connection.addLicense(license, worker);
+            server.addLicense(license, worker);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -226,7 +231,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void deleteLicense(String licenseNumber) throws Exception {
         try {
-            connection.removeLicense(getLicenseByNumber(licenseNumber));
+            server.removeLicense(getLicenseByNumber(licenseNumber));
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -239,7 +244,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public ArrayList<Job> getEmployerJobs() {
-        return connection.getEmployerJobs(employer);
+        try {
+            return server.getEmployerJobs(employer);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+            //todo
+        }
     }
 
     @Override
@@ -255,13 +266,19 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public ArrayList<Job> getJobs() {
-        return connection.getJobs();
+        try {
+            return server.getJobs();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return null;
+            //todo
+        }
     }
 
     @Override
     public ArrayList<Job> getUpcomingJobs() throws Exception {
         try {
-            return connection.getUpcomingJobs(worker);
+            return server.getUpcomingJobs(worker);
         } catch (RemoteException e) {
             throw new Exception("No jobs could be found");
         }
