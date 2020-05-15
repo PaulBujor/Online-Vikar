@@ -28,6 +28,11 @@ public class Worker extends Account {
         return CPR;
     }
 
+    public void setCPR(String CPR)
+    {
+        this.CPR = CPR;
+    }
+
     public String getFirstName() {
         return firstName;
     }

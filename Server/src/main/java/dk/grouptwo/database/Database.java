@@ -1,11 +1,10 @@
 package dk.grouptwo.database;
 
-import dk.grouptwo.model.objects.Address;
-import dk.grouptwo.model.objects.Employer;
-import dk.grouptwo.model.objects.Job;
-import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.model.objects.*;
 
+import javax.print.DocFlavor;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Database implements Persistence
@@ -20,89 +19,105 @@ public class Database implements Persistence
     String SQL =
         "INSERT INTO job(jobtitle,description,salary,workersneeded,shiftstart,shiftend,status,cvr,address"
             + "VALUES(?,?,?,?,?,?,?,?,?)";
-   try{
-     Connection conn= DatabaseConnection.getInstance().connect();
-     PreparedStatement posted = conn.prepareStatement(SQL);
-     posted.setString(1,job.getJobTitle());
-     posted.setString(2,job.getDescription());
-     posted.setDouble(3,job.getSalary());
-     posted.setInt(4,job.getWorkersNeeded());
-     posted.setTimestamp(5,Timestamp.valueOf(job.getShiftStart()));
-     posted.setTimestamp(6,Timestamp.valueOf(job.getShiftEnd()));
-     posted.setString(7,job.getStatus());
-     posted.setString(8,job.getEmployer().getCVR());
-     posted.setInt(9,insertAddress(job.getLocation()));
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement posted = conn.prepareStatement(SQL);
+      posted.setString(1, job.getJobTitle());
+      posted.setString(2, job.getDescription());
+      posted.setDouble(3, job.getSalary());
+      posted.setInt(4, job.getWorkersNeeded());
+      posted.setTimestamp(5, Timestamp.valueOf(job.getShiftStart()));
+      posted.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
+      posted.setString(7, job.getStatus());
+      posted.setString(8, job.getEmployer().getCVR());
+      posted.setInt(9, insertAddress(job.getLocation()));
 
-   }
-   catch (SQLException e ){
-     e.printStackTrace();
-   }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
-public Employer getEmployer(String cvr){
-    Employer tmpEmployer = new Employer(null,null,null,null,null);
-    try{
+
+  public Employer getEmployer(String cvr)
+  {
+    Employer tmpEmployer = new Employer(null, null, null, null, null);
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       String SQL = "SELECT * FROM employer WHERE cvr=?";
       PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1,cvr);
+      pstm.setString(1, cvr);
       ResultSet rs = pstm.executeQuery();
 
-      while(rs.next()){
-        process(rs,tmpEmployer);
+      while (rs.next())
+      {
+        process(rs, tmpEmployer);
       }
 
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return tmpEmployer;
-}
+  }
 
-public Employer getEmployer(Job job){
-  Employer tmpEmployer = new Employer(null,null,null,getJobCVR(job),null);
-    try{
-      Connection conn= DatabaseConnection.getInstance().connect();
+  public Employer getEmployer(Job job)
+  {
+    Employer tmpEmployer = new Employer(null, null, null, getJobCVR(job), null);
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
       String SQL = "SELECT * FROM employer WHERE cvr=?";
-      PreparedStatement pstm =conn.prepareStatement(SQL);
-      pstm.setString(1,getJobCVR(job));
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, getJobCVR(job));
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
+      while (rs.next())
+      {
 
-        process(rs,tmpEmployer);
+        process(rs, tmpEmployer);
       }
     }
-    catch (SQLException e ){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return tmpEmployer;
-}
-  public String getJobCVR(Job job){
+  }
+
+  public String getJobCVR(Job job)
+  {
     String SQL = "Select cvr FROM job WHERE jobID=?";
     String tmp = "";
-    try{
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setInt(1,getJobID(job));
+      pstm.setInt(1, getJobID(job));
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
+      while (rs.next())
+      {
         tmp = rs.getString("cvr");
       }
     }
-    catch (SQLException e) {
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return tmp;
   }
 
-
-  public int getJobID(Job job){
+  public int getJobID(Job job)
+  {
     String SQL = "SELECT jobID FROM job WHERE jobtitle=? AND description=? AND salary=? AND workersneeded=? AND shiftstart=? AND shiftend=? AND status=? AND cvr=? AND address=?";
     int id = 0;
     try
     {
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement preparedStatement = conn.prepareStatement(SQL);
-      preparedStatement.setString(1,job.getJobTitle() );
+      preparedStatement.setString(1, job.getJobTitle());
       preparedStatement.setString(2, job.getDescription());
       preparedStatement.setDouble(3, job.getSalary());
       preparedStatement.setInt(4, job.getWorkersNeeded());
@@ -110,7 +125,7 @@ public Employer getEmployer(Job job){
       preparedStatement.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
       preparedStatement.setString(7, job.getStatus());
       preparedStatement.setString(8, job.getEmployer().getCVR());
-      preparedStatement.setInt(9,insertAddress(job.getLocation()));
+      preparedStatement.setInt(9, insertAddress(job.getLocation()));
       ResultSet rs = preparedStatement.executeQuery();
       while (rs.next())
       {
@@ -124,37 +139,42 @@ public Employer getEmployer(Job job){
     return id;
   }
 
-
   @Override public void removeJobFromDB(Job job)
   {
-String SQL = "DELETE FROM job WHERE jobID=?";
-    try{
+    String SQL = "DELETE FROM job WHERE jobID=?";
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm= conn.prepareStatement(SQL);
-      pstm.setInt(1,getJobID(job));
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setInt(1, getJobID(job));
       pstm.executeUpdate();
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
   }
 
-
-
-
   @Override public void applyForJob(Job job, Worker worker)
 
   {
- String SQL = "INSERT INTO applied (cvr,jobID)" + "VALUES(?,?)";
- try{
-   Connection conn = DatabaseConnection.getInstance().connect();
-   PreparedStatement pstm= conn.prepareStatement(SQL);
-   pstm.setString(1,worker.getCPR());
-   pstm.setInt(1,getJobID(job));
- }
- catch (SQLException e){
-   e.printStackTrace();
- }
+    String SQL = "INSERT INTO applied (cvr,jobID)" + "VALUES(?,?)";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
+      pstm.setInt(1, getJobID(job));
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void updateJob()
+  {
+
   }
 
   @Override public void updateJob(Job job)
@@ -176,9 +196,10 @@ String SQL = "DELETE FROM job WHERE jobID=?";
       String password) throws SQLException
   {
 
-    String SQL = "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
+    String SQL =
+        "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
 
-        + "VALUES(?,?,?,?,?,?)";
+            + "VALUES(?,?,?,?,?,?)";
     try
     {
       Connection conn = DatabaseConnection.getInstance().connect();
@@ -217,7 +238,7 @@ String SQL = "DELETE FROM job WHERE jobID=?";
       posted.setString(7, worker.getPhone());
       posted.setString(8, worker.getLanguages());
       posted.setString(9, worker.getDescription());
-      posted.setInt(10,insertAddress(worker.getAddress()));
+      posted.setInt(10, insertAddress(worker.getAddress()));
       posted.execute();
       posted.close();
     }
@@ -231,21 +252,24 @@ String SQL = "DELETE FROM job WHERE jobID=?";
   {
     ArrayList<Job> jobs = new ArrayList<>();
     String SQL = "SELECT * FROM job";
-    try{
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       Statement stmt = conn.createStatement();
       ResultSet rs = stmt.executeQuery(SQL);
-      while(rs.next()){
-        Job tmpJob = new Job(0,null,null,0,0,null,null,null,null,null);
-        process(rs,tmpJob);
+      while (rs.next())
+      {
+        Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
+        process(rs, tmpJob);
         jobs.add(tmpJob);
       }
     }
-    catch (SQLException e ){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return jobs;
-}
+  }
 
   @Override public ArrayList<Job> getAllJobHistoryWorkerFromDB(Worker worker)
   {
@@ -255,23 +279,26 @@ String SQL = "DELETE FROM job WHERE jobID=?";
   @Override public ArrayList<Job> getAllJobHistoryEmployerFromDB(
       Employer employer)
   {
-   ArrayList<Job> jobs = new ArrayList<>();
-   String SQL = "SELECT * FROM job WHERE cvr=? AND status='finished' OR status='cancelled'";
-   try{
-     Connection conn = DatabaseConnection.getInstance().connect();
-    PreparedStatement pstm = conn.prepareStatement(SQL);
-    pstm.setString(1,employer.getCVR());
-  ResultSet rs = pstm.executeQuery();
-     while(rs.next()){
-       Job tmpJob = new Job(0,null,null,0,0,null,null,null,null,null);
-       process(rs,tmpJob);
-       jobs.add(tmpJob);
-     }
-   }
-   catch (SQLException e ){
-     e.printStackTrace();
-   }
-   return  jobs;
+    ArrayList<Job> jobs = new ArrayList<>();
+    String SQL = "SELECT * FROM job WHERE cvr=? AND status='completed' OR status='cancelled'";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, employer.getCVR());
+      ResultSet rs = pstm.executeQuery();
+      while (rs.next())
+      {
+        Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
+        process(rs, tmpJob);
+        jobs.add(tmpJob);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return jobs;
   }
 
   @Override public ArrayList<Job> getUpcomingJobsWorkerFromDB(Worker worker)
@@ -282,26 +309,57 @@ String SQL = "DELETE FROM job WHERE jobID=?";
   @Override public ArrayList<Job> getCurrentEmployerJobs(Employer employer)
   {
     ArrayList<Job> jobs = new ArrayList<>();
-    String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending'";
-    try{
+    String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending' OR status='created'";
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1,employer.getCVR());
+      pstm.setString(1, employer.getCVR());
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
-        Job tmpJob = new Job(0,null,null,0,0,null,null,null,null,null);
-        process(rs,tmpJob);
+      while (rs.next())
+      {
+        Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
+        process(rs, tmpJob);
         jobs.add(tmpJob);
       }
     }
-    catch (SQLException e ){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
-    return  jobs;
+    return jobs;
   }
 
-
   @Override public ArrayList<Worker> getAllAppliedWorkers(Job job)
+  {
+    ArrayList<Worker> workers = new ArrayList<>();
+
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+
+      //TODO might need to change SQL
+      String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM applied WHERE jobID =? )";
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt.setInt(1, getJobID(job));
+      ResultSet rs = pstmt.executeQuery();
+      while (rs.next())
+      {
+        //TODO subject to change
+        Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
+            null, null);
+        process(rs, tmpWorker);
+        workers.add(tmpWorker);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return workers;
+  }
+
+  @Override public ArrayList<Worker> getAllAcceptedWorkers(Job job)
   {
     ArrayList<Worker> workers = new ArrayList<>();
 
@@ -328,6 +386,48 @@ String SQL = "DELETE FROM job WHERE jobID=?";
       e.printStackTrace();
     }
     return workers;
+  }
+
+  @Override public void addLicense(License license, Worker worker)
+  {
+    String SQL =
+        "INSERT INTO licence(cpr,licensenumber,typee,category,issuedate,expirydate"
+            + "VALUE(?,?,?,?,?,?)";
+
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
+      pstm.setString(2, license.getLicenseNumber());
+      pstm.setString(3, license.getType());
+      pstm.setString(4, license.getCategory());
+      pstm.setDate(5, Date.valueOf(license.getIssueDate()));
+      pstm.setDate(6, Date.valueOf(license.getExpiryDate()));
+      pstm.execute();
+
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void removeLicense(License license)
+  {
+    String SQL = "DELETE FROM licence where licensenumber=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, license.getLicenseNumber());
+      pstm.execute();
+
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public int insertAddress(Address address)
@@ -375,77 +475,94 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     }
     return id;
   }
-  public Address getAddressByID(int id){
-    Address tmpAddress = new Address(null,null,null,null);
-    String SQL ="SELECT * FROM address WHERE addressid=?";
-    try{
+
+  public Address getAddressByID(int id)
+  {
+    Address tmpAddress = new Address(null, null, null, null);
+    String SQL = "SELECT * FROM address WHERE addressid=?";
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setInt(1,id);
+      pstm.setInt(1, id);
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
-        process(rs,tmpAddress);
+      while (rs.next())
+      {
+        process(rs, tmpAddress);
       }
     }
-    catch (SQLException e ){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return tmpAddress;
   }
 
-  public int getAddressValueFromJob(Job job){
-    int id=0;
-    String SQL ="SELECT address FROM job where jobID=?";
-    try{
-      Connection conn = DatabaseConnection.getInstance().connect();
-     PreparedStatement pstm = conn.prepareStatement(SQL);
-     pstm.setInt(1,getJobID(job));
-     ResultSet rs = pstm.executeQuery();
-     while(rs.next()){
-       id= rs.getInt("address");
-     }
-    }
-    catch (SQLException e){
-      e.printStackTrace();
-    }
-    return id;
-  }
-  public int getAddressValueFromEmployer(Employer employer){
+  public int getAddressValueFromJob(Job job)
+  {
     int id = 0;
-    String SQL ="SELECT address FROM employer where cvr=?";
-    try{
+    String SQL = "SELECT address FROM job where jobID=?";
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1,employer.getCVR());
+      pstm.setInt(1, getJobID(job));
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
+      while (rs.next())
+      {
         id = rs.getInt("address");
       }
     }
-    catch (SQLException e ){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return id;
   }
 
-  public  int getAddressValueFromWorker(Worker worker){
+  public int getAddressValueFromEmployer(Employer employer)
+  {
+    int id = 0;
+    String SQL = "SELECT address FROM employer where cvr=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, employer.getCVR());
+      ResultSet rs = pstm.executeQuery();
+      while (rs.next())
+      {
+        id = rs.getInt("address");
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return id;
+  }
+
+  public int getAddressValueFromWorker(Worker worker)
+  {
     int id = 0;
     String SQL = "SELECT address FROM worker where cpr=?";
-    try{
+    try
+    {
       Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm= conn.prepareStatement(SQL);
-      pstm.setString(1,worker.getCPR());
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
       ResultSet rs = pstm.executeQuery();
-      while(rs.next()){
+      while (rs.next())
+      {
         id = rs.getInt("address");
       }
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
     return id;
   }
-
 
   public ArrayList<Address> getAllAddress()
   {
@@ -472,6 +589,31 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     return addresses;
   }
 
+  public ArrayList<License> getAllLicencesByCPR(String cpr)
+  {
+    ArrayList<License> licenses = new ArrayList<>();
+    try
+    {
+      String SQL = "SELECT * license where cpr=?";
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, cpr);
+      ResultSet rs = pstm.executeQuery();
+
+      while (rs.next())
+      {
+        License tmpLicense = new License(null, null, null, null, null);
+        process(rs, tmpLicense);
+        licenses.add(tmpLicense);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    return licenses;
+  }
+
   private void process(ResultSet rs, Address address) throws SQLException
   {
     address.setCountry(rs.getString("country"));
@@ -483,6 +625,7 @@ String SQL = "DELETE FROM job WHERE jobID=?";
 
   private void process(ResultSet rs, Worker worker) throws SQLException
   {
+    worker.setCPR(rs.getString("cpr"));
     worker.setFirstName(rs.getString("firstname"));
     worker.setLastName(rs.getString("lastname"));
     worker.setTaxCard(rs.getString("taxcard"));
@@ -491,7 +634,16 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     worker.setLanguages(rs.getString("languages"));
     worker.setDescription(rs.getString("description"));
     worker.setAddress(getAddressByID(rs.getInt("address")));
+    worker.setLicenses(getAllLicencesByCPR(rs.getString("cpr")));
+  }
 
+  private void process(ResultSet rs, License license) throws SQLException
+  {
+    license.setLicenseNumber(rs.getString("licensenumber"));
+    license.setType(rs.getString("typee"));
+    license.setCategory(rs.getString("category"));
+    license.setIssueDate(rs.getDate("issuedate").toLocalDate());
+    license.setExpiryDate(rs.getDate("expirydate").toLocalDate());
   }
 
   private void process(ResultSet rs, Employer employer) throws SQLException
@@ -501,6 +653,7 @@ String SQL = "DELETE FROM job WHERE jobID=?";
     employer.setPhone(rs.getString("phone"));
     employer.setAddress(getAddressByID(rs.getInt("address")));
   }
+
   private void process(ResultSet rs, Job job) throws SQLException
   {
 
