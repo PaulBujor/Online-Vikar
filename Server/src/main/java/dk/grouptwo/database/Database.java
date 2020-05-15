@@ -6,7 +6,6 @@ import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 
 import java.sql.*;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Database implements Persistence
@@ -118,12 +117,12 @@ String SQL = "DELETE FROM job WHERE jobid=?";
     }
   }
 
-  @Override public Worker applyForJob(Worker worker)
+  @Override public Worker applyForJob(Job job, Worker worker)
   {
     return null;
   }
 
-  @Override public void updateJob()
+  @Override public void updateJob(Job job)
   {
 
   }

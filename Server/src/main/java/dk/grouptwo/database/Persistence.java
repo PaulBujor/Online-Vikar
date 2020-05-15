@@ -15,8 +15,8 @@ public interface Persistence
   void removeJobFromDB(Job job);
 
   // maybe Worker instead of void
-  Worker applyForJob(Worker worker);
-  void updateJob();
+  Worker applyForJob(Job job, Worker worker);
+  void updateJob(Job job);
 
  //Login checks
  Employer loginEmployer(String CVR,String password);

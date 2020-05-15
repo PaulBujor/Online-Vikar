@@ -1,8 +1,10 @@
 package dk.grouptwo.model;
 
 import dk.grouptwo.model.objects.*;
+import dk.grouptwo.networking.EmployerClient;
 import dk.grouptwo.networking.Server;
 import dk.grouptwo.networking.WorkerClient;
+import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 
@@ -21,6 +23,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private int port = 1099;
     private RemoteServer server = new Server(host, port);
     private RemoteWorkerClient workerClient;
+    private RemoteEmployerClient employerClient;
 
     @Override
     public void registerAccountWorker(Worker worker, String password) throws Exception {
@@ -63,20 +66,24 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void logInEmployer(String CVR, String password) throws Exception {
         try {
             employer = server.loginEmployer(CVR, password);
+            jobs = server.getEmployerJobs(employer);
+            employerClient = new EmployerClient(this);
+            server.registerEmployerClient(employerClient, jobs);
+            setEmployerName(employer.getCompanyName());
         } catch (RemoteException e) {
-            throw new Exception("Account does not exist!");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
-        setEmployerName(employer.getCompanyName());
     }
 
     @Override
     public void editEmployer(Employer employer, String password) throws Exception {
         try {
             server.editEmployer(employer, password);
+            this.employer = employer;
         } catch (RemoteException e) {
-            throw new IllegalArgumentException("Error saving edited data.");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
         }
@@ -86,8 +93,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void editEmployer(Employer employer, String password, String newPassword) throws Exception {
         try {
             server.editEmployer(employer, password, newPassword);
+            this.employer = employer;
         } catch (RemoteException e) {
-            throw new IllegalArgumentException("Error saving edited data.");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
         }
@@ -96,9 +104,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editWorker(Worker worker, String password) throws Exception {
         try {
-            worker = server.editWorker(worker, password);
+            server.editWorker(worker, password);
+            this.worker = worker;
         } catch (RemoteException e) {
-            throw new Exception("Error saving edited data.");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could no be encrypted.");
         }
@@ -107,9 +116,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editWorker(Worker worker, String password, String newPassword) throws Exception {
         try {
-            worker = server.editWorker(worker, password, newPassword);
+            server.editWorker(worker, password, newPassword);
+            this.worker = worker;
         } catch (RemoteException e) {
-            throw new Exception("Error saving edited data.");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could no be encrypted.");
         }
@@ -119,8 +129,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         return employer;
     }
 
-    public Worker getWorker()
-    {
+    public Worker getWorker() {
         return worker;
     }
 
@@ -175,7 +184,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     public ArrayList<Job> getEmployerJobHistory() throws Exception {
         try {
-            return server.getEmployerWorkHistory(employer);
+            return server.getEmployerJobHistory(employer);
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -256,8 +265,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public Worker getWorkerByJob(int jobID, String CPR) {
         Job job = getJobById(jobID);
-        for (Worker worker : job.getApplicants())
-        {
+        for (Worker worker : job.getApplicants()) {
             if (worker.getCPR().equals(CPR))
                 return worker;
         }

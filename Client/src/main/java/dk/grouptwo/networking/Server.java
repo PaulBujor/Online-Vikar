@@ -113,8 +113,8 @@ public class Server implements RemoteServer {
         return server.getWorkerJobHistory(worker);
     }
 
-    public ArrayList<Job> getEmployerWorkHistory(Employer employer) throws RemoteException {
-        return server.getEmployerWorkHistory(employer);
+    public ArrayList<Job> getEmployerJobHistory(Employer employer) throws RemoteException {
+        return server.getEmployerJobHistory(employer);
     }
 
     //todo
