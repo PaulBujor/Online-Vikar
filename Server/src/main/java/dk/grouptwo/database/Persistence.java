@@ -1,9 +1,7 @@
 package dk.grouptwo.database;
 
-import dk.grouptwo.model.objects.Address;
-import dk.grouptwo.model.objects.Employer;
-import dk.grouptwo.model.objects.Job;
-import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.model.objects.*;
+
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -40,6 +38,11 @@ public interface Persistence
   ArrayList<Job> getCurrentEmployerJobs(Employer employer);
 
   ArrayList<Worker> getAllAppliedWorkers(Job job);
+  ArrayList<Worker> getAllAcceptedWorkers(Job job);
+
+ void addLicense(License license, Worker worker) ;
+
+ void removeLicense(License license) ;
 
   int insertAddress(Address address);
 
