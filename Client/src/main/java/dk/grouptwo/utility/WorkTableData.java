@@ -56,21 +56,17 @@ public class WorkTableData {
         return jobTitle;
     }
 
-
     public StringProperty statusProperty() {
         return status;
     }
-
 
     public StringProperty employerProperty() {
         return employer;
     }
 
-
     public IntegerProperty numberOfWorkersProperty() {
         return numberOfWorkers;
     }
-
 
     public DoubleProperty salaryProperty() {
         return salary;
@@ -79,7 +75,6 @@ public class WorkTableData {
     public ObjectProperty<LocalDateTime> startTimeProperty() {
         return startTime;
     }
-
 
     public ObjectProperty<LocalDateTime> endTimeProperty() {
         return endTime;

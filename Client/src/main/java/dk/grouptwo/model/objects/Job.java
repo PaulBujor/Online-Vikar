@@ -152,4 +152,8 @@ public class Job implements Serializable {
     public void removeSelectedWorker(Worker worker) {
         selectedWorkers.remove(worker);
     }
+
+    public void setSelectedWorkers(ArrayList<Worker> selectedWorkers) {
+        this.selectedWorkers = selectedWorkers;
+    }
 }
