@@ -58,4 +58,6 @@ public interface RemoteServer extends Remote {
     ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException;
 
     ArrayList<Job> getJobs() throws RemoteException;
+
+    void cancelWorkerFromJob(Job job, Worker worker);
 }

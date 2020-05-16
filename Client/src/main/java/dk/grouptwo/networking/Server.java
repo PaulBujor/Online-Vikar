@@ -123,7 +123,11 @@ public class Server implements RemoteServer {
         return server.getEmployerJobHistory(employer);
     }
 
-    //todo
+    @Override
+    public void cancelWorkerFromJob(Job job, Worker worker) {
+        server.cancelWorkerFromJob(job, worker);
+    }
+
     public void addLicense(License license, Worker worker) throws RemoteException {
         server.addLicense(license, worker);
     }
@@ -132,11 +136,13 @@ public class Server implements RemoteServer {
         server.removeLicense(license);
     }
 
-    public ArrayList<Job> getEmployerJobs(Employer employer) {
-        return null;
+    public ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException {
+        return server.getEmployerJobs(employer);
     }
 
-    public ArrayList<Job> getJobs() {
-        return null;
+    public ArrayList<Job> getJobs() throws RemoteException {
+        return server.getJobs();
     }
+
+
 }

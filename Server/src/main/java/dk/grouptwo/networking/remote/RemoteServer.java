@@ -2,10 +2,8 @@ package dk.grouptwo.networking.remote;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
-
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
-
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -60,4 +58,6 @@ public interface RemoteServer extends Remote {
     ArrayList<Job> getEmployerJobs(Employer employer) throws RemoteException;
 
     ArrayList<Job> getJobs() throws RemoteException;
+
+    void cancelWorkerFromJob(Job job, Worker worker);
 }

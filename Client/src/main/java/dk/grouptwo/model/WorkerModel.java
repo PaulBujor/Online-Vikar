@@ -27,4 +27,6 @@ public interface WorkerModel extends PropertyChangeSubject {
     ArrayList<Job> getUpcomingJobs() throws Exception;
 
     Job getJobById(int jobId);
+
+    void cancelWorkerFromJob(Job job);
 }

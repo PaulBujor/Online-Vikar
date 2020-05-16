@@ -98,6 +98,16 @@ public class Server implements RemoteServer {
     }
 
     @Override
+    public void cancelWorkerFromJob(Job job, Worker worker) {
+        RemoteEmployerClient client = jobMap.get(job);
+        jobMap.remove(job);
+        persistence.cancelWorkerFromJob(job, worker);
+        job.removeWorker(worker);
+        jobMap.put(job, client);
+        client.updateJob(job);
+    }
+
+    @Override
     public void updateJob(Job job) throws RemoteException {
         persistence.updateJob(job);
         for (RemoteWorkerClient client : clients) {
@@ -183,4 +193,5 @@ public class Server implements RemoteServer {
     public void removeLicense(License license) throws RemoteException {
         //todo
     }
+
 }

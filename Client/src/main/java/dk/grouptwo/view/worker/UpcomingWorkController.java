@@ -94,7 +94,7 @@ public class UpcomingWorkController extends WorkerViewTabController {
 
     @FXML
     void upcomingCancelButtonPressed() {
-
+        viewModel.cancel();
     }
 
 }

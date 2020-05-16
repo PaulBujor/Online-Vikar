@@ -1,9 +1,7 @@
 package dk.grouptwo.viewmodel.worker;
 
-import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.WorkerModel;
 import dk.grouptwo.model.objects.Job;
-import dk.grouptwo.model.objects.Worker;
 import dk.grouptwo.utility.WorkTableData;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
@@ -28,6 +26,7 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
     private StringProperty location;
     private StringProperty description;
     private ObservableList<WorkTableData> list;
+    WorkTableData selectedJob;
 
     public UpcomingWorkViewModel(WorkerModel model)
     {
@@ -61,12 +60,21 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
     }
 
     public void selectItem(WorkTableData data) {
+        selectedJob = data;
         jobTitle.set(data.jobTitleProperty().get());
         employer.set(data.employerProperty().get());
         salary.set(data.salaryProperty().get());
         startEndDates.set(data.startTimeProperty().get() + " - " + data.endTimeProperty().get());
         location.set(data.locationProperty().get());
         description.set(data.getDescription());
+    }
+
+    public void cancel() {
+        try {
+            model.cancelWorkerFromJob(model.getJobById(selectedJob.getJobId()));
+        } catch (NullPointerException e) {
+            //this would happen if no job is selected
+        }
     }
 
     public StringProperty jobTitleProperty() {
