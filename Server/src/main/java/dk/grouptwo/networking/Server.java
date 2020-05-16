@@ -193,5 +193,4 @@ public class Server implements RemoteServer {
     public void removeLicense(License license) throws RemoteException {
         persistence.removeLicense(license);
     }
-
 }

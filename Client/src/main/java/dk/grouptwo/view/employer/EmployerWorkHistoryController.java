@@ -65,8 +65,6 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
     @FXML
     private TableColumn<WorkTableData, String> employerHistoryLocationColumn;
 
-    //TODO Create Table row classes and connect them with table columns
-
     public void init(ViewHandler viewHandler, EmployerWorkHistoryViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;

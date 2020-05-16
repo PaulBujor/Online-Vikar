@@ -78,9 +78,8 @@ public class WorkOfferViewModel {
     }
 
     public boolean save() {
-        //TODO add selected workers (get selected ones from table data, convert to worker, and add to selected ArrayList in Job)
         try {
-            if(validData()) {
+            if (validData()) {
                 job.setJobTitle(title.get());
                 job.setSalary(salary.get());
                 job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
@@ -101,7 +100,12 @@ public class WorkOfferViewModel {
     }
 
     public ArrayList<Worker> getSelectedWorkers() {
-        return new ArrayList<Worker>();//todo
+        ArrayList<Worker> selectedWorkers = new ArrayList<Worker>();
+        for (WorkersTableData data : list) {
+            if (data.selectedForWorkProperty().get())
+                selectedWorkers.add(model.getWorkerByJob(this.data.getJobId(), data.CPRProperty().get()));
+        }
+        return selectedWorkers;
     }
 
     public void reset(WorkTableData data) {
@@ -124,20 +128,17 @@ public class WorkOfferViewModel {
         this.data = data;
     }
 
-    public ObservableList<WorkersTableData> createList()
-    {
+    public ObservableList<WorkersTableData> createList() {
         ObservableList<WorkersTableData> list = FXCollections.observableArrayList();
         ArrayList<Worker> workers = job.getApplicants();
 
-        for (Worker worker: workers)
-        {
+        for (Worker worker : workers) {
             list.add(new WorkersTableData(worker));
         }
         return list;
     }
 
-    public void selectWorker(WorkersTableData workersTableData)
-    {
+    public void selectWorker(WorkersTableData workersTableData) {
         Worker worker = model.getWorkerByJob(job.getJobID(), workersTableData.CPRProperty().get());
         try {
             workerDateOfBirth.set(worker.getBirthday().toString());
@@ -145,9 +146,7 @@ public class WorkOfferViewModel {
             workerLanguages.set(worker.getLanguages());
             workerDescription.set(worker.getDescription());
             workerLicenses.set(worker.getLicenses().toString());
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             //
         }
 
