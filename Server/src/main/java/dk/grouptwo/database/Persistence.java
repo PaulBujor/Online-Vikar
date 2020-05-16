@@ -2,7 +2,8 @@ package dk.grouptwo.database;
 
 import dk.grouptwo.model.objects.*;
 
-
+import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public interface Persistence
   // maybe Worker instead of void
 
   void  applyForJob(Job job,Worker worker);
-  void updateJob();
+
 
 
   void updateJob(Job job);
@@ -50,4 +51,22 @@ public interface Persistence
 
  ArrayList<Address> getAllAddress();
 
+ void cancelWorkerFromJob(Job job, Worker worker);
+
+ void editEmployer(Employer employer, String password);
+
+
+
+
+  void editEmployer(Employer employer, String password, String newPassword);
+
+
+  void editWorker(Worker worker, String password) ;
+
+
+  void editWorker(Worker worker, String password, String newPassword) ;
+
+ void addSelectedWorker(Job job, Worker worker);
+
+ void removeSelectedWorker(Job job, Worker worker);
 }

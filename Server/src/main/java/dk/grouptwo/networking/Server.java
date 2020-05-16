@@ -107,7 +107,7 @@ public class Server implements RemoteServer {
         client.updateJob(job);
     }
 
-    @Override
+    @Override //TODO modify selected workers
     public void updateJob(Job job) throws RemoteException {
         persistence.updateJob(job);
         for (RemoteWorkerClient client : clients) {
@@ -186,12 +186,12 @@ public class Server implements RemoteServer {
 
     @Override
     public void addLicense(License license, Worker worker) throws RemoteException {
-        //todo
+        persistence.addLicense(license,worker);
     }
 
     @Override
     public void removeLicense(License license) throws RemoteException {
-        //todo
+        persistence.removeLicense(license);
     }
 
 }

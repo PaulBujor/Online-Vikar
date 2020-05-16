@@ -164,7 +164,8 @@ public class Database implements Persistence
       Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
-      pstm.setInt(1, getJobID(job));
+      pstm.setInt(2, getJobID(job));
+      pstm.execute();
     }
     catch (SQLException e)
     {
@@ -172,24 +173,70 @@ public class Database implements Persistence
     }
   }
 
-  @Override public void updateJob()
-  {
-
-  }
 
   @Override public void updateJob(Job job)
   {
+String SQL = "UPDATE job SET jobtitle=?, description=?, salary=?, workersneeded=?, shiftstart=?, shiftend=?, status=?, address=? ";
 
+try{ Connection conn= DatabaseConnection.getInstance().connect();
+  PreparedStatement pstm = conn.prepareStatement(SQL);
+  pstm.setString(1,job.getJobTitle());
+  pstm.setString(2,job.getDescription());
+  pstm.setDouble(3,job.getSalary());
+  pstm.setInt(4,job.getWorkersNeeded());
+  pstm.setTimestamp(5,Timestamp.valueOf(job.getShiftStart()));
+  pstm.setTimestamp(6,Timestamp.valueOf(job.getShiftEnd()));
+  pstm.setString(7,job.getStatus());
+  pstm.setInt(8,insertAddress(job.getLocation()));
+  pstm.executeUpdate();
+}
+catch (SQLException e){
+  e.printStackTrace();
+}
   }
 
   @Override public Employer loginEmployer(String CVR, String password)
   {
-    return null;
+    Employer tmpEmployer = new Employer(null,null,null,null,null);
+   String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
+   try{
+     Connection conn = DatabaseConnection.getInstance().connect();
+     PreparedStatement pstm= conn.prepareStatement(SQL);
+     pstm.setString(1,CVR);
+     pstm.setString(2,password);
+     ResultSet rs = pstm.executeQuery();
+
+     while(rs.next()){
+       process(rs,tmpEmployer);
+     }
+   }
+   catch (SQLException e){
+     e.printStackTrace();
+   }
+return tmpEmployer;
   }
+
+
 
   @Override public Worker loginWorker(String CPR, String password)
   {
-    return null;
+Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null);
+
+String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
+try{
+  Connection conn = DatabaseConnection.getInstance().connect();
+  PreparedStatement pstm = conn.prepareStatement(SQL);
+  pstm.setString(1,CPR);
+  pstm.setString(2,password);
+  ResultSet rs = pstm.executeQuery();
+  while(rs.next()){
+    process(rs,tmpWorker);
+  }
+}
+catch (SQLException e ){
+  e.printStackTrace();
+}
+return tmpWorker;
   }
 
   @Override public void createEmployerAccount(Employer employer,
@@ -587,6 +634,91 @@ public class Database implements Persistence
     }
     System.out.println(addresses.toString());
     return addresses;
+  }
+
+  @Override public void cancelWorkerFromJob(Job job, Worker worker)
+  {
+    String SQL = "DELETE FROM works where cpr=? AND jobID=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
+      pstm.setInt(2, getJobID(job));
+      pstm.execute();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+
+    String SQL1 = "DELETE FROM applied where cpr=? AND jobID=?";
+    try{
+      Connection conn= DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt = conn.prepareStatement(SQL1);
+      pstmt.setString(1,worker.getCPR());
+      pstmt.setInt(2,getJobID(job));
+      pstmt.execute();
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void editEmployer(Employer employer, String password)
+  {
+    //TODO need to check if the current psw is legit // IF psw doesnt match -> throw an exception
+  }
+
+  @Override public void editEmployer(Employer employer, String password,
+      String newPassword)
+  {
+//TODO call the simple one in a try catch and update the new psw.
+  }
+
+  @Override public void editWorker(Worker worker, String password)
+  {
+
+  }
+
+  @Override public void editWorker(Worker worker, String password,
+      String newPassword)
+  {
+
+  }
+
+  @Override public void addSelectedWorker(Job job, Worker worker)
+  {
+    String SQL = "INSERT INTO works (cvr,jobID)" + "VALUES(?,?)";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
+      pstm.setInt(2, getJobID(job));
+      pstm.execute();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  @Override public void removeSelectedWorker(Job job, Worker worker)
+  {
+    String SQL = "DELETE from works where cpr=? AND jobID=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, worker.getCPR());
+      pstm.setInt(2, getJobID(job));
+      pstm.execute();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   public ArrayList<License> getAllLicencesByCPR(String cpr)
