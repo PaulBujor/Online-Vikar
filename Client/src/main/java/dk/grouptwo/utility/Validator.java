@@ -2,6 +2,7 @@ package dk.grouptwo.utility;
 
 import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 
 import java.util.ArrayList;
 
@@ -99,14 +100,28 @@ public class Validator {
         }
 
         return true;
-
     }
 
-    public static boolean createEmployer(Employer employer, String password, String confirmPassword) throws Exception {
-        if (employer.getCVR().equals("") || employer.getCompanyName().equals("") || employer.getAddress().getCity().equals("") || employer.getAddress().getZip().equals("") || employer.getAddress().getStreet().equals("") ||
-                employer.getAddress().getCountry().equals("") || employer.getPhone().equals("") || employer.getEmail().equals("") || password.equals("") || confirmPassword.equals("")) {
+    public static boolean createWorker(Worker worker, String password, String passwordConfirmation) throws Exception {
+        if (worker.getCPR().equals("") || worker.getFirstName().equals("") || worker.getLastName().equals("") || worker.getGender().equals("") || worker.getAddress().getCity().equals("") ||
+                worker.getAddress().getZip().equals("") || worker.getAddress().getCountry().equals("") || worker.getAddress().getStreet().equals("") || worker.getPhone().equals("") || worker.getTaxCard().equals("") || worker.getLanguages().equals("") || worker.getEmail().equals("") ||
+                password.equals("") || passwordConfirmation.equals("")) {
             throw new Exception("All fields should be filled.");
-        } else if (!(password.equals(confirmPassword))) {
+        } else if (!(password.equals(passwordConfirmation))) {
+            throw new Exception("The passwords do not match.");
+        } else if (password.length() < 8) {
+            throw new Exception("The password should contain at least 8 characters.");
+        } else if (!(emailCheck(worker.getEmail()))) {
+            throw new Exception("Wrong email format.");
+        }
+        return true;
+    }
+
+    public static boolean createEmployer(Employer employer, String password, String passwordConfirmation) throws Exception {
+        if (employer.getCVR().equals("") || employer.getCompanyName().equals("") || employer.getAddress().getCity().equals("") || employer.getAddress().getZip().equals("") || employer.getAddress().getStreet().equals("") ||
+                employer.getAddress().getCountry().equals("") || employer.getPhone().equals("") || employer.getEmail().equals("") || password.equals("") || passwordConfirmation.equals("")) {
+            throw new Exception("All fields should be filled.");
+        } else if (!(password.equals(passwordConfirmation))) {
             throw new Exception("The passwords do not match.");
         } else if (password.length() < 8) {
             throw new Exception("The password should contain at least 8 characters.");

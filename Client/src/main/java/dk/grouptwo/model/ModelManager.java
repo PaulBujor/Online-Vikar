@@ -113,8 +113,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void registerAccountWorker(Worker worker, String password) throws Exception {
+    public void registerAccountWorker(Worker worker, String password, String passwordConfirmation) throws Exception {
         try {
+            if(Validator.createWorker(worker, password, passwordConfirmation))
             server.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");

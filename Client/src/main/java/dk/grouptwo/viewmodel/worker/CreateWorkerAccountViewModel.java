@@ -53,30 +53,11 @@ public class CreateWorkerAccountViewModel {
         error = new SimpleStringProperty("");
     }
 
-    private boolean dataValid() {
-        if (CPR.get().equals("") || firstName.get().equals("") || lastName.get().equals("") || gender.get().equals("") || city.get().equals("") ||
-                postCode.get().equals("") || mobilePhone.get().equals("") || taxCard.get().equals("") || languages.get().equals("") || description.get().equals("") || email.get().equals("") ||
-                password.get().equals("") || confirmPassword.get().equals("")) {
-            error.set("All fields should be filled.");
-            return false;
-        } else if (!(password.get().equals(confirmPassword.get()))) {
-            error.set("The passwords do not match.");
-            return false;
-        } else if (!(Validator.emailCheck(email.get()))) {
-            error.set("Wrong email format.");
-            return false;
-        }
-        return true;
-    }
-
     public boolean createWorkerAccount() {
         try {
-            if (dataValid()) {
-                model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(),
-                        firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get()), password.get());
-                return true;
-            }
-            return false;
+            model.registerAccountWorker(new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(),
+                    firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get()), password.get(), confirmPassword.get());
+            return true;
         } catch (Exception e) {
             error.set(e.getMessage());
             return false;

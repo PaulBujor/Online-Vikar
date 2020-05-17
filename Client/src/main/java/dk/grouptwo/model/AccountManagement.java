@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public interface AccountManagement extends PropertyChangeSubject {
 
-    public void registerAccountWorker(Worker worker, String password) throws Exception;
+    public void registerAccountWorker(Worker worker, String password, String passwordConfirmation) throws Exception;
 
     public void logInWorker(String CPR, String password) throws Exception;
 
