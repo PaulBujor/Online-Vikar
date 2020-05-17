@@ -148,4 +148,9 @@ public class Validator {
         //todo
         return true;
     }
+
+    public static boolean updateWork(Job job) {
+        //todo
+        return true;
+    }
 }

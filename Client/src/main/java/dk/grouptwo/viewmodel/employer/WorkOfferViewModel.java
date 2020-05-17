@@ -79,20 +79,17 @@ public class WorkOfferViewModel {
 
     public boolean save() {
         try {
-            if (validData()) {
-                job.setJobTitle(title.get());
-                job.setSalary(salary.get());
-                job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
-                job.setShiftEnd(LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())));
-                job.setLocation(new Address(country.get(), city.get(), street.get(), postCode.get()));
-                job.setDescription(description.get());
-                job.setWorkersNeeded(workersNeeded.get());
-                job.setSelectedWorkers(getSelectedWorkers());
-                model.updateWorkOffer(job);
-                data.update(job); //updates the table data system-wide
-                return true;
-            }
-            return false;
+            job.setJobTitle(title.get());
+            job.setSalary(salary.get());
+            job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
+            job.setShiftEnd(LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())));
+            job.setLocation(new Address(country.get(), city.get(), street.get(), postCode.get()));
+            job.setDescription(description.get());
+            job.setWorkersNeeded(workersNeeded.get());
+            job.setSelectedWorkers(getSelectedWorkers());
+            model.updateWorkOffer(job);
+            data.update(job); //updates the table data system-wide
+            return true;
         } catch (Exception e) {
             error.set(e.getMessage());
             return false;

@@ -302,7 +302,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void updateWorkOffer(Job job) throws Exception {
         try {
-            server.updateJob(job);
+            if (Validator.updateWork(job)) {
+                server.updateJob(job);
+            }
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
