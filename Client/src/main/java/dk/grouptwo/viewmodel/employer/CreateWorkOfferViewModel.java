@@ -46,19 +46,11 @@ public class CreateWorkOfferViewModel {
         error = new SimpleStringProperty("");
     }
 
-    public boolean validData() {
-        //todo validate data
-        return true;
-    }
-
     public boolean create() {
         try {
-            if (validData()) {
-                model.createWorkOffer(new Job(title.get(), description.get(), salary.get(), workersNeeded.get(), LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())),
-                        LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())), new Address(country.get(), city.get(), street.get(), postCode.get()), "Pending", model.getEmployer()));
-                return true;
-            }
-            return false;
+            model.createWorkOffer(new Job(title.get(), description.get(), salary.get(), workersNeeded.get(), LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())),
+                    LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())), new Address(country.get(), city.get(), street.get(), postCode.get()), "Pending", model.getEmployer()));
+            return true;
         } catch (Exception e) {
             error.set(e.getMessage());
             return false;

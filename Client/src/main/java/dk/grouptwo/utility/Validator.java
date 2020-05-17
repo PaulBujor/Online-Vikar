@@ -1,6 +1,7 @@
 package dk.grouptwo.utility;
 
 import dk.grouptwo.model.objects.Employer;
+import dk.grouptwo.model.objects.Job;
 
 import java.util.ArrayList;
 
@@ -112,6 +113,44 @@ public class Validator {
         } else if (!(emailCheck(employer.getEmail()))) {
             throw new Exception("Wrong email format.");
         }
+        return true;
+    }
+
+    public static boolean updateEmployer(Employer employer, String password) throws Exception {
+        if (employer.getCVR().equals("") || employer.getCompanyName().equals("") || employer.getAddress().getCity().equals("") || employer.getAddress().getZip().equals("") || employer.getAddress().getStreet().equals("") ||
+                employer.getAddress().getCountry().equals("") || employer.getPhone().equals("") || employer.getEmail().equals("")) {
+            throw new Exception("All fields should be filled.");
+        } else if (!(emailCheck(employer.getEmail()))) {
+            throw new Exception("Wrong email format.");
+        }
+        if(password.isEmpty())
+            throw new Exception("Enter your password to save changes");
+        return true;
+    }
+
+    public static boolean updateEmployer(Employer employer, String password, String newPassword, String newPasswordConfirm) throws Exception {
+         if (updateEmployer(employer, password)) {
+             if(!newPassword.equals(newPasswordConfirm))
+                 throw new Exception("Passwords do not match");
+             else if (newPassword.length()>0 && newPassword.length()<8)
+                 throw new Exception("New password must contain at least 8 characters");
+         }
+         return true;
+    }
+
+    public static boolean logInEmployer(String CVR, String password) throws Exception {
+        if(CVR.isEmpty() || password.isEmpty())
+            throw new Exception("Login fields cannot be empty");
+        return true;
+    }
+
+    public static boolean createWork(Job job) {
+        //todo
+        return true;
+    }
+
+    public static boolean updateWork(Job job) {
+        //todo
         return true;
     }
 }

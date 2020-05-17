@@ -20,7 +20,7 @@ public interface AccountManagement extends PropertyChangeSubject {
 
     public void editEmployer(Employer employer, String password) throws Exception;
 
-    public void editEmployer(Employer employer, String password, String newPassword) throws Exception;
+    public void editEmployer(Employer employer, String password, String newPassword, String newPasswordConfirm) throws Exception;
 
     public void editWorker(Worker worker, String password) throws Exception;
 

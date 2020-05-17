@@ -21,22 +21,14 @@ public class SignInEmployerViewModel {
         error = new SimpleStringProperty("");
     }
 
-    private boolean credentialsValid() {
-        return !CVR.get().equals("") && !password.get().equals("");
-    }
-
     public boolean logInEmployer() {
-        if (credentialsValid()) {
-            try {
-                model.logInEmployer(CVR.get(), password.get());
-                return true;
-            } catch (Exception e) {
-                error.set(e.getMessage());
-            }
-        } else {
-            error.set("Incomplete information");
+        try {
+            model.logInEmployer(CVR.get(), password.get());
+            return true;
+        } catch (Exception e) {
+            error.set(e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public StringProperty CVRProperty() {

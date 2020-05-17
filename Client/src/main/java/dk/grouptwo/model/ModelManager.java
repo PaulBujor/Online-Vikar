@@ -154,11 +154,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInEmployer(String CVR, String password) throws Exception {
         try {
-            employer = server.loginEmployer(CVR, password);
-            jobs = server.getEmployerJobs(employer);
-            employerClient = new EmployerClient();
-            server.registerEmployerClient(employerClient, jobs);
-            setEmployerName(employer.getCompanyName());
+            if (Validator.logInEmployer(CVR, password)) {
+                employer = server.loginEmployer(CVR, password);
+                jobs = server.getEmployerJobs(employer);
+                employerClient = new EmployerClient();
+                server.registerEmployerClient(employerClient, jobs);
+                setEmployerName(employer.getCompanyName());
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
@@ -169,8 +171,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editEmployer(Employer employer, String password) throws Exception {
         try {
-            server.editEmployer(employer, password);
-            this.employer = employer;
+            if (Validator.updateEmployer(employer, password)) {
+                server.editEmployer(employer, password);
+                this.employer = employer;
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
@@ -179,10 +183,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void editEmployer(Employer employer, String password, String newPassword) throws Exception {
+    public void editEmployer(Employer employer, String password, String newPassword, String newPasswordConfirm) throws Exception {
         try {
-            server.editEmployer(employer, password, newPassword);
-            this.employer = employer;
+            if (Validator.updateEmployer(employer, password, newPassword, newPasswordConfirm)) {
+                server.editEmployer(employer, password, newPassword);
+                this.employer = employer;
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
@@ -269,9 +275,11 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public void createWorkOffer(Job job) throws Exception {
-        jobs.add(job);
         try {
-            server.addJob(job, employerClient);
+            if (Validator.createWork(job)) {
+                server.addJob(job, employerClient);
+                jobs.add(job);
+            }
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
@@ -294,7 +302,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void updateWorkOffer(Job job) throws Exception {
         try {
-            server.updateJob(job);
+            if (Validator.updateWork(job)) {
+                server.updateJob(job);
+            }
         } catch (RemoteException e) {
             throw new Exception("An error has occured.");
         }
