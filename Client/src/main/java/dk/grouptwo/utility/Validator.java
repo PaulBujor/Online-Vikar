@@ -1,8 +1,10 @@
 package dk.grouptwo.utility;
 
+import dk.grouptwo.model.objects.Employer;
+
 import java.util.ArrayList;
 
-public class EmailValidator {
+public class Validator {
 
     private static char[] emailToArray;
     private static ArrayList<Character> emailBeforeAtSign = new ArrayList<>();
@@ -97,5 +99,19 @@ public class EmailValidator {
 
         return true;
 
+    }
+
+    public static boolean createEmployer(Employer employer, String password, String confirmPassword) throws Exception {
+        if (employer.getCVR().equals("") || employer.getCompanyName().equals("") || employer.getAddress().getCity().equals("") || employer.getAddress().getZip().equals("") || employer.getAddress().getStreet().equals("") ||
+                employer.getAddress().getCountry().equals("") || employer.getPhone().equals("") || employer.getEmail().equals("") || password.equals("") || confirmPassword.equals("")) {
+            throw new Exception("All fields should be filled.");
+        } else if (!(password.equals(confirmPassword))) {
+            throw new Exception("The passwords do not match.");
+        } else if (password.length() < 8) {
+            throw new Exception("The password should contain at least 8 characters.");
+        } else if (!(emailCheck(employer.getEmail()))) {
+            throw new Exception("Wrong email format.");
+        }
+        return true;
     }
 }

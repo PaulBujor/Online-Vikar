@@ -3,7 +3,7 @@ package dk.grouptwo.viewmodel.worker;
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Worker;
-import dk.grouptwo.utility.EmailValidator;
+import dk.grouptwo.utility.Validator;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -62,7 +62,7 @@ public class CreateWorkerAccountViewModel {
         } else if (!(password.get().equals(confirmPassword.get()))) {
             error.set("The passwords do not match.");
             return false;
-        } else if (!(EmailValidator.emailCheck(email.get()))) {
+        } else if (!(Validator.emailCheck(email.get()))) {
             error.set("Wrong email format.");
             return false;
         }

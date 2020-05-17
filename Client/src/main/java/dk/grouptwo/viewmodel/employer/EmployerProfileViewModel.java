@@ -1,11 +1,10 @@
 package dk.grouptwo.viewmodel.employer;
 
 import dk.grouptwo.model.AccountManagement;
-import dk.grouptwo.model.EmployerModel;
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
-import dk.grouptwo.utility.EmailValidator;
+import dk.grouptwo.utility.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -53,7 +52,7 @@ public class EmployerProfileViewModel {
         } else if (newPassword.get().length() < 8 && newPassword.get().length() > 0) {
             error.set("The password should contain at least 8 characters.");
             return false;
-        } else if (!(EmailValidator.emailCheck(email.get()))) {
+        } else if (!(Validator.emailCheck(email.get()))) {
             error.set("Wrong email format.");
             return false;
         }
