@@ -84,6 +84,8 @@ class ModelManagerTest {
         assertEquals("The passwords do not match.", errorMessage);
     }
 
+
+
     @Test
     void registerAccountEmployerPasswordLength() throws Exception {
         String errorMessage = "";
@@ -125,6 +127,7 @@ class ModelManagerTest {
     void editEmployer() throws Exception {
         Employer dummyEmployerEdited = dummyEmployer;
         model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
+        model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
         dummyEmployerEdited.setCompanyName("Another Employer Company");
         model.editEmployer(dummyEmployerEdited, "12345678");
         assertEquals(dummyEmployerEdited, model.getEmployer());
@@ -133,23 +136,83 @@ class ModelManagerTest {
     @Test
     void editEmployerPassword() throws Exception {
         Employer dummyEmployerEdited = dummyEmployer;
-        model.editEmployer(dummyEmployerEdited, "12345678", "87654321");
+        model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
+        model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
+        model.editEmployer(dummyEmployerEdited, "12345678", "87654321","87654321");
         assertEquals(dummyEmployerEdited, model.getEmployer());
     }
 
-
-
     @Test
-    void editWorker() {
+    void editEmployerWrongCurrentPassword() throws Exception {
+        String errorMessage = "";
+        Employer dummyEmployerEdited = dummyEmployer;
+        model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
+        model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
+        try {
+            model.editEmployer(dummyEmployerEdited, "123456789", "87654321","87654321");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Password does not match the current one.", errorMessage);
     }
 
     @Test
-    void testEditWorker() throws Exception {
+    void editEmployerWrongPasswordConfirmation() throws Exception {
+        String errorMessage = "";
+        Employer dummyEmployerEdited = dummyEmployer;
+        model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
+        model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
+        try {
+            model.editEmployer(dummyEmployerEdited, "12345678", "87654321","876543210");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Passwords do not match", errorMessage);
+    }
+
+
+
+    @Test
+    void editWorker() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
+        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         dummyWorkerEdited.setFirstName("Kyle");
         model.editWorker(dummyWorkerEdited, "12345678");
         assertEquals(dummyWorkerEdited, model.getWorker());
     }
+
+    @Test
+    void editWorkerPassword() throws Exception {
+        Worker dummyWorkerEdited = dummyWorker;
+        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
+        model.editWorker(dummyWorkerEdited, "12345678", "87654321", "87654321");
+        assertEquals(dummyWorkerEdited, model.getWorker());
+    }
+
+    @Test
+    void editWorkerWrongCurrentPassword() throws Exception {
+        Worker dummyWorkerEdited = dummyWorker;
+        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
+        model.editWorker(dummyWorkerEdited, "123456789", "87654321", "87654321");
+        assertEquals(dummyWorkerEdited, model.getWorker());
+    }
+
+    @Test
+    void editWorkerWrongPasswordConfirmation() throws Exception {
+        Worker dummyWorkerEdited = dummyWorker;
+        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
+        model.editWorker(dummyWorkerEdited, "12345678", "87654321", "876543210");
+        assertEquals(dummyWorkerEdited, model.getWorker());
+    }
+
 
     @Test
     void getEmployer() {
