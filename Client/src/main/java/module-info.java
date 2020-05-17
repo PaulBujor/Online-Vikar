@@ -3,6 +3,7 @@ module dk.grouptwo {
     requires javafx.fxml;
     requires java.desktop;
     requires java.rmi;
+
     //requires com.google.gson;
 
     opens dk.grouptwo to javafx.fxml;
