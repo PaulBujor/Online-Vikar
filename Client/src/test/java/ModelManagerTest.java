@@ -50,18 +50,18 @@ class ModelManagerTest {
     @Test
     void registerAccountEmployer() throws Exception {
 
-        model.registerAccountEmployer(dummyEmployer, "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678","12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
         assertEquals(dummyEmployer, model.getEmployer());
     }
 
     @Test
-    void registerAccountEmployerInvalidData() throws Exception {
+    void registerAccountEmployerExistingAccount() throws Exception {
         String errorMessage = "";
-        model.registerAccountEmployer(dummyEmployer, "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         Employer anotherDummyEmployer = dummyEmployer;
         try {
-            model.registerAccountEmployer(anotherDummyEmployer, "12345678");
+            model.registerAccountEmployer(anotherDummyEmployer, "12345678", "12345678");
         }
         catch (Exception e)
         {
@@ -69,6 +69,50 @@ class ModelManagerTest {
         }
         assertEquals("Account could not be created!", errorMessage);
     }
+
+    @Test
+    void registerAccountEmployerNotMatchingPasswords() throws Exception {
+        String errorMessage = "";
+
+        try {
+            model.registerAccountEmployer(dummyEmployer, "12345678", "123456789");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("The passwords do not match.", errorMessage);
+    }
+
+    @Test
+    void registerAccountEmployerPasswordLength() throws Exception {
+        String errorMessage = "";
+
+        try {
+            model.registerAccountEmployer(dummyEmployer, "1234567", "1234567");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("The password should contain at least 8 characters.", errorMessage);
+    }
+
+    @Test
+    void registerAccountEmployerEmailFormat() throws Exception {
+        String errorMessage = "";
+        dummyEmployer.setEmail("employer@@gmail.com");
+        try {
+            model.registerAccountEmployer(dummyEmployer, "1234567", "1234567");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Wrong email format.", errorMessage);
+    }
+
+
 
 
     @Test
