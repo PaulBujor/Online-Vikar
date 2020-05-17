@@ -23,8 +23,8 @@ public interface Persistence
 
 
  //Login checks
- Employer loginEmployer(String CVR,String password);
- Worker loginWorker(String CPR,String password);
+ Employer loginEmployer(String CVR,String password) throws Exception;
+ Worker loginWorker(String CPR,String password) throws Exception;
 
  //Creating accounts**** //TODO needs testing
   void createEmployerAccount(Employer employer, String password)
@@ -53,18 +53,20 @@ public interface Persistence
 
  void cancelWorkerFromJob(Job job, Worker worker);
 
- void editEmployer(Employer employer, String password);
+ void editEmployer(Employer employer, String password) throws Exception;
 
 
 
 
-  void editEmployer(Employer employer, String password, String newPassword);
+  void editEmployer(Employer employer, String password, String newPassword)
+      throws Exception;
 
 
-  void editWorker(Worker worker, String password) ;
+  void editWorker(Worker worker, String password) throws Exception;
 
 
-  void editWorker(Worker worker, String password, String newPassword) ;
+  void editWorker(Worker worker, String password, String newPassword)
+      throws Exception;
 
  void addSelectedWorker(Job job, Worker worker);
 

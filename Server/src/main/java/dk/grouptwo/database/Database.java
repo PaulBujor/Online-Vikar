@@ -173,70 +173,88 @@ public class Database implements Persistence
     }
   }
 
-
   @Override public void updateJob(Job job)
   {
-String SQL = "UPDATE job SET jobtitle=?, description=?, salary=?, workersneeded=?, shiftstart=?, shiftend=?, status=?, address=? ";
+    String SQL = "UPDATE job SET jobtitle=?, description=?, salary=?, workersneeded=?, shiftstart=?, shiftend=?, status=?, address=? WHERE jobID=? ";
 
-try{ Connection conn= DatabaseConnection.getInstance().connect();
-  PreparedStatement pstm = conn.prepareStatement(SQL);
-  pstm.setString(1,job.getJobTitle());
-  pstm.setString(2,job.getDescription());
-  pstm.setDouble(3,job.getSalary());
-  pstm.setInt(4,job.getWorkersNeeded());
-  pstm.setTimestamp(5,Timestamp.valueOf(job.getShiftStart()));
-  pstm.setTimestamp(6,Timestamp.valueOf(job.getShiftEnd()));
-  pstm.setString(7,job.getStatus());
-  pstm.setInt(8,insertAddress(job.getLocation()));
-  pstm.executeUpdate();
-}
-catch (SQLException e){
-  e.printStackTrace();
-}
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, job.getJobTitle());
+      pstm.setString(2, job.getDescription());
+      pstm.setDouble(3, job.getSalary());
+      pstm.setInt(4, job.getWorkersNeeded());
+      pstm.setTimestamp(5, Timestamp.valueOf(job.getShiftStart()));
+      pstm.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
+      pstm.setString(7, job.getStatus());
+      pstm.setInt(8, insertAddress(job.getLocation()));
+      pstm.setInt(9,getJobID(job));
+      pstm.executeUpdate();
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @Override public Employer loginEmployer(String CVR, String password)
+      throws Exception
   {
-    Employer tmpEmployer = new Employer(null,null,null,null,null);
-   String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
-   try{
-     Connection conn = DatabaseConnection.getInstance().connect();
-     PreparedStatement pstm= conn.prepareStatement(SQL);
-     pstm.setString(1,CVR);
-     pstm.setString(2,password);
-     ResultSet rs = pstm.executeQuery();
+    Employer tmpEmployer = new Employer(null, null, null, null, null);
+    String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, CVR);
+      pstm.setString(2, password);
+      ResultSet rs = pstm.executeQuery();
 
-     while(rs.next()){
-       process(rs,tmpEmployer);
-     }
-   }
-   catch (SQLException e){
-     e.printStackTrace();
-   }
-return tmpEmployer;
+      while (rs.next())
+      {
+        process(rs, tmpEmployer);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    if(tmpEmployer.getCVR() == null){
+      throw new Exception("Account not found");
+    }
+    else
+    return tmpEmployer;
   }
-
-
 
   @Override public Worker loginWorker(String CPR, String password)
+      throws Exception
   {
-Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null);
+    Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
+        null, null,null,null);
 
-String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
-try{
-  Connection conn = DatabaseConnection.getInstance().connect();
-  PreparedStatement pstm = conn.prepareStatement(SQL);
-  pstm.setString(1,CPR);
-  pstm.setString(2,password);
-  ResultSet rs = pstm.executeQuery();
-  while(rs.next()){
-    process(rs,tmpWorker);
-  }
-}
-catch (SQLException e ){
-  e.printStackTrace();
-}
-return tmpWorker;
+    String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, CPR);
+      pstm.setString(2, password);
+      ResultSet rs = pstm.executeQuery();
+      while (rs.next())
+      {
+        process(rs, tmpWorker);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    if (tmpWorker.getCPR() ==null){
+      throw  new Exception("Account not found");
+    }
+    else
+    return tmpWorker;
   }
 
   @Override public void createEmployerAccount(Employer employer,
@@ -270,8 +288,8 @@ return tmpWorker;
   {
 
     String SQL =
-        "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address)"
-            + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address,birthday,gender)"
+            + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
     try
     {
       Connection conn = DatabaseConnection.getInstance().connect();
@@ -286,6 +304,8 @@ return tmpWorker;
       posted.setString(8, worker.getLanguages());
       posted.setString(9, worker.getDescription());
       posted.setInt(10, insertAddress(worker.getAddress()));
+      posted.setDate(11,Date.valueOf(worker.getBirthday()));
+      posted.setString(12,worker.getGender());
       posted.execute();
       posted.close();
     }
@@ -320,7 +340,25 @@ return tmpWorker;
 
   @Override public ArrayList<Job> getAllJobHistoryWorkerFromDB(Worker worker)
   {
-    return null;
+    //TODO SOLVESQL
+    ArrayList<Job> jobs=  new ArrayList<>();
+    String SQL = "SELECT * jobs INNER JOIN works ON jobs.jobID = works.jobID WHERE works.cpr=? AND job.status='completed'";
+    try{
+      Connection conn = DatabaseConnection.getInstance().connect();
+     PreparedStatement pstmt = conn.prepareStatement(SQL);
+     pstmt.setString(1,worker.getCPR());
+      ResultSet rs = pstmt.executeQuery();
+
+      while(rs.next()){
+        Job tmpJob = new Job(0,null,null,0,0,null,null,null,null,null);
+        process(rs,tmpJob);
+        jobs.add(tmpJob);
+      }
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+    return  jobs;
   }
 
   @Override public ArrayList<Job> getAllJobHistoryEmployerFromDB(
@@ -350,7 +388,26 @@ return tmpWorker;
 
   @Override public ArrayList<Job> getUpcomingJobsWorkerFromDB(Worker worker)
   {
-    return null;
+
+    ArrayList<Job> jobs = new ArrayList<>();
+    String SQL = "SELECT * jobs INNER JOIN works ON jobs.jobID = works.jobID WHERE works.cpr=? AND job.status='pending'";
+
+    try{
+      Connection conn= DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1,worker.getCPR());
+      ResultSet rs = pstmt.executeQuery();
+
+      while(rs.next()){
+        Job tmpJob= new Job(0,null,null,0,0,null,null,null,null,null);
+        process(rs,tmpJob);
+        jobs.add(tmpJob);
+      }
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+    return jobs;
   }
 
   @Override public ArrayList<Job> getCurrentEmployerJobs(Employer employer)
@@ -394,7 +451,7 @@ return tmpWorker;
       {
         //TODO subject to change
         Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
-            null, null);
+            null, null,null,null);
         process(rs, tmpWorker);
         workers.add(tmpWorker);
       }
@@ -423,7 +480,7 @@ return tmpWorker;
       {
         //TODO subject to change
         Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
-            null, null);
+            null, null,null,null);
         process(rs, tmpWorker);
         workers.add(tmpWorker);
       }
@@ -653,37 +710,160 @@ return tmpWorker;
     }
 
     String SQL1 = "DELETE FROM applied where cpr=? AND jobID=?";
-    try{
-      Connection conn= DatabaseConnection.getInstance().connect();
+    try
+    {
+      Connection conn = DatabaseConnection.getInstance().connect();
       PreparedStatement pstmt = conn.prepareStatement(SQL1);
-      pstmt.setString(1,worker.getCPR());
-      pstmt.setInt(2,getJobID(job));
+      pstmt.setString(1, worker.getCPR());
+      pstmt.setInt(2, getJobID(job));
       pstmt.execute();
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
   }
 
+
+
+  public boolean employerPasswordCheck(Employer employer, String password){
+    String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
+    Employer tmpEmployer = new Employer(null,null,null,null,null);
+    try{
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt= conn.prepareStatement(SQL);
+      pstmt.setString(1,employer.getCVR());
+      pstmt.setString(2,password);
+      ResultSet rs = pstmt.executeQuery();
+
+      while(rs.next()){
+
+        process(rs,tmpEmployer);
+      }
+
+    }
+    catch (Exception e){
+      e.printStackTrace();
+    }
+    if(tmpEmployer.getCVR() == null){
+      return false;
+    }
+    else return true;
+  }
+
+  public boolean workerPasswordCheck(Worker worker, String password){
+    String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
+    Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null,null,null);
+
+    try{
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1,worker.getCPR());
+      pstmt.setString(2,password);
+      ResultSet rs = pstmt.executeQuery();
+
+      while(rs.next()){
+        process(rs,tmpWorker);
+      }
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
+    if(tmpWorker.getCPR() == null){
+      return false;
+    }
+    else return true;
+  }
   @Override public void editEmployer(Employer employer, String password)
+      throws Exception
   {
-    //TODO need to check if the current psw is legit // IF psw doesnt match -> throw an exception
+if(employerPasswordCheck(employer,password)){
+
+  try{
+    String SQL= "UPDATE employer SET companyname=?, email=?, phone=?, address=? WHERE cvr=?";
+    Connection conn= DatabaseConnection.getInstance().connect();
+    PreparedStatement pstmt= conn.prepareStatement(SQL);
+    pstmt.setString(1,employer.getCompanyName());
+    pstmt.setString(2,employer.getEmail());
+    pstmt.setString(3,employer.getPhone());
+    pstmt.setInt(4,insertAddress(employer.getAddress()));
+    pstmt.setString(5,employer.getCVR());
+    pstmt.executeUpdate();
+  }
+  catch (SQLException e){
+    e.printStackTrace();
+  }
+}
+else throw new Exception("Password does not match the current one.");
   }
 
   @Override public void editEmployer(Employer employer, String password,
-      String newPassword)
+      String newPassword) throws Exception
   {
-//TODO call the simple one in a try catch and update the new psw.
+    editEmployer(employer,password);
+    try{
+
+      String SQL = "UPDATE employer SET  password=? WHERE cvr=?";
+      Connection conn = DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+     pstmt.setString(1,newPassword);
+     pstmt.setString(2,employer.getCVR());
+      pstmt.executeUpdate();
+
+    }
+
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+
   }
 
   @Override public void editWorker(Worker worker, String password)
+      throws Exception
   {
+if(workerPasswordCheck(worker, password)){
 
+  try{
+    String SQL = "UPDATE worker SET firstname=?, lastname=?, taxcard=?, gender=?, email=?, phone=?, languages=?, description=?, address=?, birthday=? WHERE cpr=? ";
+    Connection conn= DatabaseConnection.getInstance().connect();
+    PreparedStatement pstmt= conn.prepareStatement(SQL);
+    pstmt.setString(1,worker.getFirstName());
+    pstmt.setString(2,worker.getLastName());
+    pstmt.setString(3,worker.getTaxCard());
+    pstmt.setString(4,worker.getGender());
+    pstmt.setString(5,worker.getEmail());
+    pstmt.setString(6,worker.getPhone());
+    pstmt.setString(7,worker.getLanguages());
+    pstmt.setString(8,worker.getDescription());
+    pstmt.setInt(9,insertAddress(worker.getAddress()));
+    pstmt.setDate(10,Date.valueOf(worker.getBirthday()));
+    pstmt.setString(11,worker.getCPR());
+    pstmt.executeUpdate();
+  }
+  catch (SQLException e){
+    e.printStackTrace();
+  }
+}
+else throw new Exception("Password does not match the current one.");
   }
 
   @Override public void editWorker(Worker worker, String password,
-      String newPassword)
+      String newPassword) throws Exception
   {
+    editWorker(worker, password);
+    try{
+
+      String SQL = "UPDATE worker SET password=? WHERE cpr=? ";
+      Connection conn= DatabaseConnection.getInstance().connect();
+      PreparedStatement pstmt = conn.prepareStatement(SQL);
+pstmt.setString(1,newPassword);
+pstmt.setString(2,worker.getCPR());
+      pstmt.executeUpdate();
+    }
+    catch (SQLException e){
+      e.printStackTrace();
+    }
 
   }
 
@@ -767,6 +947,8 @@ return tmpWorker;
     worker.setDescription(rs.getString("description"));
     worker.setAddress(getAddressByID(rs.getInt("address")));
     worker.setLicenses(getAllLicencesByCPR(rs.getString("cpr")));
+    worker.setGender(rs.getString("gender"));
+    worker.setBirthday(rs.getDate("birthday").toLocalDate());
   }
 
   private void process(ResultSet rs, License license) throws SQLException
@@ -780,6 +962,7 @@ return tmpWorker;
 
   private void process(ResultSet rs, Employer employer) throws SQLException
   {
+    employer.setCVR(rs.getString("cvr"));
     employer.setCompanyName(rs.getString("companyname"));
     employer.setEmail(rs.getString("email"));
     employer.setPhone(rs.getString("phone"));
@@ -801,4 +984,6 @@ return tmpWorker;
     job.setLocation(getAddressByID(rs.getInt("address")));
   }
 
+
+  //TODO add gender and birthday to worker everywhere in database
 }
