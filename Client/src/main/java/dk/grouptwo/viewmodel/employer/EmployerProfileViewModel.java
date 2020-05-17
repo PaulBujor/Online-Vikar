@@ -41,29 +41,6 @@ public class EmployerProfileViewModel {
         error = new SimpleStringProperty("");
     }
 
-    private boolean validData() {
-        if (CVR.get().equals("") || company.get().equals("") || country.get().equals("") || city.get().equals("") || postCode.get().equals("") || address.get().equals("") ||
-                mobilePhone.get().equals("") || email.get().equals("")) {
-            error.set("All fields should be filled.");
-            return false;
-        } else if (!(newPassword.get().equals(confirmPassword.get()))) {
-            error.set("The passwords do not match.");
-            return false;
-        } else if (newPassword.get().length() < 8 && newPassword.get().length() > 0) {
-            error.set("The password should contain at least 8 characters.");
-            return false;
-        } else if (!(Validator.emailCheck(email.get()))) {
-            error.set("Wrong email format.");
-            return false;
-        }
-        if (currentPassword.get().equals("")) {
-            error.set("Please enter your current password to save changes");
-            return false;
-        }
-        error.set("");
-        return true;
-    }
-
     public void reset() {
         Employer employer = model.getEmployer();
         CVR.set(employer.getCVR());
@@ -79,15 +56,12 @@ public class EmployerProfileViewModel {
 
     public boolean saveChangesEmployer() {
         try {
-            if (validData()) {
-                Employer employer = new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get());
-                if (newPassword.get().equals(""))
-                    model.editEmployer(employer, currentPassword.get());
-                else
-                    model.editEmployer(employer, currentPassword.get(), newPassword.get());
-                return true;
-            }
-            return false;
+            Employer employer = new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get());
+            if (newPassword.get().equals(""))
+                model.editEmployer(employer, currentPassword.get());
+            else
+                model.editEmployer(employer, currentPassword.get(), newPassword.get(), confirmPassword.get());
+            return true;
         } catch (Exception e) {
             error.set(e.getMessage());
             return false;
