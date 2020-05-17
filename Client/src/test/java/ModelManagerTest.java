@@ -122,16 +122,22 @@ class ModelManagerTest {
 
 
     @Test
-    void editEmployer() {
-    }
-
-    @Test
-    void testEditEmployer() throws Exception {
+    void editEmployer() throws Exception {
         Employer dummyEmployerEdited = dummyEmployer;
+        model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
         dummyEmployerEdited.setCompanyName("Another Employer Company");
         model.editEmployer(dummyEmployerEdited, "12345678");
         assertEquals(dummyEmployerEdited, model.getEmployer());
     }
+
+    @Test
+    void editEmployerPassword() throws Exception {
+        Employer dummyEmployerEdited = dummyEmployer;
+        model.editEmployer(dummyEmployerEdited, "12345678", "87654321");
+        assertEquals(dummyEmployerEdited, model.getEmployer());
+    }
+
+
 
     @Test
     void editWorker() {
