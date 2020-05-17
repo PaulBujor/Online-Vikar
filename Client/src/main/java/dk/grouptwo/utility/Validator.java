@@ -119,8 +119,7 @@ public class Validator {
 
     public static boolean updateWorker(Worker worker, String password) throws Exception {
         if (worker.getCPR().equals("") || worker.getFirstName().equals("") || worker.getLastName().equals("") || worker.getGender().equals("") || worker.getAddress().getCity().equals("") ||
-                worker.getAddress().getZip().equals("") || worker.getAddress().getCountry().equals("") || worker.getAddress().getStreet().equals("") || worker.getPhone().equals("") || worker.getTaxCard().equals("") || worker.getLanguages().equals("") || worker.getEmail().equals("") ||
-                password.equals("") || passwordConfirmation.equals("")) {
+                worker.getAddress().getZip().equals("") || worker.getAddress().getCountry().equals("") || worker.getAddress().getStreet().equals("") || worker.getPhone().equals("") || worker.getTaxCard().equals("") || worker.getLanguages().equals("") || worker.getEmail().equals("")) {
             throw new Exception("All fields should be filled.");
         } else if (!(emailCheck(worker.getEmail()))) {
             throw new Exception("Wrong email format.");
