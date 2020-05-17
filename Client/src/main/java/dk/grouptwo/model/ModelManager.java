@@ -154,11 +154,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInEmployer(String CVR, String password) throws Exception {
         try {
-            employer = server.loginEmployer(CVR, password);
-            jobs = server.getEmployerJobs(employer);
-            employerClient = new EmployerClient();
-            server.registerEmployerClient(employerClient, jobs);
-            setEmployerName(employer.getCompanyName());
+            if (Validator.logInEmployer(CVR, password)) {
+                employer = server.loginEmployer(CVR, password);
+                jobs = server.getEmployerJobs(employer);
+                employerClient = new EmployerClient();
+                server.registerEmployerClient(employerClient, jobs);
+                setEmployerName(employer.getCompanyName());
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {

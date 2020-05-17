@@ -138,6 +138,12 @@ public class Validator {
          return true;
     }
 
+    public static boolean logInEmployer(String CVR, String password) throws Exception {
+        if(CVR.isEmpty() || password.isEmpty())
+            throw new Exception("Login fields cannot be empty");
+        return true;
+    }
+
     public static boolean createWork(Job job) {
         //todo
         return true;
