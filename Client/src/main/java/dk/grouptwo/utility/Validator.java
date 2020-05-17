@@ -117,6 +117,37 @@ public class Validator {
         return true;
     }
 
+    public static boolean updateWorker(Worker worker, String password) throws Exception {
+        if (worker.getCPR().equals("") || worker.getFirstName().equals("") || worker.getLastName().equals("") || worker.getGender().equals("") || worker.getAddress().getCity().equals("") ||
+                worker.getAddress().getZip().equals("") || worker.getAddress().getCountry().equals("") || worker.getAddress().getStreet().equals("") || worker.getPhone().equals("") || worker.getTaxCard().equals("") || worker.getLanguages().equals("") || worker.getEmail().equals("") ||
+                password.equals("") || passwordConfirmation.equals("")) {
+            throw new Exception("All fields should be filled.");
+        } else if (!(emailCheck(worker.getEmail()))) {
+            throw new Exception("Wrong email format.");
+        }
+        if(password.isEmpty())
+            throw new Exception("Enter your password to save changes");
+        return true;
+    }
+
+    public static boolean updateWorker(Worker worker, String password, String newPassword, String newPasswordConfirm) throws Exception {
+        if(updateWorker(worker, password)) {
+            if(!newPassword.equals(newPasswordConfirm))
+                throw new Exception("Passwords do not match");
+            else if (newPassword.length()>0 && newPassword.length()<8)
+                throw new Exception("New password must contain at least 8 characters");
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean logInWorker(String CPR, String password) throws Exception {
+        if(CPR.isEmpty() || password.isEmpty())
+            throw new Exception("Login fields cannot be empty");
+        return true;
+    }
+
     public static boolean createEmployer(Employer employer, String password, String passwordConfirmation) throws Exception {
         if (employer.getCVR().equals("") || employer.getCompanyName().equals("") || employer.getAddress().getCity().equals("") || employer.getAddress().getZip().equals("") || employer.getAddress().getStreet().equals("") ||
                 employer.getAddress().getCountry().equals("") || employer.getPhone().equals("") || employer.getEmail().equals("") || password.equals("") || passwordConfirmation.equals("")) {
@@ -149,6 +180,8 @@ public class Validator {
                  throw new Exception("Passwords do not match");
              else if (newPassword.length()>0 && newPassword.length()<8)
                  throw new Exception("New password must contain at least 8 characters");
+         } else {
+             return false;
          }
          return true;
     }

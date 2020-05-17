@@ -97,25 +97,16 @@ public class WorkerProfileViewModel {
 
     public boolean saveChangesWorker() {
         try {
-            if (dataValid()) {
-                Worker worker = new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(), firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get());
-                if (newPassword.get().equals(""))
-                    model.editWorker(worker, currentPassword.get());
-                else
-                    model.editWorker(worker, currentPassword.get(), newPassword.get());
-            }
+            Worker worker = new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(), firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get());
+            if (newPassword.get().equals(""))
+                model.editWorker(worker, currentPassword.get());
+            else
+                model.editWorker(worker, currentPassword.get(), newPassword.get(), confirmPassword.get());
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        if (!(newPassword.get().equals(confirmPassword.get()))) {
-            error.set("The passwords do not match.");
-            return false;
-        } else if (newPassword.get().length() < 8) {
-            error.set("The password should contain at least 8 characters.");
             return false;
         }
-        return true;
     }
 
     public void addLicense() {

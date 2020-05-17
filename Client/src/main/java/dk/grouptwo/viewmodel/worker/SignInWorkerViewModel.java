@@ -18,22 +18,14 @@ public class SignInWorkerViewModel {
         error = new SimpleStringProperty("");
     }
 
-    private boolean credentialsValid() {
-        return !CPR.get().equals("") && !password.get().equals("");
-    }
-
     public boolean logInWorker() {
-        if (credentialsValid()) {
-            try {
-                model.logInWorker(CPR.get(), password.get());
-                return true;
-            } catch (Exception e) {
-                error.set(e.getMessage());
-            }
-        } else {
-            error.set("Incomplete information");
+        try {
+            model.logInWorker(CPR.get(), password.get());
+            return true;
+        } catch (Exception e) {
+            error.set(e.getMessage());
+            return false;
         }
-        return false;
     }
 
     public StringProperty CPRProperty() {

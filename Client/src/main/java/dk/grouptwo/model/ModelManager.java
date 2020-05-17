@@ -115,8 +115,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void registerAccountWorker(Worker worker, String password, String passwordConfirmation) throws Exception {
         try {
-            if(Validator.createWorker(worker, password, passwordConfirmation))
-            server.createWorkerAccount(worker, password);
+            if (Validator.createWorker(worker, password, passwordConfirmation))
+                server.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
@@ -127,11 +127,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logInWorker(String CPR, String password) throws Exception {
         try {
-            worker = server.loginWorker(CPR, password);
-            workerClient = new WorkerClient();
-            server.registerWorkerClient(workerClient);
-            upcomingJobs = server.getUpcomingJobs(worker);
-            workHistory = server.getWorkerJobHistory(worker);
+            if (Validator.logInWorker(CPR, password)) {
+                worker = server.loginWorker(CPR, password);
+                workerClient = new WorkerClient();
+                server.registerWorkerClient(workerClient);
+                upcomingJobs = server.getUpcomingJobs(worker);
+                workHistory = server.getWorkerJobHistory(worker);
+            }
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
@@ -200,8 +202,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void editWorker(Worker worker, String password) throws Exception {
         try {
-            server.editWorker(worker, password);
-            this.worker = worker;
+            if (Validator.updateWorker(worker, password)) {
+                server.editWorker(worker, password);
+                this.worker = worker;
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
@@ -210,10 +214,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void editWorker(Worker worker, String password, String newPassword) throws Exception {
+    public void editWorker(Worker worker, String password, String newPassword, String newPasswordConfirm) throws Exception {
         try {
-            server.editWorker(worker, password, newPassword);
-            this.worker = worker;
+            if (Validator.updateWorker(worker, password, newPassword, newPasswordConfirm)) {
+                server.editWorker(worker, password, newPassword);
+                this.worker = worker;
+            }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
