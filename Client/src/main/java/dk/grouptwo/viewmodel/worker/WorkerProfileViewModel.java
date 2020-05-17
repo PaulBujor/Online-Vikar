@@ -1,12 +1,10 @@
 package dk.grouptwo.viewmodel.worker;
 
 import dk.grouptwo.model.AccountManagement;
-import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Address;
-import dk.grouptwo.model.objects.Employer;
 import dk.grouptwo.model.objects.License;
 import dk.grouptwo.model.objects.Worker;
-import dk.grouptwo.utility.EmailValidator;
+import dk.grouptwo.utility.Validator;
 import dk.grouptwo.utility.LicenseTableData;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -86,7 +84,7 @@ public class WorkerProfileViewModel {
         } else if (!(newPassword.get().equals(confirmPassword.get()))) {
             error.set("The passwords do not match.");
             return false;
-        } else if (!(EmailValidator.emailCheck(email.get()))) {
+        } else if (!(Validator.emailCheck(email.get()))) {
             error.set("Wrong email format.");
             return false;
         }

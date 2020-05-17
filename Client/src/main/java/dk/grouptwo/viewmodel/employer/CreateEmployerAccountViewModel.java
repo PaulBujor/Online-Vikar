@@ -3,7 +3,7 @@ package dk.grouptwo.viewmodel.employer;
 import dk.grouptwo.model.AccountManagement;
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
-import dk.grouptwo.utility.EmailValidator;
+import dk.grouptwo.utility.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -37,31 +37,10 @@ public class CreateEmployerAccountViewModel {
         error = new SimpleStringProperty("");
     }
 
-    private boolean validData() {
-        if (CVR.get().equals("") || company.get().equals("") || city.get().equals("") || postCode.get().equals("") || address.get().equals("") ||
-                mobilePhone.get().equals("") || email.get().equals("") || password.get().equals("") || confirmPassword.get().equals("")) {
-            error.set("All fields should be filled.");
-            return false;
-        } else if (!(password.get().equals(confirmPassword.get()))) {
-            error.set("The passwords do not match.");
-            return false;
-        } else if (password.get().length() < 8) {
-            error.set("The password should contain at least 8 characters.");
-            return false;
-        } else if (!(EmailValidator.emailCheck(email.get()))) {
-            error.set("Wrong email format.");
-            return false;
-        }
-        return true;
-    }
-
     public boolean createEmployerAccount() {
         try {
-            if (validData()) {
-                model.registerAccountEmployer(new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get()), password.get());
-                return true;
-            }
-            return false;
+            model.registerAccountEmployer(new Employer(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), address.get(), postCode.get()), CVR.get(), company.get()), password.get(), confirmPassword.get());
+            return true;
         } catch (Exception e) {
             error.set(e.getMessage());
             return false;
@@ -90,7 +69,9 @@ public class CreateEmployerAccountViewModel {
         return company;
     }
 
-    public StringProperty countryProperty() { return country; }
+    public StringProperty countryProperty() {
+        return country;
+    }
 
     public StringProperty cityProperty() {
         return city;

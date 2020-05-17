@@ -8,6 +8,7 @@ import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 import dk.grouptwo.utility.PropertyChangeSubject;
+import dk.grouptwo.utility.Validator;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -66,13 +67,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                         property.firePropertyChange("workerCancelled", prevJob, newJob);
                         property.firePropertyChange("addJob", prevJob, newJob);
                     } else {
-                        if(newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
                             jobs.remove(prevJob);
                             property.firePropertyChange("removeFromJobs", prevJob, newJob);
                         }
                     }
                 } else if (employer != null) {
-                    if(newJob.getStatus().equals("completed")) {
+                    if (newJob.getStatus().equals("completed")) {
                         jobs.remove(prevJob);
                         workHistory.add(newJob);
                         property.firePropertyChange("moveToHistory", prevJob, newJob);
@@ -139,16 +140,16 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public void registerAccountEmployer(Employer employer, String password) throws Exception {
+    public void registerAccountEmployer(Employer employer, String password, String passwordConfirmation) throws Exception {
         try {
-            server.createEmployerAccount(employer, password);
+            if (Validator.createEmployer(employer, password, passwordConfirmation))
+                server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
         }
     }
-
 
     @Override
     public void logInEmployer(String CVR, String password) throws Exception {
