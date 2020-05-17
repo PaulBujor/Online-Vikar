@@ -1,5 +1,6 @@
 package dk.grouptwo.model.objects;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import dk.grouptwo.model.objects.Account;
 
@@ -7,13 +8,14 @@ public class Worker extends Account {
     private String CPR;
     private String firstName;
     private String lastName;
+    private LocalDate birthday;
+    private String gender;
     private String taxCard;
     private String languages;
     private String description;
     private ArrayList<License> licenses;
 
-
-    public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description) {
+    public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description, LocalDate birthday, String gender) {
         super(email, phone, address);
         this.CPR = CPR;
         this.firstName = firstName;
@@ -22,15 +24,12 @@ public class Worker extends Account {
         this.languages = languages;
         this.description = description;
         licenses = new ArrayList<License>();
+        this.birthday = birthday;
+        this.gender = gender;
     }
 
     public String getCPR() {
         return CPR;
-    }
-
-    public void setCPR(String CPR)
-    {
-        this.CPR = CPR;
     }
 
     public String getFirstName() {
@@ -39,6 +38,11 @@ public class Worker extends Account {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public void setCPR(String CPR)
+    {
+        this.CPR = CPR;
     }
 
     public String getLastName() {
@@ -91,4 +95,26 @@ public class Worker extends Account {
         licenses.remove(license);
     }
 
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Worker))
+            return false;
+        Worker other = (Worker) obj;
+        return CPR.equals(other.CPR);
+    }
 }
