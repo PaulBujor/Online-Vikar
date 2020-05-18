@@ -39,7 +39,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private RemoteEmployerClient employerClient;
 
     //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
-
+    public ModelManager() {
+        jobs = new ArrayList<Job>();
+        workHistory = new ArrayList<Job>();
+        upcomingJobs = new ArrayList<Job>();
+        server = new Server(host, port);
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
