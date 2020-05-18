@@ -69,11 +69,16 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
         description.set(data.getDescription());
     }
 
-    public void cancel() {
+    public void cancel()
+    {
         try {
             model.cancelWorkerFromJob(model.getJobById(selectedJob.getJobId()));
         } catch (NullPointerException e) {
             //this would happen if no job is selected
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 

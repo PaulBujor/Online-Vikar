@@ -21,7 +21,7 @@ public class CreateEmployerAccountController {
     @FXML
     private TextField createAccountEmployerCompany;
     @FXML
-    private Label createAccountEmployerCountry;
+    private TextField createAccountEmployerCountry;
     @FXML
     private TextField createAccountEmployerCity;
     @FXML

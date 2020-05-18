@@ -10,6 +10,8 @@ import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 
+import java.lang.reflect.Array;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
@@ -53,7 +55,7 @@ public class Server implements RemoteServer {
             try {
                 client.addJob(job);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RemoteException(e.getMessage());
             }
         }
     }
@@ -66,25 +68,44 @@ public class Server implements RemoteServer {
             try {
                 client.removeJob(job);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RemoteException(e.getMessage());
             }
         }
     }
 
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
+
         Employer employer = null; //todo get employer CVR password
-        if (employer != null)
+        try
+        {
+            employer = persistence.loginEmployer(CVR,password);
+        }
+        catch (Exception e)
+        {
+            throw new RemoteException(e.getMessage());
+        }
+
             return employer;
-        throw new RemoteException("Account could not be found!");
+
     }
 
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
         Worker worker = null; //todo get worker CPR password
-        if (worker != null)
+        try
+        {
+            worker = persistence.loginWorker(CPR, password);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw  new RemoteException(e.getMessage());
+        }
+
+
             return worker;
-        throw new RemoteException("Account could not be found!");
+
     }
 
     @Override
@@ -107,9 +128,26 @@ public class Server implements RemoteServer {
         client.updateJob(job);
     }
 
-    @Override //TODO modify selected workers
+    @Override //TODO modify selected workers --- needs tested
     public void updateJob(Job job) throws RemoteException {
+        RemoteEmployerClient employer = jobMap.get(job);
+        jobMap.remove(job);
+        jobMap.put(job, employer);
         persistence.updateJob(job);
+
+        //update in database
+        ArrayList<Worker> selectedWorkers = persistence.getAllAcceptedWorkers(job);
+        for (Worker worker : job.getSelectedWorkers()) {
+            if (!selectedWorkers.contains(worker)) {
+                persistence.addSelectedWorker(job, worker);
+            }
+        }
+        for (Worker worker : selectedWorkers) {
+            if (!job.getSelectedWorkers().contains(worker)) {
+                persistence.removeSelectedWorker(job, worker);
+            }
+        }
+
         for (RemoteWorkerClient client : clients) {
             try {
                 client.updateJob(job);
@@ -124,7 +162,7 @@ public class Server implements RemoteServer {
         try {
             persistence.createEmployerAccount(employer, password);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -133,7 +171,7 @@ public class Server implements RemoteServer {
         try {
             persistence.createWorkerAccount(worker, password);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -166,31 +204,55 @@ public class Server implements RemoteServer {
     //todo throw remote exception if an error occurs
     @Override
     public void editEmployer(Employer employer, String password) throws RemoteException {
-        //todo
+        try {
+            persistence.editEmployer(employer, password);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     @Override
     public void editEmployer(Employer employer, String password, String newPassword) throws RemoteException, NoSuchAlgorithmException {
-        //todo
+        try {
+            persistence.editEmployer(employer, password, newPassword);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     @Override
     public void editWorker(Worker worker, String password) throws RemoteException {
-        //todo
+        try {
+            persistence.editWorker(worker, password);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     @Override
     public void editWorker(Worker worker, String password, String newPassword) throws RemoteException, NoSuchAlgorithmException {
-        //todo
+        try {
+            persistence.editWorker(worker, password, newPassword);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     @Override
     public void addLicense(License license, Worker worker) throws RemoteException {
-        persistence.addLicense(license,worker);
+        try {
+            persistence.addLicense(license, worker);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 
     @Override
     public void removeLicense(License license) throws RemoteException {
-        persistence.removeLicense(license);
+        try {
+            persistence.removeLicense(license);
+        } catch (Exception e) {
+            throw new RemoteException(e.getMessage());
+        }
     }
 }

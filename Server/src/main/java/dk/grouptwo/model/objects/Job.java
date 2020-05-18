@@ -15,6 +15,7 @@ public class Job implements Serializable {
     private String status;
     private Address location;
     private Employer employer;
+    private static final long serialVersionUID = 4;
 
 
     private ArrayList<Worker> selectedWorkers;
@@ -136,14 +137,36 @@ public class Job implements Serializable {
     }
 
     public void addApplicant(Worker worker) {
-        applicants.add(worker);
+        if (!applicants.contains(worker))
+            applicants.add(worker);
     }
 
-    public void setApplicants(ArrayList<Worker> applicants) {
-        this.applicants = applicants;
+    public void removeApplicant(Worker worker) {
+        applicants.remove(worker);
+    }
+
+    public void addSelectedworker(Worker worker) {
+        if (!selectedWorkers.contains(worker))
+            selectedWorkers.add(worker);
+    }
+
+    public void removeSelectedWorker(Worker worker) {
+        selectedWorkers.remove(worker);
     }
 
     public void setSelectedWorkers(ArrayList<Worker> selectedWorkers) {
         this.selectedWorkers = selectedWorkers;
+    }
+
+    public boolean workerSelected(Worker worker) {
+        return selectedWorkers.contains(worker);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Job job = (Job) o;
+        return jobID == job.jobID;
     }
 }

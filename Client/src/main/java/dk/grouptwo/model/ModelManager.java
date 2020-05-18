@@ -39,7 +39,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private RemoteEmployerClient employerClient;
 
     //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
-
+    public ModelManager() {
+        jobs = new ArrayList<Job>();
+        workHistory = new ArrayList<Job>();
+        upcomingJobs = new ArrayList<Job>();
+        server = new Server(host, port);
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -48,7 +53,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
                 Job newJob = (Job) evt.getNewValue();
                 if (worker != null) {
-                    if (newJob.getSelectedWorkers().contains(worker)) {
+                    if (newJob.workerSelected(worker)) {
                         jobs.remove(prevJob);
                         if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
                             if (!workHistory.contains(newJob)) {
@@ -148,6 +153,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.createEmployer(employer, password, passwordConfirmation))
                 server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
@@ -165,6 +171,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 setEmployerName(employer.getCompanyName());
             }
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
@@ -292,8 +299,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         }
     }
 
-    public void cancelWorkerFromJob(Job job) {
-        server.cancelWorkerFromJob(job, worker);
+    public void cancelWorkerFromJob(Job job) throws Exception {
+        try {
+            server.cancelWorkerFromJob(job, worker);
+        } catch (RemoteException e) {
+            throw new Exception("An error has occured.");
+        }
     }
 
     @Override

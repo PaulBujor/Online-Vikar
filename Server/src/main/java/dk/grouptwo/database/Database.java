@@ -1,6 +1,7 @@
 package dk.grouptwo.database;
 
 import dk.grouptwo.model.objects.*;
+import org.apache.commons.dbutils.DbUtils;
 
 import javax.print.DocFlavor;
 import java.sql.*;
@@ -14,15 +15,27 @@ public class Database implements Persistence
 
   }
 
+  public void close(ResultSet rs, Statement statement, Connection connection)
+  {
+    if (rs != null)
+    {
+      DbUtils.closeQuietly(rs);
+    }
+    DbUtils.closeQuietly(statement);
+    DbUtils.closeQuietly(connection);
+  }
+
   @Override public synchronized void addJobToDB(Job job)
   {
+    Connection conn = null;
     String SQL =
         "INSERT INTO job(jobtitle,description,salary,workersneeded,shiftstart,shiftend,status,cvr,address"
             + "VALUES(?,?,?,?,?,?,?,?,?)";
+    PreparedStatement posted = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement posted = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      posted = conn.prepareStatement(SQL);
       posted.setString(1, job.getJobTitle());
       posted.setString(2, job.getDescription());
       posted.setDouble(3, job.getSalary());
@@ -32,24 +45,31 @@ public class Database implements Persistence
       posted.setString(7, job.getStatus());
       posted.setString(8, job.getEmployer().getCVR());
       posted.setInt(9, insertAddress(job.getLocation()));
-
+      posted.executeUpdate();
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, posted, conn);
     }
   }
 
   public Employer getEmployer(String cvr)
   {
     Employer tmpEmployer = new Employer(null, null, null, null, null);
+    PreparedStatement pstm = null;
+    ResultSet rs = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
+      conn = DatabaseConnection.getInstance().connect();
       String SQL = "SELECT * FROM employer WHERE cvr=?";
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, cvr);
-      ResultSet rs = pstm.executeQuery();
+      rs = pstm.executeQuery();
 
       while (rs.next())
       {
@@ -61,62 +81,25 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
-    return tmpEmployer;
-  }
-
-  public Employer getEmployer(Job job)
-  {
-    Employer tmpEmployer = new Employer(null, null, null, getJobCVR(job), null);
-    try
+    finally
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      String SQL = "SELECT * FROM employer WHERE cvr=?";
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1, getJobCVR(job));
-      ResultSet rs = pstm.executeQuery();
-      while (rs.next())
-      {
-
-        process(rs, tmpEmployer);
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
+      close(rs, pstm, conn);
     }
     return tmpEmployer;
-  }
 
-  public String getJobCVR(Job job)
-  {
-    String SQL = "Select cvr FROM job WHERE jobID=?";
-    String tmp = "";
-    try
-    {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setInt(1, getJobID(job));
-      ResultSet rs = pstm.executeQuery();
-      while (rs.next())
-      {
-        tmp = rs.getString("cvr");
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
-    return tmp;
   }
 
   public int getJobID(Job job)
   {
     String SQL = "SELECT jobID FROM job WHERE jobtitle=? AND description=? AND salary=? AND workersneeded=? AND shiftstart=? AND shiftend=? AND status=? AND cvr=? AND address=?";
     int id = 0;
+    ResultSet rs = null;
+    PreparedStatement preparedStatement = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      preparedStatement = conn.prepareStatement(SQL);
       preparedStatement.setString(1, job.getJobTitle());
       preparedStatement.setString(2, job.getDescription());
       preparedStatement.setDouble(3, job.getSalary());
@@ -126,15 +109,21 @@ public class Database implements Persistence
       preparedStatement.setString(7, job.getStatus());
       preparedStatement.setString(8, job.getEmployer().getCVR());
       preparedStatement.setInt(9, insertAddress(job.getLocation()));
-      ResultSet rs = preparedStatement.executeQuery();
+      rs = preparedStatement.executeQuery();
       while (rs.next())
       {
         id = rs.getInt("jobID");
       }
+
     }
+
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, preparedStatement, conn);
     }
     return id;
   }
@@ -142,16 +131,23 @@ public class Database implements Persistence
   @Override public void removeJobFromDB(Job job)
   {
     String SQL = "DELETE FROM job WHERE jobID=?";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setInt(1, getJobID(job));
       pstm.executeUpdate();
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstm, conn);
     }
   }
 
@@ -159,17 +155,24 @@ public class Database implements Persistence
 
   {
     String SQL = "INSERT INTO applied (cvr,jobID)" + "VALUES(?,?)";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
       pstm.setInt(2, getJobID(job));
       pstm.execute();
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstm, conn);
     }
   }
 
@@ -177,10 +180,12 @@ public class Database implements Persistence
   {
     String SQL = "UPDATE job SET jobtitle=?, description=?, salary=?, workersneeded=?, shiftstart=?, shiftend=?, status=?, address=? WHERE jobID=? ";
 
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, job.getJobTitle());
       pstm.setString(2, job.getDescription());
       pstm.setDouble(3, job.getSalary());
@@ -189,12 +194,17 @@ public class Database implements Persistence
       pstm.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
       pstm.setString(7, job.getStatus());
       pstm.setInt(8, insertAddress(job.getLocation()));
-      pstm.setInt(9,getJobID(job));
+      pstm.setInt(9, getJobID(job));
       pstm.executeUpdate();
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstm, conn);
     }
   }
 
@@ -202,45 +212,60 @@ public class Database implements Persistence
       throws Exception
   {
     Employer tmpEmployer = new Employer(null, null, null, null, null);
+    System.out.println(password);
     String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, CVR);
       pstm.setString(2, password);
-      ResultSet rs = pstm.executeQuery();
-
+      rs = pstm.executeQuery();
+      System.out.println(rs);
       while (rs.next())
       {
         process(rs, tmpEmployer);
       }
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
     }
-    if(tmpEmployer.getCVR() == null){
+    finally
+    {
+      close(rs, pstm, conn);
+    }
+    System.out.println(tmpEmployer.getCVR());
+    if (tmpEmployer.getCVR().equals(""))
+    {
       throw new Exception("Account not found");
     }
     else
-    return tmpEmployer;
+      return tmpEmployer;
+
   }
 
   @Override public Worker loginWorker(String CPR, String password)
       throws Exception
   {
     Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
-        null, null,null,null);
+        null, null, null, null);
 
     String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, CPR);
       pstm.setString(2, password);
-      ResultSet rs = pstm.executeQuery();
+      rs = pstm.executeQuery();
       while (rs.next())
       {
         process(rs, tmpWorker);
@@ -250,11 +275,16 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
-    if (tmpWorker.getCPR() ==null){
-      throw  new Exception("Account not found");
+    finally
+    {
+      close(rs, pstm, conn);
+    }
+    if (tmpWorker.getCPR() == null)
+    {
+      throw new Exception("Account not found");
     }
     else
-    return tmpWorker;
+      return tmpWorker;
   }
 
   @Override public void createEmployerAccount(Employer employer,
@@ -265,22 +295,28 @@ public class Database implements Persistence
         "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
 
             + "VALUES(?,?,?,?,?,?)";
+    PreparedStatement posted = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement posted = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      posted = conn.prepareStatement(SQL);
       posted.setString(1, employer.getCVR());
       posted.setString(2, password);
       posted.setString(3, employer.getCompanyName());
       posted.setString(4, employer.getEmail());
       posted.setString(5, employer.getPhone());
       posted.setInt(6, insertAddress(employer.getAddress()));
-      posted.execute();
-      posted.close();
+      posted.executeUpdate();
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, posted, conn);
     }
   }
 
@@ -290,10 +326,12 @@ public class Database implements Persistence
     String SQL =
         "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address,birthday,gender)"
             + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    PreparedStatement posted = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement posted = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      posted = conn.prepareStatement(SQL);
       posted.setString(1, worker.getCPR());
       posted.setString(2, password);
       posted.setString(3, worker.getFirstName());
@@ -304,14 +342,18 @@ public class Database implements Persistence
       posted.setString(8, worker.getLanguages());
       posted.setString(9, worker.getDescription());
       posted.setInt(10, insertAddress(worker.getAddress()));
-      posted.setDate(11,Date.valueOf(worker.getBirthday()));
-      posted.setString(12,worker.getGender());
+      posted.setDate(11, Date.valueOf(worker.getBirthday()));
+      posted.setString(12, worker.getGender());
       posted.execute();
-      posted.close();
+
     }
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, posted, conn);
     }
   }
 
@@ -319,11 +361,14 @@ public class Database implements Persistence
   {
     ArrayList<Job> jobs = new ArrayList<>();
     String SQL = "SELECT * FROM job";
+    ResultSet rs = null;
+    Statement stmt = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      Statement stmt = conn.createStatement();
-      ResultSet rs = stmt.executeQuery(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      stmt = conn.createStatement();
+      rs = stmt.executeQuery(SQL);
       while (rs.next())
       {
         Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
@@ -335,30 +380,44 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(rs, stmt, conn);
+    }
     return jobs;
   }
 
   @Override public ArrayList<Job> getAllJobHistoryWorkerFromDB(Worker worker)
   {
-    //TODO SOLVESQL
-    ArrayList<Job> jobs=  new ArrayList<>();
-    String SQL = "SELECT * jobs INNER JOIN works ON jobs.jobID = works.jobID WHERE works.cpr=? AND job.status='completed'";
-    try{
-      Connection conn = DatabaseConnection.getInstance().connect();
-     PreparedStatement pstmt = conn.prepareStatement(SQL);
-     pstmt.setString(1,worker.getCPR());
-      ResultSet rs = pstmt.executeQuery();
 
-      while(rs.next()){
-        Job tmpJob = new Job(0,null,null,0,0,null,null,null,null,null);
-        process(rs,tmpJob);
+    ArrayList<Job> jobs = new ArrayList<>();
+    String SQL = "SELECT * jobs INNER JOIN works ON jobs.jobID = works.jobID WHERE works.cpr=? AND job.status='completed'";
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
+    try
+    {
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, worker.getCPR());
+      rs = pstmt.executeQuery();
+
+      while (rs.next())
+      {
+        Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
+        process(rs, tmpJob);
         jobs.add(tmpJob);
       }
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
-    return  jobs;
+    finally
+    {
+      close(rs, pstmt, conn);
+    }
+    return jobs;
   }
 
   @Override public ArrayList<Job> getAllJobHistoryEmployerFromDB(
@@ -366,12 +425,15 @@ public class Database implements Persistence
   {
     ArrayList<Job> jobs = new ArrayList<>();
     String SQL = "SELECT * FROM job WHERE cvr=? AND status='completed' OR status='cancelled'";
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, employer.getCVR());
-      ResultSet rs = pstm.executeQuery();
+      rs = pstm.executeQuery();
       while (rs.next())
       {
         Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
@@ -382,6 +444,10 @@ public class Database implements Persistence
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, pstm, conn);
     }
     return jobs;
   }
@@ -392,34 +458,16 @@ public class Database implements Persistence
     ArrayList<Job> jobs = new ArrayList<>();
     String SQL = "SELECT * jobs INNER JOIN works ON jobs.jobID = works.jobID WHERE works.cpr=? AND job.status='pending'";
 
-    try{
-      Connection conn= DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
-      pstmt.setString(1,worker.getCPR());
-      ResultSet rs = pstmt.executeQuery();
-
-      while(rs.next()){
-        Job tmpJob= new Job(0,null,null,0,0,null,null,null,null,null);
-        process(rs,tmpJob);
-        jobs.add(tmpJob);
-      }
-    }
-    catch (SQLException e){
-      e.printStackTrace();
-    }
-    return jobs;
-  }
-
-  @Override public ArrayList<Job> getCurrentEmployerJobs(Employer employer)
-  {
-    ArrayList<Job> jobs = new ArrayList<>();
-    String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending' OR status='created'";
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1, employer.getCVR());
-      ResultSet rs = pstm.executeQuery();
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, worker.getCPR());
+      rs = pstmt.executeQuery();
+
       while (rs.next())
       {
         Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
@@ -431,6 +479,41 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(rs, pstmt, conn);
+    }
+    return jobs;
+  }
+
+  @Override public ArrayList<Job> getCurrentEmployerJobs(Employer employer)
+  {
+    ArrayList<Job> jobs = new ArrayList<>();
+    String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending' OR status='created'";
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
+    try
+    {
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
+      pstm.setString(1, employer.getCVR());
+      rs = pstm.executeQuery();
+      while (rs.next())
+      {
+        Job tmpJob = new Job(0, null, null, 0, 0, null, null, null, null, null);
+        process(rs, tmpJob);
+        jobs.add(tmpJob);
+      }
+    }
+    catch (SQLException e)
+    {
+      e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, pstm, conn);
+    }
     return jobs;
   }
 
@@ -438,20 +521,23 @@ public class Database implements Persistence
   {
     ArrayList<Worker> workers = new ArrayList<>();
 
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
+      conn = DatabaseConnection.getInstance().connect();
 
       //TODO might need to change SQL
       String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM applied WHERE jobID =? )";
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      pstmt = conn.prepareStatement(SQL);
       pstmt.setInt(1, getJobID(job));
-      ResultSet rs = pstmt.executeQuery();
+      rs = pstmt.executeQuery();
       while (rs.next())
       {
         //TODO subject to change
         Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
-            null, null,null,null);
+            null, null, null, null);
         process(rs, tmpWorker);
         workers.add(tmpWorker);
       }
@@ -459,6 +545,10 @@ public class Database implements Persistence
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, pstmt, conn);
     }
     return workers;
   }
@@ -467,20 +557,23 @@ public class Database implements Persistence
   {
     ArrayList<Worker> workers = new ArrayList<>();
 
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
+      conn = DatabaseConnection.getInstance().connect();
 
       //TODO might need to change SQL
-      String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM works WHERE jobID =? )";
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
+      String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM works WHERE jobID =? )";
+      pstmt = conn.prepareStatement(SQL);
       pstmt.setInt(1, getJobID(job));
-      ResultSet rs = pstmt.executeQuery();
+      rs = pstmt.executeQuery();
       while (rs.next())
       {
         //TODO subject to change
         Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
-            null, null,null,null);
+            null, null, null, null);
         process(rs, tmpWorker);
         workers.add(tmpWorker);
       }
@@ -488,6 +581,10 @@ public class Database implements Persistence
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, pstmt, conn);
     }
     return workers;
   }
@@ -498,10 +595,12 @@ public class Database implements Persistence
         "INSERT INTO licence(cpr,licensenumber,typee,category,issuedate,expirydate"
             + "VALUE(?,?,?,?,?,?)";
 
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
       pstm.setString(2, license.getLicenseNumber());
       pstm.setString(3, license.getType());
@@ -515,15 +614,21 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(null, pstm, conn);
+    }
   }
 
   @Override public void removeLicense(License license)
   {
     String SQL = "DELETE FROM licence where licensenumber=?";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, license.getLicenseNumber());
       pstm.execute();
 
@@ -531,6 +636,10 @@ public class Database implements Persistence
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstm, conn);
     }
   }
 
@@ -540,34 +649,43 @@ public class Database implements Persistence
     {
       String SQL =
           "INSERT INTO address(country,city,street,zip)" + "VALUES(?,?,?,?)";
+      PreparedStatement posted = null;
+      Connection conn = null;
       try
       {
-        Connection conn = DatabaseConnection.getInstance().connect();
-        PreparedStatement posted = conn.prepareStatement(SQL);
+        conn = DatabaseConnection.getInstance().connect();
+        posted = conn.prepareStatement(SQL);
         posted.setString(1, address.getCountry());
         posted.setString(2, address.getCity());
         posted.setString(3, address.getStreet());
         posted.setString(4, address.getZip());
         posted.execute();
-        posted.close();
+
       }
       catch (SQLException e)
       {
 
         e.printStackTrace();
       }
+      finally
+      {
+        close(null, posted, conn);
+      }
     }
     String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?"/*+"VALUES(?,?,?,?)"*/;
     int id = 0;
+    ResultSet rs = null;
+    PreparedStatement preparedStatement = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement preparedStatement = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      preparedStatement = conn.prepareStatement(SQL);
       preparedStatement.setString(1, address.getCountry());
       preparedStatement.setString(2, address.getCity());
       preparedStatement.setString(3, address.getStreet());
       preparedStatement.setString(4, address.getZip());
-      ResultSet rs = preparedStatement.executeQuery();
+      rs = preparedStatement.executeQuery();
       while (rs.next())
       {
         id = rs.getInt("addressID");
@@ -577,6 +695,10 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(rs, preparedStatement, conn);
+    }
     return id;
   }
 
@@ -584,12 +706,15 @@ public class Database implements Persistence
   {
     Address tmpAddress = new Address(null, null, null, null);
     String SQL = "SELECT * FROM address WHERE addressid=?";
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setInt(1, id);
-      ResultSet rs = pstm.executeQuery();
+      rs = pstm.executeQuery();
       while (rs.next())
       {
         process(rs, tmpAddress);
@@ -599,88 +724,29 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(rs, pstm, conn);
+    }
     return tmpAddress;
-  }
-
-  public int getAddressValueFromJob(Job job)
-  {
-    int id = 0;
-    String SQL = "SELECT address FROM job where jobID=?";
-    try
-    {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setInt(1, getJobID(job));
-      ResultSet rs = pstm.executeQuery();
-      while (rs.next())
-      {
-        id = rs.getInt("address");
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
-    return id;
-  }
-
-  public int getAddressValueFromEmployer(Employer employer)
-  {
-    int id = 0;
-    String SQL = "SELECT address FROM employer where cvr=?";
-    try
-    {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1, employer.getCVR());
-      ResultSet rs = pstm.executeQuery();
-      while (rs.next())
-      {
-        id = rs.getInt("address");
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
-    return id;
-  }
-
-  public int getAddressValueFromWorker(Worker worker)
-  {
-    int id = 0;
-    String SQL = "SELECT address FROM worker where cpr=?";
-    try
-    {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
-      pstm.setString(1, worker.getCPR());
-      ResultSet rs = pstm.executeQuery();
-      while (rs.next())
-      {
-        id = rs.getInt("address");
-      }
-    }
-    catch (SQLException e)
-    {
-      e.printStackTrace();
-    }
-    return id;
   }
 
   public ArrayList<Address> getAllAddress()
   {
     ArrayList<Address> addresses = new ArrayList<>();
+    ResultSet rs = null;
+    Statement stmt = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      Statement stmt = conn.createStatement();
+      conn = DatabaseConnection.getInstance().connect();
+      stmt = conn.createStatement();
       String SQL = "Select * FROM address";
-      ResultSet rs = stmt.executeQuery(SQL);
+      rs = stmt.executeQuery(SQL);
 
       while (rs.next())
       {
-        Address tmpAddress = new Address();
+        Address tmpAddress = new Address(null,null,null,null);
         process(rs, tmpAddress);
         addresses.add(tmpAddress);
       }
@@ -689,6 +755,10 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(rs, stmt, conn);
+    }
     System.out.println(addresses.toString());
     return addresses;
   }
@@ -696,10 +766,12 @@ public class Database implements Persistence
   @Override public void cancelWorkerFromJob(Job job, Worker worker)
   {
     String SQL = "DELETE FROM works where cpr=? AND jobID=?";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
       pstm.setInt(2, getJobID(job));
       pstm.execute();
@@ -708,106 +780,153 @@ public class Database implements Persistence
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(null, pstm, conn);
+    }
 
     String SQL1 = "DELETE FROM applied where cpr=? AND jobID=?";
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt = conn.prepareStatement(SQL1);
-      pstmt.setString(1, worker.getCPR());
-      pstmt.setInt(2, getJobID(job));
-      pstmt.execute();
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL1);
+      pstm.setString(1, worker.getCPR());
+      pstm.setInt(2, getJobID(job));
+      pstm.execute();
     }
     catch (SQLException e)
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(null, pstm, conn);
+    }
   }
 
-
-
-  public boolean employerPasswordCheck(Employer employer, String password){
+  public boolean employerPasswordCheck(Employer employer, String password)
+  {
     String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
-    Employer tmpEmployer = new Employer(null,null,null,null,null);
-    try{
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt= conn.prepareStatement(SQL);
-      pstmt.setString(1,employer.getCVR());
-      pstmt.setString(2,password);
-      ResultSet rs = pstmt.executeQuery();
+    Employer tmpEmployer = new Employer(null, null, null, null, null);
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
+    try
+    {
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, employer.getCVR());
+      pstmt.setString(2, password);
+      rs = pstmt.executeQuery();
 
-      while(rs.next()){
+      while (rs.next())
+      {
 
-        process(rs,tmpEmployer);
+        process(rs, tmpEmployer);
       }
 
     }
-    catch (Exception e){
+    catch (Exception e)
+    {
       e.printStackTrace();
     }
-    if(tmpEmployer.getCVR() == null){
+    finally
+    {
+      close(rs, pstmt, conn);
+    }
+    if (tmpEmployer.getCVR() == null)
+    {
       return false;
     }
-    else return true;
+    else
+      return true;
   }
 
-  public boolean workerPasswordCheck(Worker worker, String password){
+  public boolean workerPasswordCheck(Worker worker, String password)
+  {
     String SQL = "SELECT * FROM worker WHERE cpr=? AND password=?";
-    Worker tmpWorker = new Worker(null,null,null,null,null,null,null,null,null,null,null);
+    Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
+        null, null, null, null);
 
-    try{
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
-      pstmt.setString(1,worker.getCPR());
-      pstmt.setString(2,password);
-      ResultSet rs = pstmt.executeQuery();
+    ResultSet rs = null;
+    PreparedStatement pstmt = null;
+    Connection conn = null;
+    try
+    {
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, worker.getCPR());
+      pstmt.setString(2, password);
+      rs = pstmt.executeQuery();
 
-      while(rs.next()){
-        process(rs,tmpWorker);
+      while (rs.next())
+      {
+        process(rs, tmpWorker);
       }
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
     }
-    if(tmpWorker.getCPR() == null){
+    finally
+    {
+      close(rs, pstmt, conn);
+    }
+    if (tmpWorker.getCPR() == null)
+    {
       return false;
     }
-    else return true;
+    else
+      return true;
   }
+
   @Override public void editEmployer(Employer employer, String password)
       throws Exception
   {
-if(employerPasswordCheck(employer,password)){
+    if (employerPasswordCheck(employer, password))
+    {
 
-  try{
-    String SQL= "UPDATE employer SET companyname=?, email=?, phone=?, address=? WHERE cvr=?";
-    Connection conn= DatabaseConnection.getInstance().connect();
-    PreparedStatement pstmt= conn.prepareStatement(SQL);
-    pstmt.setString(1,employer.getCompanyName());
-    pstmt.setString(2,employer.getEmail());
-    pstmt.setString(3,employer.getPhone());
-    pstmt.setInt(4,insertAddress(employer.getAddress()));
-    pstmt.setString(5,employer.getCVR());
-    pstmt.executeUpdate();
-  }
-  catch (SQLException e){
-    e.printStackTrace();
-  }
-}
-else throw new Exception("Password does not match the current one.");
+      PreparedStatement pstmt = null;
+      Connection conn = null;
+      try
+      {
+        String SQL = "UPDATE employer SET companyname=?, email=?, phone=?, address=? WHERE cvr=?";
+        conn = DatabaseConnection.getInstance().connect();
+        pstmt = conn.prepareStatement(SQL);
+        pstmt.setString(1, employer.getCompanyName());
+        pstmt.setString(2, employer.getEmail());
+        pstmt.setString(3, employer.getPhone());
+        pstmt.setInt(4, insertAddress(employer.getAddress()));
+        pstmt.setString(5, employer.getCVR());
+        pstmt.executeUpdate();
+      }
+      catch (SQLException e)
+      {
+        e.printStackTrace();
+      }
+      finally
+      {
+        close(null, pstmt, conn);
+      }
+    }
+    else
+      throw new Exception("Password does not match the current one.");
   }
 
   @Override public void editEmployer(Employer employer, String password,
       String newPassword) throws Exception
   {
-    editEmployer(employer,password);
-    try{
+    editEmployer(employer, password);
+    PreparedStatement pstmt = null;
+    Connection conn = null;
+    try
+    {
 
       String SQL = "UPDATE employer SET  password=? WHERE cvr=?";
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
-     pstmt.setString(1,newPassword);
-     pstmt.setString(2,employer.getCVR());
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, newPassword);
+      pstmt.setString(2, employer.getCVR());
       pstmt.executeUpdate();
 
     }
@@ -815,6 +934,10 @@ else throw new Exception("Password does not match the current one.");
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstmt, conn);
     }
 
   }
@@ -822,47 +945,65 @@ else throw new Exception("Password does not match the current one.");
   @Override public void editWorker(Worker worker, String password)
       throws Exception
   {
-if(workerPasswordCheck(worker, password)){
+    if (workerPasswordCheck(worker, password))
+    {
 
-  try{
-    String SQL = "UPDATE worker SET firstname=?, lastname=?, taxcard=?, gender=?, email=?, phone=?, languages=?, description=?, address=?, birthday=? WHERE cpr=? ";
-    Connection conn= DatabaseConnection.getInstance().connect();
-    PreparedStatement pstmt= conn.prepareStatement(SQL);
-    pstmt.setString(1,worker.getFirstName());
-    pstmt.setString(2,worker.getLastName());
-    pstmt.setString(3,worker.getTaxCard());
-    pstmt.setString(4,worker.getGender());
-    pstmt.setString(5,worker.getEmail());
-    pstmt.setString(6,worker.getPhone());
-    pstmt.setString(7,worker.getLanguages());
-    pstmt.setString(8,worker.getDescription());
-    pstmt.setInt(9,insertAddress(worker.getAddress()));
-    pstmt.setDate(10,Date.valueOf(worker.getBirthday()));
-    pstmt.setString(11,worker.getCPR());
-    pstmt.executeUpdate();
-  }
-  catch (SQLException e){
-    e.printStackTrace();
-  }
-}
-else throw new Exception("Password does not match the current one.");
+      PreparedStatement pstmt = null;
+      Connection conn = null;
+      try
+      {
+        String SQL = "UPDATE worker SET firstname=?, lastname=?, taxcard=?, gender=?, email=?, phone=?, languages=?, description=?, address=?, birthday=? WHERE cpr=? ";
+        conn = DatabaseConnection.getInstance().connect();
+        pstmt = conn.prepareStatement(SQL);
+        pstmt.setString(1, worker.getFirstName());
+        pstmt.setString(2, worker.getLastName());
+        pstmt.setString(3, worker.getTaxCard());
+        pstmt.setString(4, worker.getGender());
+        pstmt.setString(5, worker.getEmail());
+        pstmt.setString(6, worker.getPhone());
+        pstmt.setString(7, worker.getLanguages());
+        pstmt.setString(8, worker.getDescription());
+        pstmt.setInt(9, insertAddress(worker.getAddress()));
+        pstmt.setDate(10, Date.valueOf(worker.getBirthday()));
+        pstmt.setString(11, worker.getCPR());
+        pstmt.executeUpdate();
+      }
+      catch (SQLException e)
+      {
+        e.printStackTrace();
+      }
+      finally
+      {
+        close(null, pstmt, conn);
+      }
+    }
+    else
+      throw new Exception("Password does not match the current one.");
   }
 
   @Override public void editWorker(Worker worker, String password,
       String newPassword) throws Exception
   {
     editWorker(worker, password);
-    try{
+    PreparedStatement pstmt = null;
+    Connection conn = null;
+    try
+    {
 
       String SQL = "UPDATE worker SET password=? WHERE cpr=? ";
-      Connection conn= DatabaseConnection.getInstance().connect();
-      PreparedStatement pstmt = conn.prepareStatement(SQL);
-pstmt.setString(1,newPassword);
-pstmt.setString(2,worker.getCPR());
+      conn = DatabaseConnection.getInstance().connect();
+      pstmt = conn.prepareStatement(SQL);
+      pstmt.setString(1, newPassword);
+      pstmt.setString(2, worker.getCPR());
       pstmt.executeUpdate();
     }
-    catch (SQLException e){
+    catch (SQLException e)
+    {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstmt, conn);
     }
 
   }
@@ -870,10 +1011,12 @@ pstmt.setString(2,worker.getCPR());
   @Override public void addSelectedWorker(Job job, Worker worker)
   {
     String SQL = "INSERT INTO works (cvr,jobID)" + "VALUES(?,?)";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
       pstm.setInt(2, getJobID(job));
       pstm.execute();
@@ -881,16 +1024,22 @@ pstmt.setString(2,worker.getCPR());
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(null, pstm, conn);
     }
   }
 
   @Override public void removeSelectedWorker(Job job, Worker worker)
   {
     String SQL = "DELETE from works where cpr=? AND jobID=?";
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, worker.getCPR());
       pstm.setInt(2, getJobID(job));
       pstm.execute();
@@ -899,18 +1048,25 @@ pstmt.setString(2,worker.getCPR());
     {
       e.printStackTrace();
     }
+    finally
+    {
+      close(null, pstm, conn);
+    }
   }
 
   public ArrayList<License> getAllLicencesByCPR(String cpr)
   {
     ArrayList<License> licenses = new ArrayList<>();
+    ResultSet rs = null;
+    PreparedStatement pstm = null;
+    Connection conn = null;
     try
     {
       String SQL = "SELECT * license where cpr=?";
-      Connection conn = DatabaseConnection.getInstance().connect();
-      PreparedStatement pstm = conn.prepareStatement(SQL);
+      conn = DatabaseConnection.getInstance().connect();
+      pstm = conn.prepareStatement(SQL);
       pstm.setString(1, cpr);
-      ResultSet rs = pstm.executeQuery();
+      rs = pstm.executeQuery();
 
       while (rs.next())
       {
@@ -922,6 +1078,10 @@ pstmt.setString(2,worker.getCPR());
     catch (SQLException e)
     {
       e.printStackTrace();
+    }
+    finally
+    {
+      close(rs, pstm, conn);
     }
     return licenses;
   }
@@ -984,6 +1144,4 @@ pstmt.setString(2,worker.getCPR());
     job.setLocation(getAddressByID(rs.getInt("address")));
   }
 
-
-  //TODO add gender and birthday to worker everywhere in database
 }

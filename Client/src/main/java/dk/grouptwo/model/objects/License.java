@@ -9,6 +9,7 @@ public class License implements Serializable {
     private String licenseNumber;
     private LocalDate issueDate;
     private LocalDate expiryDate;
+    private static final long serialVersionUID = 5;
 
     public License(String type, String category, String licenseNumber, LocalDate issueDate, LocalDate expiryDate) {
         this.type = type;

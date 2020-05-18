@@ -67,7 +67,7 @@ public class WorkOfferViewModel {
         workerLanguages = new SimpleStringProperty("");
         workerDescription = new SimpleStringProperty("");
         workerLicenses = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
 
         error = new SimpleStringProperty("");
     }
@@ -123,6 +123,7 @@ public class WorkOfferViewModel {
         error.set("");
         job = model.getJobById(data.getJobId());
         this.data = data;
+        list = createList();
     }
 
     public ObservableList<WorkersTableData> createList() {

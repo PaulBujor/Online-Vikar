@@ -9,6 +9,7 @@ public class Address implements Serializable {
     private String city;
     private String street;
     private String zip;
+    private static final long serialVersionUID = 6;
 
     public Address(String country, String city, String street, String zip) {
         this.country = country;

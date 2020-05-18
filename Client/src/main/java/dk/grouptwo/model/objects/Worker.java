@@ -13,6 +13,7 @@ public class Worker extends Account {
     private String languages;
     private String description;
     private ArrayList<License> licenses;
+    private static final long serialVersionUID = 3;
 
     public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description, LocalDate birthday, String gender) {
         super(email, phone, address);
@@ -103,6 +104,10 @@ public class Worker extends Account {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setCPR(String CPR) {
+        this.CPR = CPR;
     }
 
     public boolean equals(Object obj) {

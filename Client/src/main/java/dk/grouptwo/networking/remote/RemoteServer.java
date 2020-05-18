@@ -59,5 +59,5 @@ public interface RemoteServer extends Remote {
 
     ArrayList<Job> getJobs() throws RemoteException;
 
-    void cancelWorkerFromJob(Job job, Worker worker);
+    void cancelWorkerFromJob(Job job, Worker worker) throws RemoteException;
 }
