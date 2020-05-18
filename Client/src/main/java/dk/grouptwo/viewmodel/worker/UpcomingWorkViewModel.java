@@ -26,7 +26,7 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
     private StringProperty location;
     private StringProperty description;
     private ObservableList<WorkTableData> list;
-    WorkTableData selectedJob;
+    private WorkTableData selectedJob;
 
     public UpcomingWorkViewModel(WorkerModel model)
     {
