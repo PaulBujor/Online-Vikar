@@ -60,7 +60,6 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
         startEndDates.set(job.getShiftStart() + " - " + job.getShiftEnd());
         location.set(job.getLocation().toString());
         description.set(job.getDescription());
-        //i like cock
     }
 
     public StringProperty usernameProperty() {
