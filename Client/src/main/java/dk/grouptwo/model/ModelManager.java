@@ -297,8 +297,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         }
     }
 
-    public void cancelWorkerFromJob(Job job) {
-        server.cancelWorkerFromJob(job, worker);
+    public void cancelWorkerFromJob(Job job) throws Exception {
+        try {
+            server.cancelWorkerFromJob(job, worker);
+        } catch (RemoteException e) {
+            throw new Exception("An error has occured.");
+        }
     }
 
     @Override
