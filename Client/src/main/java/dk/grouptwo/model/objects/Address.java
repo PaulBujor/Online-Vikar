@@ -50,4 +50,8 @@ public class Address implements Serializable {
     public void setZip(String zip) {
         this.zip = zip;
     }
+
+    public String toString() {
+        return String.format("%s, %s %s, %s", street, city, zip, country);
+    }
 }

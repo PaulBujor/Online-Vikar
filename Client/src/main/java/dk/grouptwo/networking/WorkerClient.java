@@ -23,17 +23,17 @@ public class WorkerClient implements RemoteWorkerClient, PropertyChangeSubject {
     }
 
     @Override
-    public void addJob(Job job) {
+    public void addJob(Job job) throws RemoteException {
         property.firePropertyChange("addJob", 0, job);
     }
 
     @Override
-    public void updateJob(Job job) {
+    public void updateJob(Job job) throws RemoteException {
         property.firePropertyChange("updateJob", 0, job);
     }
 
     @Override
-    public void removeJob(Job job) {
+    public void removeJob(Job job) throws RemoteException {
         property.firePropertyChange("removeJob", 0, job);
     }
 

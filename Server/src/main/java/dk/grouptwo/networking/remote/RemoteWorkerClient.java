@@ -4,12 +4,13 @@ import dk.grouptwo.model.objects.Job;
 
 import java.io.Serializable;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 public interface RemoteWorkerClient extends Remote, Serializable {
-    public void addJob(Job job);
+    public void addJob(Job job) throws RemoteException;
 
-    public void updateJob(Job job);
+    public void updateJob(Job job) throws RemoteException;
 
-    public void removeJob(Job job);
+    public void removeJob(Job job) throws RemoteException;
 }
 

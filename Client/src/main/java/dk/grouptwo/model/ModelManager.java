@@ -134,8 +134,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             if (Validator.logInWorker(CPR, password)) {
                 worker = server.loginWorker(CPR, password);
+                setWorkerName(worker.getFirstName());
                 workerClient = new WorkerClient();
                 server.registerWorkerClient(workerClient);
+                jobs = server.getJobs();
                 upcomingJobs = server.getUpcomingJobs(worker);
                 workHistory = server.getWorkerJobHistory(worker);
             }
@@ -144,7 +146,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
-        setWorkerName(worker.getFirstName());
     }
 
     @Override
@@ -171,7 +172,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 setEmployerName(employer.getCompanyName());
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
@@ -184,6 +184,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.updateEmployer(employer, password)) {
                 server.editEmployer(employer, password);
                 this.employer = employer;
+                setEmployerName(employer.getCompanyName());
             }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
@@ -198,6 +199,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.updateEmployer(employer, password, newPassword, newPasswordConfirm)) {
                 server.editEmployer(employer, password, newPassword);
                 this.employer = employer;
+                setEmployerName(employer.getCompanyName());
             }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
@@ -212,6 +214,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.updateWorker(worker, password)) {
                 server.editWorker(worker, password);
                 this.worker = worker;
+                setWorkerName(worker.getFirstName());
             }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
@@ -226,6 +229,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.updateWorker(worker, password, newPassword, newPasswordConfirm)) {
                 server.editWorker(worker, password, newPassword);
                 this.worker = worker;
+                setWorkerName(worker.getFirstName());
             }
         } catch (RemoteException e) {
             throw new Exception(e.getMessage());
@@ -295,6 +299,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 jobs.add(job);
             }
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw new Exception("An error has occured.");
         }
     }

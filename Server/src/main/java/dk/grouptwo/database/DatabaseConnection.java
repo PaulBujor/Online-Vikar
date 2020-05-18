@@ -11,9 +11,9 @@ public class DatabaseConnection
 
   private Connection connection;
   private String driver = "org.postgresql.Driver";
-  private String url = "jdbc:postgresql://localhost:5432/SEP2?currentSchema=sep2db";
+  private String url = "jdbc:postgresql://localhost:5432/sep2db?currentSchema=sep2db";
   private String user = "postgres";
-  private String password = "adminass";
+  private String password = "gt-s5570";
   private static DatabaseConnection instance;
   private static Lock locker = new ReentrantLock();
 

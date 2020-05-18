@@ -95,7 +95,7 @@ public class FindWorkController extends WorkerViewTabController {
     }
 
     public void reset() {
-        //todo
+        viewModel.reset();
     }
 
 }

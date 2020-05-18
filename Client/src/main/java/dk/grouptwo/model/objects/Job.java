@@ -169,4 +169,12 @@ public class Job implements Serializable {
         Job job = (Job) o;
         return jobID == job.jobID;
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "jobID=" + jobID +
+                ", jobTitle='" + jobTitle + '\'' +
+                '}';
+    }
 }

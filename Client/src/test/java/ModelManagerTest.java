@@ -29,7 +29,7 @@ class ModelManagerTest {
     @Test
     void registerAccountWorker() throws Exception {
 
-        model.registerAccountWorker(dummyWorker, "12345678");
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
         model.logInWorker(dummyWorker.getCPR(), "12345678");
         assertEquals(dummyWorker, model.getWorker());
     }
@@ -179,7 +179,7 @@ class ModelManagerTest {
     @Test
     void editWorker() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         dummyWorkerEdited.setFirstName("Kyle");
         model.editWorker(dummyWorkerEdited, "12345678");
@@ -189,7 +189,7 @@ class ModelManagerTest {
     @Test
     void editWorkerPassword() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "12345678", "87654321", "87654321");
         assertEquals(dummyWorkerEdited, model.getWorker());
@@ -198,7 +198,7 @@ class ModelManagerTest {
     @Test
     void editWorkerWrongCurrentPassword() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "123456789", "87654321", "87654321");
         assertEquals(dummyWorkerEdited, model.getWorker());
@@ -207,7 +207,7 @@ class ModelManagerTest {
     @Test
     void editWorkerWrongPasswordConfirmation() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "12345678", "87654321", "876543210");
         assertEquals(dummyWorkerEdited, model.getWorker());

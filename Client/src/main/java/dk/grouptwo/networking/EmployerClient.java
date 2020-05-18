@@ -23,7 +23,7 @@ public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubje
     }
 
     @Override
-    public void updateJob(Job job) {
+    public void updateJob(Job job) throws RemoteException {
         property.firePropertyChange("updateJob", 0, job);
     }
 

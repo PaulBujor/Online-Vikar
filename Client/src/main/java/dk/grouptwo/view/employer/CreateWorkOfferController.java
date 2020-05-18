@@ -7,6 +7,7 @@ import dk.grouptwo.viewmodel.employer.CreateWorkOfferViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -54,7 +55,7 @@ public class CreateWorkOfferController extends EmployerViewTabController {
     private TextField street;
 
     @FXML
-    private TextArea error;
+    private Label error;
 
     @FXML
     private TextArea createWorkOfferWorkDescription;

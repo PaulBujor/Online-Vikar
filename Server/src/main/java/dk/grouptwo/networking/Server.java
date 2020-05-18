@@ -125,7 +125,11 @@ public class Server implements RemoteServer {
         persistence.cancelWorkerFromJob(job, worker);
         job.removeWorker(worker);
         jobMap.put(job, client);
-        client.updateJob(job);
+        try {
+            client.updateJob(job);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override //TODO modify selected workers --- needs tested

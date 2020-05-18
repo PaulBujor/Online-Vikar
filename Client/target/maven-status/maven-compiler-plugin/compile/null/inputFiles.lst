@@ -1,58 +1,58 @@
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\AccountManagement.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\WorkController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\ViewModelFactory.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\Server.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\SignInWorkerController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\UpcomingWorkController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerViewTabController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\App.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerWorkHistoryController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\CreateWorkOfferViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\StringDoubleConverter.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\WorkOfferViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Job.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\LicenseTableData.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\License.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteServer.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\FindWorkViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\Validator.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Address.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\CreateEmployerAccountViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\CreateWorkerAccountViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\StringIntegerConverter.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\CreateAccountController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\SignInEmployerController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\UpcomingWorkViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\EmployerModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\WorkViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\WorkerModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\ViewHandler.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteWorkerClient.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\CreateWorkOfferController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\SignInWorkerViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\WorkersTableData.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\SignInEmployerViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Worker.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\EmployerWorkHistoryViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerViewTabController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Account.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\WorkTableData.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\EmployerClient.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerProfileController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\WorkerWorkHistoryViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\CreateWorkerAccountController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\EmployerProfileViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\SignInController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\Encryptor.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\CreateEmployerAccountController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\WorkerClient.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerWorkHistoryController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\WorkerProfileViewModel.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\module-info.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteEmployerClient.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\FindWorkController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerProfileController.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\ModelManager.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Employer.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\utility\PropertyChangeSubject.java
-E:\Java Projects\VIA SDJ 2nd semester - no JFX\SEP2\Client\src\main\java\dk\grouptwo\view\employer\WorkOfferController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\App.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\Validator.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\WorkOfferViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Account.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\EmployerModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\WorkTableData.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\WorkViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\UpcomingWorkViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\AccountManagement.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteServer.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\StringIntegerConverter.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\WorkController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\CreateWorkerAccountViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\FindWorkViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\SignInWorkerController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\SignInEmployerViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\module-info.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteWorkerClient.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\WorkerWorkHistoryViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\ViewHandler.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\WorkerClient.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerProfileController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\EmployerWorkHistoryViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerViewTabController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\WorkerModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Address.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\remote\RemoteEmployerClient.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\ModelManager.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\WorkerProfileViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\FindWorkController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\EmployerClient.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\UpcomingWorkController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\WorkersTableData.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\WorkOfferController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerProfileController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\CreateEmployerAccountViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\StringDoubleConverter.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerViewTabController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\LicenseTableData.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Job.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\Encryptor.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\utility\PropertyChangeSubject.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\SignInEmployerController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\CreateWorkOfferController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Worker.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\Employer.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\EmployerWorkHistoryController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\model\objects\License.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\worker\SignInWorkerViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\networking\Server.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\CreateWorkOfferViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\SignInController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\WorkerWorkHistoryController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\CreateAccountController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\ViewModelFactory.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\viewmodel\employer\EmployerProfileViewModel.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\employer\CreateEmployerAccountController.java
+C:\Users\bujor\OneDrive - ViaUC\Skrivebord\SEP2\Client\src\main\java\dk\grouptwo\view\worker\CreateWorkerAccountController.java

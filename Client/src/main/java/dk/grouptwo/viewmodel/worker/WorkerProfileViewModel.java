@@ -75,26 +75,6 @@ public class WorkerProfileViewModel {
         list = FXCollections.observableArrayList();
     }
 
-    private boolean dataValid() {
-        if (CPR.get().equals("") || firstName.get().equals("") || lastName.get().equals("") || gender.get().equals("") || city.get().equals("") ||
-                postCode.get().equals("") || mobilePhone.get().equals("") || taxCard.get().equals("") || languages.get().equals("") || description.get().equals("") || email.get().equals("") ||
-                currentPassword.get().equals("")) {
-            error.set("All fields should be filled.");
-            return false;
-        } else if (!(newPassword.get().equals(confirmPassword.get()))) {
-            error.set("The passwords do not match.");
-            return false;
-        } else if (!(Validator.emailCheck(email.get()))) {
-            error.set("Wrong email format.");
-            return false;
-        }
-        if (newPassword.get().length() > 0 && newPassword.get().length() < 8) {
-            error.set("New password must be at least 8 characters long");
-            return false;
-        }
-        return true;
-    }
-
     public boolean saveChangesWorker() {
         try {
             Worker worker = new Worker(email.get(), mobilePhone.get(), new Address(country.get(), city.get(), street.get(), postCode.get()), CPR.get(), firstName.get(), lastName.get(), taxCard.get(), languages.get(), description.get(), birthday.get(), gender.get());
@@ -135,15 +115,11 @@ public class WorkerProfileViewModel {
     }
 
     private ObservableList<LicenseTableData> createList() {
-        ObservableList<LicenseTableData> list = FXCollections.observableArrayList();
-
         ArrayList<License> licenses = new ArrayList<>(model.getLicenses());
-
         for (License license : licenses) {
             list.add(new LicenseTableData(license));
         }
         return list;
-
     }
 
     public void reset() {
@@ -171,9 +147,8 @@ public class WorkerProfileViewModel {
         licenseIssueDate.set(null);
         licenseExpiryDate.set(null);
         error.set("");
-        list = createList();
+        createList();
     }
-
 
     public StringProperty usernameProperty() {
         return username;

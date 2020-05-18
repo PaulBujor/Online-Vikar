@@ -37,13 +37,13 @@ public class WorkViewModel implements PropertyChangeListener {
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
         error = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
     }
 
     private ObservableList<WorkTableData> createList()
     {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
-        try {
+        list.clear();
+       try {
             ArrayList<Job> jobs = model.getEmployerJobs();
             for (Job job : jobs)
                 list.add(new WorkTableData(job));
@@ -80,7 +80,7 @@ public class WorkViewModel implements PropertyChangeListener {
         startEndDates.set("");
         location.set("");
         description.set("");
-
+        createList();
     }
 
     public EmployerModel getModel() {

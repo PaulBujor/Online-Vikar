@@ -38,11 +38,11 @@ public class FindWorkViewModel implements PropertyChangeListener {
         startEndDates = new SimpleStringProperty("");
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
     }
 
     public ObservableList<WorkTableData> createList() {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+        list.clear();
         try {
             ArrayList<Job> jobs = model.getJobs();
             for(Job job : jobs)
@@ -59,6 +59,10 @@ public class FindWorkViewModel implements PropertyChangeListener {
         } catch (Exception e) {
 //            error.set(e.getMessage());
         }
+    }
+
+    public void reset() {
+        createList();
     }
 
     public ObservableList<WorkTableData> getList()

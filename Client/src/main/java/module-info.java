@@ -13,4 +13,5 @@ module dk.grouptwo {
     exports dk.grouptwo;
     exports dk.grouptwo.view.worker to javafx.fxml;
     exports dk.grouptwo.view.employer to javafx.fxml;
+    exports dk.grouptwo.networking.remote to java.rmi;
 }

@@ -219,9 +219,8 @@ public class ViewHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            findWorkController.reset();
         }
+        findWorkController.reset();
         return findWorkController.getRoot();
     }
 
@@ -236,9 +235,8 @@ public class ViewHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            workerProfileController.reset();
         }
+        workerProfileController.reset();
         return workerProfileController.getRoot();
     }
 
@@ -287,9 +285,8 @@ public class ViewHandler {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            workController.reset();
         }
+        workController.reset();
         return workController.getRoot();
     }
 
