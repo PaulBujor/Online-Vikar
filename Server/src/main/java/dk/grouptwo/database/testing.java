@@ -38,6 +38,7 @@ public class testing
 /*    System.out.println(testing.insertAddressTest(insertAddress));*/
    /* System.out.println(testing.getAllAddresses());*/
 
-    System.out.println(testing.insertAddressTest(insertAddressNew));
+Database database = new Database();
+
   }
 }

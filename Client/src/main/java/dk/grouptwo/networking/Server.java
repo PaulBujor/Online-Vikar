@@ -34,7 +34,7 @@ public class Server implements RemoteServer {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-            UnicastRemoteObject.exportObject(this, 0);
+          /*  UnicastRemoteObject.exportObject(this, 0);*/
             server = (RemoteServer) registry.lookup("Server");
             connected = true;
         } catch (RemoteException | NotBoundException e) {
@@ -124,7 +124,7 @@ public class Server implements RemoteServer {
     }
 
     @Override
-    public void cancelWorkerFromJob(Job job, Worker worker) {
+    public void cancelWorkerFromJob(Job job, Worker worker) throws  RemoteException{
         server.cancelWorkerFromJob(job, worker);
     }
 

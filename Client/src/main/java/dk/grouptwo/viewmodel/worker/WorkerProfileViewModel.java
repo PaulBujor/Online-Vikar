@@ -72,7 +72,7 @@ public class WorkerProfileViewModel {
         this.licenseIssueDate = new SimpleObjectProperty<LocalDate>(null);
         this.licenseExpiryDate = new SimpleObjectProperty<LocalDate>(null);
         error = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
     }
 
     private boolean dataValid() {
@@ -171,6 +171,7 @@ public class WorkerProfileViewModel {
         licenseIssueDate.set(null);
         licenseExpiryDate.set(null);
         error.set("");
+        list = createList();
     }
 
 

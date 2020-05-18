@@ -1,8 +1,9 @@
 package dk.grouptwo.model.objects;
 
 import java.io.Serializable;
+import dk.grouptwo.model.objects.Account;
 
-public class Employer extends Account {
+public class Employer extends Account implements Serializable {
     private String CVR;
     private String companyName;
 
