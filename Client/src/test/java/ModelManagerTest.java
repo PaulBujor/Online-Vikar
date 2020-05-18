@@ -1,12 +1,14 @@
 import dk.grouptwo.model.ModelManager;
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Employer;
+import dk.grouptwo.model.objects.Job;
 import dk.grouptwo.model.objects.Worker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,29 +30,76 @@ class ModelManagerTest {
 
     @Test
     void registerAccountWorker() throws Exception {
-
-        model.registerAccountWorker(dummyWorker, "12345678");
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
         model.logInWorker(dummyWorker.getCPR(), "12345678");
         assertEquals(dummyWorker, model.getWorker());
     }
 
     @Test
+    void registerAccountWorkerExistingAccount() throws Exception {
+        String errorMessage = "";
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        Worker anotherDummyWorker = dummyWorker;
+        try {
+            model.registerAccountWorker(anotherDummyWorker, "12345678", "12345678");
+        }
+        catch (Exception e)
+        {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Account could not be created!", errorMessage);
+    }
+
+    @Test
+    void registerAccountWorkerNotMatchingPasswords() throws Exception {
+        String errorMessage = "";
+
+        try {
+            model.registerAccountWorker(dummyWorker, "12345678", "123456789");
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("The passwords do not match.", errorMessage);
+    }
+
+    @Test
+    void registerAccountWorkerPasswordLength() throws Exception {
+        String errorMessage = "";
+        try {
+            model.registerAccountWorker(dummyWorker, "1234567", "1234567");
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("The password should contain at least 8 characters.", errorMessage);
+    }
+
+    @Test
+    void registerAccountWorkerEmailFormat() throws Exception {
+        String errorMessage = "";
+        dummyWorker.setEmail("worker@@gmail.com");
+        try {
+            model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Wrong email format.", errorMessage);
+    }
+
+    @Test
     void logInWorkerNotExisting() throws Exception {
         String errorMessage = "";
-       try {
-           model.logInWorker("000000-0000", "12345678");
-       }
-       catch (Exception e)
-       {
-           errorMessage = e.getMessage();
-       }
+        try {
+            model.logInWorker("000000-0000", "12345678");
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
         assertEquals("Account does not exist!", errorMessage);
     }
 
     @Test
     void registerAccountEmployer() throws Exception {
 
-        model.registerAccountEmployer(dummyEmployer, "12345678","12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
         assertEquals(dummyEmployer, model.getEmployer());
     }
@@ -62,10 +111,8 @@ class ModelManagerTest {
         Employer anotherDummyEmployer = dummyEmployer;
         try {
             model.registerAccountEmployer(anotherDummyEmployer, "12345678", "12345678");
-        }
-        catch (Exception e)
-        {
-             errorMessage = e.getMessage();
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
         }
         assertEquals("Account could not be created!", errorMessage);
     }
@@ -76,14 +123,11 @@ class ModelManagerTest {
 
         try {
             model.registerAccountEmployer(dummyEmployer, "12345678", "123456789");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("The passwords do not match.", errorMessage);
     }
-
 
 
     @Test
@@ -92,9 +136,7 @@ class ModelManagerTest {
 
         try {
             model.registerAccountEmployer(dummyEmployer, "1234567", "1234567");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("The password should contain at least 8 characters.", errorMessage);
@@ -105,16 +147,12 @@ class ModelManagerTest {
         String errorMessage = "";
         dummyEmployer.setEmail("employer@@gmail.com");
         try {
-            model.registerAccountEmployer(dummyEmployer, "1234567", "1234567");
-        }
-        catch (Exception e)
-        {
+            model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("Wrong email format.", errorMessage);
     }
-
-
 
 
     @Test
@@ -138,9 +176,10 @@ class ModelManagerTest {
         Employer dummyEmployerEdited = dummyEmployer;
         model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
         model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
-        model.editEmployer(dummyEmployerEdited, "12345678", "87654321","87654321");
+        model.editEmployer(dummyEmployerEdited, "12345678", "87654321", "87654321");
         assertEquals(dummyEmployerEdited, model.getEmployer());
     }
+
 
     @Test
     void editEmployerWrongCurrentPassword() throws Exception {
@@ -149,10 +188,8 @@ class ModelManagerTest {
         model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
         model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
         try {
-            model.editEmployer(dummyEmployerEdited, "123456789", "87654321","87654321");
-        }
-        catch (Exception e)
-        {
+            model.editEmployer(dummyEmployerEdited, "123456789", "87654321", "87654321");
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("Password does not match the current one.", errorMessage);
@@ -165,21 +202,18 @@ class ModelManagerTest {
         model.registerAccountEmployer(dummyEmployerEdited, "12345678", "12345678");
         model.logInEmployer(dummyEmployerEdited.getCVR(), "12345678");
         try {
-            model.editEmployer(dummyEmployerEdited, "12345678", "87654321","876543210");
-        }
-        catch (Exception e)
-        {
+            model.editEmployer(dummyEmployerEdited, "12345678", "87654321", "876543210");
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("Passwords do not match", errorMessage);
     }
 
 
-
     @Test
     void editWorker() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         dummyWorkerEdited.setFirstName("Kyle");
         model.editWorker(dummyWorkerEdited, "12345678");
@@ -189,7 +223,7 @@ class ModelManagerTest {
     @Test
     void editWorkerPassword() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "12345678", "87654321", "87654321");
         assertEquals(dummyWorkerEdited, model.getWorker());
@@ -198,7 +232,7 @@ class ModelManagerTest {
     @Test
     void editWorkerWrongCurrentPassword() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "123456789", "87654321", "87654321");
         assertEquals(dummyWorkerEdited, model.getWorker());
@@ -207,7 +241,7 @@ class ModelManagerTest {
     @Test
     void editWorkerWrongPasswordConfirmation() throws Exception {
         Worker dummyWorkerEdited = dummyWorker;
-        model.registerAccountWorker(dummyWorkerEdited, "12345678");
+        model.registerAccountWorker(dummyWorkerEdited, "12345678", "12345678");
         model.logInWorker(dummyWorkerEdited.getCPR(), "12345678");
         model.editWorker(dummyWorkerEdited, "12345678", "87654321", "876543210");
         assertEquals(dummyWorkerEdited, model.getWorker());
@@ -247,7 +281,34 @@ class ModelManagerTest {
     }
 
     @Test
-    void createWorkOffer() {
+    void createWorkOffer() throws Exception {
+        Job job = new Job("Work", "Work needed", 100, 1,
+                LocalDateTime.of(2020, 05, 19, 6, 0, 0),
+                LocalDateTime.of(2020, 05, 19, 14, 15, 0),
+                new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
+                dummyEmployer);
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        model.createWorkOffer(job);
+    }
+
+    @Test
+    void createWorkOfferInvalidData() throws Exception {
+        String errorMessage = "";
+        Job job = new Job("Work", "Work needed", 100, 1,
+                LocalDateTime.of(2020, 05, 19, 6, 0, 0),
+                LocalDateTime.of(2020, 05, 19, 14, 15, 0),
+                new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
+                dummyEmployer);
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        try {
+            model.createWorkOffer(job);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("All the fields must be filled", errorMessage);
     }
 
     @Test
