@@ -93,9 +93,19 @@ public class Server implements RemoteServer {
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
         Worker worker = null; //todo get worker CPR password
-        if (worker != null)
+        try
+        {
+            worker = persistence.loginWorker(CPR, password);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            throw  new RemoteException(e.getMessage());
+        }
+
+
             return worker;
-        throw new RemoteException("Account could not be found!");
+
     }
 
     @Override
