@@ -6,6 +6,7 @@ public abstract class Account implements Serializable {
     private String email;
     private String phone;
     private Address address;
+    private static final long serialVersionUID = 1;
 
     public Account(String email, String phone, Address address) {
         this.email = email;

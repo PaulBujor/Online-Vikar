@@ -1,11 +1,9 @@
 package dk.grouptwo.model.objects;
 
-import java.io.Serializable;
-import dk.grouptwo.model.objects.Account;
-
-public class Employer extends Account implements Serializable {
+public class Employer extends Account {
     private String CVR;
     private String companyName;
+    private static final long serialVersionUID = 2;
 
     public Employer(String email, String phone, Address address, String CVR, String companyName) {
         super(email, phone, address);

@@ -2,7 +2,6 @@ package dk.grouptwo.model.objects;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import dk.grouptwo.model.objects.Account;
 
 public class Worker extends Account {
     private String CPR;
@@ -14,6 +13,7 @@ public class Worker extends Account {
     private String languages;
     private String description;
     private ArrayList<License> licenses;
+    private static final long serialVersionUID = 3;
 
     public Worker(String email, String phone, Address address, String CPR, String firstName, String lastName, String taxCard, String languages, String description, LocalDate birthday, String gender) {
         super(email, phone, address);
@@ -38,11 +38,6 @@ public class Worker extends Account {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public void setCPR(String CPR)
-    {
-        this.CPR = CPR;
     }
 
     public String getLastName() {

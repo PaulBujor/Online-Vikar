@@ -7,24 +7,12 @@ public class Address implements Serializable {
     private String city;
     private String street;
     private String zip;
-
-    public Address(){}
+    private static final long serialVersionUID = 6;
 
     public Address(String country, String city, String street, String zip) {
         this.country = country;
         this.city = city;
         this.street = street;
-        this.zip = zip;
-    }
-
-    public Address(String city, String street, String zip) {
-        this.city = city;
-        this.street = street;
-        this.zip = zip;
-    }
-
-    public Address(String city, String zip) {
-        this.city = city;
         this.zip = zip;
     }
 
@@ -59,17 +47,5 @@ public class Address implements Serializable {
 
     public void setZip(String zip) {
         this.zip = zip;
-    }
-
-    public String toString(){
-return country +" "+city+" "+ street+" "+zip;
-    }
-
-    public boolean equals(Object obj){
-        if(!(obj instanceof Address)){
-            return false;
-        }
-        Address other = (Address) obj;
-        return other.country.equals(country) && other.city.equals(city) && other.street.equals(street) && other.zip.equals(zip);
     }
 }

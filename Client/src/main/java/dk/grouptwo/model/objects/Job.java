@@ -15,6 +15,7 @@ public class Job implements Serializable {
     private String status;
     private Address location;
     private Employer employer;
+    private static final long serialVersionUID = 4;
 
 
     private ArrayList<Worker> selectedWorkers;
