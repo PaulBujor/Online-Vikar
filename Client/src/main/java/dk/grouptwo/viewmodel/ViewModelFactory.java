@@ -13,7 +13,6 @@ public class ViewModelFactory {
     private WorkerWorkHistoryViewModel workerWorkHistoryViewModel;
     private SignInWorkerViewModel signInWorkerViewModel;
     private WorkOfferViewModel workOfferViewModel;
-    private CreateWorkOfferViewModel createWorkOfferViewModel;
 
     //employer view models
     private CreateEmployerAccountViewModel createEmployerAccountViewModel;
@@ -21,11 +20,16 @@ public class ViewModelFactory {
     private EmployerWorkHistoryViewModel employerWorkHistoryViewModel;
     private WorkViewModel workViewModel;
     private SignInEmployerViewModel signInEmployerViewModel;
+    private CreateWorkOfferViewModel createWorkOfferViewModel;
 
     public ViewModelFactory(ModelManager model) {
         //worker
         signInWorkerViewModel = new SignInWorkerViewModel(model);
         createWorkerAccountViewModel = new CreateWorkerAccountViewModel(model);
+        findWorkViewModel = new FindWorkViewModel(model);
+        upcomingWorkViewModel = new UpcomingWorkViewModel(model);
+        workerProfileViewModel = new WorkerProfileViewModel(model);
+        workerWorkHistoryViewModel = new WorkerWorkHistoryViewModel(model);
 
         //employer
         signInEmployerViewModel = new SignInEmployerViewModel(model);
@@ -33,6 +37,9 @@ public class ViewModelFactory {
         workViewModel = new WorkViewModel(model);
         workOfferViewModel = new WorkOfferViewModel(model);
         createWorkerAccountViewModel = new CreateWorkerAccountViewModel(model);
+        employerProfileViewModel = new EmployerProfileViewModel(model);
+        employerWorkHistoryViewModel = new EmployerWorkHistoryViewModel(model);
+        createWorkOfferViewModel = new CreateWorkOfferViewModel(model);
     }
 
     public CreateWorkerAccountViewModel getCreateWorkerAccountViewModel() {
