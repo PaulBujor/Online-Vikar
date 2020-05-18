@@ -5,50 +5,60 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.SignInController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.grouptwo.view.SignInController">
    <children>
-      <Line endX="100.0" fill="WHITE" layoutX="500.0" layoutY="566.0" startX="100.0" startY="-368.0" AnchorPane.bottomAnchor="198.5" AnchorPane.topAnchor="197.5" />
       <Button layoutX="278.0" layoutY="637.0" mnemonicParsing="false" onAction="#signInCreateAccountButtonPressed" prefHeight="58.0" prefWidth="609.0" stylesheets="@css/style.css" text="CREATE ACCOUNT" textFill="WHITE" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="314.0" AnchorPane.rightAnchor="313.0">
          <font>
             <Font name="System Bold" size="26.0" />
          </font>
       </Button>
-      <Label layoutX="585.0" layoutY="578.0" prefHeight="45.0" prefWidth="31.0" text="or">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="494.0" layoutY="120.0" text="Sign in as an">
-         <font>
-            <Font size="38.0" />
-         </font>
-      </Label>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="256.0" layoutY="245.0" mnemonicParsing="false" onAction="#singInEmployerButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer">
-         <graphic>
-            <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
-               <image>
-                  <Image url="@images/employer.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
-      </Button>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="695.0" layoutY="245.0" mnemonicParsing="false" onAction="#signInEmployeeButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee">
-         <graphic>
-            <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
-               <image>
-                  <Image url="@images/employee.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
-      </Button>
+      <VBox alignment="CENTER" layoutX="308.0" layoutY="120.0" prefWidth="585.0" spacing="10.0" AnchorPane.bottomAnchor="156.0" AnchorPane.leftAnchor="308.0" AnchorPane.rightAnchor="307.0" AnchorPane.topAnchor="120.0">
+         <children>
+            <Label text="Sign in as an" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="38.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" spacing="50.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#singInEmployerButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employer" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/employer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="38.0" />
+                     </font>
+                  </Button>
+                  <Line endX="100.0" fill="WHITE" startX="100.0" startY="-368.0" />
+                  <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#signInEmployeeButtonPressed" prefHeight="267.0" prefWidth="190.0" styleClass="account" stylesheets="@css/style.css" text="Employee" HBox.hgrow="ALWAYS">
+                     <graphic>
+                        <ImageView fitHeight="199.0" fitWidth="190.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/employee.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="38.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Label prefHeight="45.0" prefWidth="31.0" text="or">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

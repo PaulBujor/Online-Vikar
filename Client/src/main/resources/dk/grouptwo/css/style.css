@@ -1,6 +1,7 @@
 
 .account {
 	-fx-background-color: transparent !important;
+	-fx-text-fill: black !important;
 }
 
 .account:hover {
@@ -28,7 +29,7 @@
 	-fx-background-color: transparent !important;
 	-fx-text-fill: #00affe !important;
 }
-
+/*
 .text-field {
 
    -fx-border-color: #00affe;
@@ -36,14 +37,7 @@
    -fx-border-radius: 0;
    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
 
-/*    -fx-background-color: -fx-text-box-border, -fx-control-inner-background;
-    -fx-text-box-border: #009DE6;
-    -fx-border-radius: 15px;
-         -fx-focus-color: transparent;*/
-
 }
+*/
 
-/*.text-field:focused{
-     -fx-focus-color: transparent;
-}*/
 

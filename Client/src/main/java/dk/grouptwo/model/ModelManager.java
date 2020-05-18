@@ -299,8 +299,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 jobs.add(job);
             }
         } catch (RemoteException e) {
-            e.printStackTrace();
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 

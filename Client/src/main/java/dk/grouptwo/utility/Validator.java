@@ -191,8 +191,9 @@ public class Validator {
         return true;
     }
 
-    public static boolean createWork(Job job) {
-        //todo
+    public static boolean createWork(Job job) throws Exception {
+        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() ==  null || job.getStatus().isEmpty() || job.getLocation() == null)
+            throw new Exception("All the fields must be filled");
         return true;
     }
 
