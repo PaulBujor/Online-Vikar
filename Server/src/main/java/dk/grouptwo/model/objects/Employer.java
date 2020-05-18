@@ -28,4 +28,11 @@ public class Employer extends Account {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Employer))
+            return false;
+        Employer other = (Employer) obj;
+        return CVR.equals(other.CVR);
+    }
 }
