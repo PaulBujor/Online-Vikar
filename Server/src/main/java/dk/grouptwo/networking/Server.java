@@ -75,10 +75,19 @@ public class Server implements RemoteServer {
 
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
+
         Employer employer = null; //todo get employer CVR password
-        if (employer != null)
+        try
+        {
+            employer = persistence.loginEmployer(CVR,password);
+        }
+        catch (Exception e)
+        {
+            throw new RemoteException(e.getMessage());
+        }
+
             return employer;
-        throw new RemoteException("Account could not be found!");
+
     }
 
     @Override

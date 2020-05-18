@@ -171,6 +171,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 setEmployerName(employer.getCompanyName());
             }
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");

@@ -212,6 +212,7 @@ public class Database implements Persistence
       throws Exception
   {
     Employer tmpEmployer = new Employer(null, null, null, null, null);
+    System.out.println(password);
     String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
     ResultSet rs = null;
     PreparedStatement pstm = null;
@@ -223,7 +224,7 @@ public class Database implements Persistence
       pstm.setString(1, CVR);
       pstm.setString(2, password);
       rs = pstm.executeQuery();
-
+      System.out.println(rs);
       while (rs.next())
       {
         process(rs, tmpEmployer);
@@ -238,7 +239,8 @@ public class Database implements Persistence
     {
       close(rs, pstm, conn);
     }
-    if (tmpEmployer.getCVR() == null)
+    System.out.println(tmpEmployer.getCVR());
+    if (tmpEmployer.getCVR().equals(""))
     {
       throw new Exception("Account not found");
     }
@@ -744,7 +746,7 @@ public class Database implements Persistence
 
       while (rs.next())
       {
-        Address tmpAddress = new Address();
+        Address tmpAddress = new Address(null,null,null,null);
         process(rs, tmpAddress);
         addresses.add(tmpAddress);
       }
