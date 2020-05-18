@@ -7,12 +7,19 @@ import dk.grouptwo.utility.PropertyChangeSubject;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubject {
     private PropertyChangeSupport property;
 
     public EmployerClient() {
         property = new PropertyChangeSupport(this);
+        try {
+            UnicastRemoteObject.exportObject(this, 0);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

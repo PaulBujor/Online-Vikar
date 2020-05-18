@@ -14,8 +14,12 @@ public class WorkerClient implements RemoteWorkerClient, PropertyChangeSubject {
     private PropertyChangeSupport property;
 
     public WorkerClient() throws RemoteException {
-        UnicastRemoteObject.exportObject(this, 0);
         property = new PropertyChangeSupport(this);
+        try {
+            UnicastRemoteObject.exportObject(this, 0);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
