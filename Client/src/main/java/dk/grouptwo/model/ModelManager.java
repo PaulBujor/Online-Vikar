@@ -48,7 +48,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
                 Job newJob = (Job) evt.getNewValue();
                 if (worker != null) {
-                    if (newJob.getSelectedWorkers().contains(worker)) {
+                    if (newJob.workerSelected(worker)) {
                         jobs.remove(prevJob);
                         if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
                             if (!workHistory.contains(newJob)) {
