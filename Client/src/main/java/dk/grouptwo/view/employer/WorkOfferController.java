@@ -58,7 +58,7 @@ public class WorkOfferController extends EmployerViewTabController {
     private TextField street;
 
     @FXML
-    private TextArea error;
+    private Label error;
 
     @FXML
     private TextArea workOfferWorkDescription;

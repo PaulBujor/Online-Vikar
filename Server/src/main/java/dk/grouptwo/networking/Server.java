@@ -43,13 +43,14 @@ public class Server implements RemoteServer {
         for (Job job : jobs) {
             jobMap.put(job, client);
         }
+        System.out.println(jobMap);
         jobs.addAll(jobs);
     }
 
     @Override
     public void addJob(Job job, RemoteEmployerClient employerClient) throws RemoteException {
         persistence.addJobToDB(job);
-        //todo job.setID with id added by database
+        job.setJobID(persistence.getJobID(job));
         jobs.add(job);
         for (RemoteWorkerClient client : clients) {
             try {
@@ -85,9 +86,7 @@ public class Server implements RemoteServer {
         {
             throw new RemoteException(e.getMessage());
         }
-
             return employer;
-
     }
 
     @Override
@@ -102,14 +101,14 @@ public class Server implements RemoteServer {
             e.printStackTrace();
             throw  new RemoteException(e.getMessage());
         }
-
-
             return worker;
-
     }
 
     @Override
     public void applyForJob(Job job, Worker worker) throws RemoteException {
+        System.out.println(job);
+        System.out.println(jobMap.get(job));
+        System.out.println(jobMap.containsKey(job));
         RemoteEmployerClient client = jobMap.get(job);
         jobMap.remove(job);
         persistence.applyForJob(job, worker);

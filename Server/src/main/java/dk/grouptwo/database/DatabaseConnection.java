@@ -37,8 +37,6 @@ public class DatabaseConnection
 
   public synchronized Connection connect()
   {
-    System.out.println("test");
-
     try
     {
       connection = DriverManager.getConnection(url, user, password);
@@ -48,8 +46,6 @@ public class DatabaseConnection
       e.printStackTrace();
       connection = null;
     }
-    System.out.println("test done ");
-
     return connection;
   }
 

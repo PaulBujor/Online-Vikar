@@ -90,7 +90,7 @@ public class Database implements Persistence {
             preparedStatement.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
             preparedStatement.setString(7, job.getStatus());
             preparedStatement.setString(8, job.getEmployer().getCVR());
-            preparedStatement.setInt(9, insertAddress(job.getLocation()));
+            preparedStatement.setInt(9, getAddressID(job.getLocation()));
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 id = rs.getInt("jobID");
@@ -103,6 +103,8 @@ public class Database implements Persistence {
         }
         return id;
     }
+
+
 
     @Override
     public void removeJobFromDB(Job job) {
@@ -124,14 +126,14 @@ public class Database implements Persistence {
 
     @Override
     public void applyForJob(Job job, Worker worker) {
-        String SQL = "INSERT INTO applied (cvr,jobID)" + "VALUES(?,?)";
+        String SQL = "INSERT INTO applied (cpr,jobID)" + "VALUES(?,?)";
         PreparedStatement pstm = null;
         Connection conn = null;
         try {
             conn = DatabaseConnection.getInstance().connect();
             pstm = conn.prepareStatement(SQL);
             pstm.setString(1, worker.getCPR());
-            pstm.setInt(2, getJobID(job));
+            pstm.setInt(2, job.getJobID());
             pstm.execute();
 
         } catch (SQLException e) {
@@ -172,7 +174,6 @@ public class Database implements Persistence {
     public Employer loginEmployer(String CVR, String password)
             throws Exception {
         Employer tmpEmployer = new Employer(null, null, null, null, null);
-        System.out.println(password);
         String SQL = "SELECT * FROM employer WHERE cvr=? AND password=?";
         ResultSet rs = null;
         PreparedStatement pstm = null;
@@ -183,7 +184,6 @@ public class Database implements Persistence {
             pstm.setString(1, CVR);
             pstm.setString(2, password);
             rs = pstm.executeQuery();
-            System.out.println(rs);
             while (rs.next()) {
                 process(rs, tmpEmployer);
             }
@@ -193,7 +193,6 @@ public class Database implements Persistence {
         } finally {
             close(rs, pstm, conn);
         }
-        System.out.println(tmpEmployer.getCVR());
         if (tmpEmployer.getCVR().equals("")) {
             throw new Exception("Account not found");
         } else
@@ -294,7 +293,7 @@ public class Database implements Persistence {
     @Override
     public ArrayList<Job> getAllJobsFromDB() {
         ArrayList<Job> jobs = new ArrayList<>();
-        String SQL = "SELECT * FROM job";
+        String SQL = "SELECT * FROM job WHERE NOT (status='completed' OR status='cancelled')";
         ResultSet rs = null;
         Statement stmt = null;
         Connection conn = null;
@@ -548,6 +547,10 @@ public class Database implements Persistence {
                 close(null, posted, conn);
             }
         }
+        return getAddressID(address);
+    }
+
+    private int getAddressID(Address address) {
         String SQL = "SELECT addressID from address WHERE country=? AND city=? AND street=? AND zip=?"/*+"VALUES(?,?,?,?)"*/;
         int id = 0;
         ResultSet rs = null;
@@ -615,7 +618,6 @@ public class Database implements Persistence {
         } finally {
             close(rs, stmt, conn);
         }
-        System.out.println(addresses.toString());
         return addresses;
     }
 

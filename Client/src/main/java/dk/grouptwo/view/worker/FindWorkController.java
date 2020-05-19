@@ -83,6 +83,14 @@ public class FindWorkController extends WorkerViewTabController {
         findWorkWorkTimeColumn.setCellValueFactory(cellData -> cellData.getValue().workTimeProperty());
         findWorkLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         findWorkTable.setItems(viewModel.getList());
+
+        findWorkTable.onMouseClickedProperty().set(evt -> {
+            try {
+                viewModel.selectItem(findWorkTable.getSelectionModel().getSelectedItem());
+            } catch (Exception e) {
+                //
+            }
+        });
     }
 
     @FXML

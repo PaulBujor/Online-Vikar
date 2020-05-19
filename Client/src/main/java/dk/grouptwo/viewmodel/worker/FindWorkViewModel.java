@@ -45,7 +45,7 @@ public class FindWorkViewModel implements PropertyChangeListener {
         list.clear();
         try {
             ArrayList<Job> jobs = model.getJobs();
-            for(Job job : jobs)
+            for (Job job : jobs)
                 list.add(new WorkTableData(job));
         } catch (Exception e) {
             //
@@ -61,12 +61,20 @@ public class FindWorkViewModel implements PropertyChangeListener {
         }
     }
 
+    public void selectItem(WorkTableData data) {
+        jobTitle.set(data.jobTitleProperty().get());
+        employer.set(data.employerProperty().get());
+        salary.set(data.salaryProperty().get());
+        startEndDatesProperty().set(data.startTimeProperty().get() + " - " + data.endTimeProperty().get());
+        location.set(data.locationProperty().get());
+        description.set(data.getDescription());
+    }
+
     public void reset() {
         createList();
     }
 
-    public ObservableList<WorkTableData> getList()
-    {
+    public ObservableList<WorkTableData> getList() {
         return list;
     }
 

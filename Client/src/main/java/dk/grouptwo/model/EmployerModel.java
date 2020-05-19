@@ -23,7 +23,7 @@ public interface EmployerModel extends PropertyChangeSubject {
 
     ArrayList<Job> getWorkHistory() throws Exception;
 
-    ArrayList<Job> getEmployerJobs() throws Exception;
+    ArrayList<Job> getJobs() throws Exception;
 
     Worker getWorkerByJob(int jobID, String CPR);
 }

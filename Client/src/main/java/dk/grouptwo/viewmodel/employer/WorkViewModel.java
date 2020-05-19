@@ -40,11 +40,10 @@ public class WorkViewModel implements PropertyChangeListener {
         list = FXCollections.observableArrayList();
     }
 
-    private ObservableList<WorkTableData> createList()
-    {
+    private ObservableList<WorkTableData> createList() {
         list.clear();
-       try {
-            ArrayList<Job> jobs = model.getEmployerJobs();
+        try {
+            ArrayList<Job> jobs = model.getJobs();
             for (Job job : jobs)
                 list.add(new WorkTableData(job));
         } catch (Exception e) {

@@ -35,8 +35,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private String host = "localhost";
     private int port = 1099;
     private RemoteServer server = new Server(host, port);
-    private RemoteWorkerClient workerClient;
-    private RemoteEmployerClient employerClient;
+    private WorkerClient workerClient;
+    private EmployerClient employerClient;
 
     //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
     public ModelManager() {
@@ -136,6 +136,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 worker = server.loginWorker(CPR, password);
                 setWorkerName(worker.getFirstName());
                 workerClient = new WorkerClient();
+                workerClient.addListener(this);
                 server.registerWorkerClient(workerClient);
                 jobs = server.getJobs();
                 upcomingJobs = server.getUpcomingJobs(worker);
@@ -168,6 +169,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 employer = server.loginEmployer(CVR, password);
                 jobs = server.getEmployerJobs(employer);
                 employerClient = new EmployerClient();
+                employerClient.addListener(this);
                 server.registerEmployerClient(employerClient, jobs);
                 setEmployerName(employer.getCompanyName());
             }
@@ -365,7 +367,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getEmployerJobs() {
+    public ArrayList<Job> getJobs() {
         return jobs;
     }
 
@@ -377,11 +379,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 return worker;
         }
         return null;
-    }
-
-    @Override
-    public ArrayList<Job> getJobs() {
-        return jobs;
     }
 
     @Override
