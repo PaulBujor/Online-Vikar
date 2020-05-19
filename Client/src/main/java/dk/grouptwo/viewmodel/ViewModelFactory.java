@@ -21,7 +21,7 @@ public class ViewModelFactory {
     private SignInEmployerViewModel signInEmployerViewModel;
     private CreateWorkOfferViewModel createWorkOfferViewModel;
     private WorkOfferViewModel workOfferViewModel;
-    
+
     public ViewModelFactory(ModelManager model) {
         //worker
         signInWorkerViewModel = new SignInWorkerViewModel(model);
