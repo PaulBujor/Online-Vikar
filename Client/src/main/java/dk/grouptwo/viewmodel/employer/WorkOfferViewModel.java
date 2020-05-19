@@ -123,13 +123,12 @@ public class WorkOfferViewModel {
         error.set("");
         job = model.getJobById(data.getJobId());
         this.data = data;
-        list = createList();
+        createList();
     }
 
     public ObservableList<WorkersTableData> createList() {
-        ObservableList<WorkersTableData> list = FXCollections.observableArrayList();
+        list.clear();
         ArrayList<Worker> workers = job.getApplicants();
-
         for (Worker worker : workers) {
             list.add(new WorkersTableData(worker));
         }

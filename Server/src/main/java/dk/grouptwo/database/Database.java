@@ -431,7 +431,7 @@ public class Database implements Persistence {
             conn = DatabaseConnection.getInstance().connect();
 
             //TODO might need to change SQL
-            String SQL = "Select * FROM worker WHERE ID IN (SELECT cpr FROM applied WHERE jobID =? )";
+            String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM applied WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, getJobID(job));
             rs = pstmt.executeQuery();
@@ -441,6 +441,7 @@ public class Database implements Persistence {
                         null, null, null, null);
                 process(rs, tmpWorker);
                 workers.add(tmpWorker);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -925,6 +926,11 @@ public class Database implements Persistence {
         job.setStatus(rs.getString("status"));
         job.setEmployer(getEmployer(rs.getString("cvr")));
         job.setLocation(getAddressByID(rs.getInt("address")));
+        job.setApplicants(getAllAppliedWorkers(job));
+        job.setSelectedWorkers(getAllAcceptedWorkers(job));
+
+//        System.out.println(job.getApplicants());
+//        System.out.println(job.getSelectedWorkers());
     }
 
 }
