@@ -12,7 +12,6 @@ public class ViewModelFactory {
     private WorkerProfileViewModel workerProfileViewModel;
     private WorkerWorkHistoryViewModel workerWorkHistoryViewModel;
     private SignInWorkerViewModel signInWorkerViewModel;
-    private WorkOfferViewModel workOfferViewModel;
 
     //employer view models
     private CreateEmployerAccountViewModel createEmployerAccountViewModel;
@@ -21,7 +20,8 @@ public class ViewModelFactory {
     private WorkViewModel workViewModel;
     private SignInEmployerViewModel signInEmployerViewModel;
     private CreateWorkOfferViewModel createWorkOfferViewModel;
-
+    private WorkOfferViewModel workOfferViewModel;
+    
     public ViewModelFactory(ModelManager model) {
         //worker
         signInWorkerViewModel = new SignInWorkerViewModel(model);
