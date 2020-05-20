@@ -85,6 +85,7 @@ public class WorkViewModel implements PropertyChangeListener {
         startEndDates.set("");
         location.set("");
         description.set("");
+        selectedItem = null;
         createList();
     }
 

@@ -14,7 +14,7 @@ public class SignInWorkerController {
     private Region root;
 
     @FXML
-    private TextField signInEmployerCPRTextField;
+    private TextField signInEmployeeCPRTextField;
 
     @FXML
     private TextField signInEmployeePasswordTextField;
@@ -27,7 +27,7 @@ public class SignInWorkerController {
         this.viewModel = viewModel;
         this.root = root;
 
-        signInEmployerCPRTextField.textProperty().bindBidirectional(viewModel.CPRProperty());
+        signInEmployeeCPRTextField.textProperty().bindBidirectional(viewModel.CPRProperty());
         signInEmployeePasswordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
         signInEmployeeErrorLabel.textProperty().bind(viewModel.errorProperty());
     }

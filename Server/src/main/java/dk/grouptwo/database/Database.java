@@ -495,8 +495,8 @@ public class Database implements Persistence {
     public void addLicense(License license, Worker worker) {
         new Thread(() -> {
             String SQL =
-                    "INSERT INTO licence(cpr,licensenumber,typee,category,issuedate,expirydate)"
-                            + "VALUE(?,?,?,?,?,?)";
+                    "INSERT INTO license(cpr,licensenumber,typee,category,issuedate,expirydate)"
+                            + "VALUES(?,?,?,?,?,?)";
 
             PreparedStatement pstm = null;
             Connection conn = null;

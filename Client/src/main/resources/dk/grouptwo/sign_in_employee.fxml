@@ -20,7 +20,7 @@
                   <Insets bottom="68.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="signInEmployerCPRTextField" prefHeight="39.0" prefWidth="414.0" promptText="CPR" />
+            <TextField fx:id="signInEmployeeCPRTextField" prefHeight="39.0" prefWidth="414.0" promptText="CPR" />
             <TextField fx:id="signInEmployeePasswordTextField" prefHeight="39.0" prefWidth="414.0" promptText="Password" />
             <Label fx:id="signInEmployeeErrorLabel" alignment="CENTER" text="Error_label" textFill="RED">
                <VBox.margin>
