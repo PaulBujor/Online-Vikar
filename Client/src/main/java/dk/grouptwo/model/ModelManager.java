@@ -82,6 +82,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                         jobs.remove(prevJob);
                         workHistory.add(newJob);
                         property.firePropertyChange("moveToHistory", prevJob, newJob);
+                    } else {
+                        jobs.remove(prevJob);
+                        jobs.add(newJob);
+                        property.firePropertyChange("updateJob", prevJob, newJob);
                     }
                 }
                 break;

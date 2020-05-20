@@ -24,6 +24,7 @@ public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubje
 
     @Override
     public void updateJob(Job job) throws RemoteException {
+        System.out.println(job.getApplicants());
         property.firePropertyChange("updateJob", 0, job);
     }
 
@@ -35,7 +36,6 @@ public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubje
     @Override
     public void removeListener(PropertyChangeListener listener) {
         property.removePropertyChangeListener(listener);
-
     }
 
     @Override

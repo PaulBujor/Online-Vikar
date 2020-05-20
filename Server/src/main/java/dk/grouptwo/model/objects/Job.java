@@ -180,22 +180,11 @@ public class Job implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Job job = (Job) o;
-        return jobID == job.jobID &&
-                Double.compare(job.salary, salary) == 0 &&
-                workersNeeded == job.workersNeeded &&
-                Objects.equals(jobTitle, job.jobTitle) &&
-                Objects.equals(description, job.description) &&
-                Objects.equals(shiftStart, job.shiftStart) &&
-                Objects.equals(shiftEnd, job.shiftEnd) &&
-                Objects.equals(status, job.status) &&
-                Objects.equals(location, job.location) &&
-                Objects.equals(employer, job.employer) &&
-                Objects.equals(selectedWorkers, job.selectedWorkers) &&
-                Objects.equals(applicants, job.applicants);
+        return jobID == job.jobID;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(jobID, jobTitle, description, salary, workersNeeded, shiftStart, shiftEnd, status, location, employer, selectedWorkers, applicants);
+        return jobID;
     }
 }

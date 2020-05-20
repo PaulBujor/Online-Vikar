@@ -66,6 +66,12 @@ public class WorkViewModel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("moveToHistory"))
             Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
+        else if (evt.getPropertyName().equals("updateJob")) {
+            Platform.runLater(() -> {
+                list.remove(new WorkTableData((Job) evt.getOldValue()));
+                list.add(new WorkTableData((Job) evt.getNewValue()));
+            });
+        }
     }
 
     public WorkTableData getSelectedWorkOffer() {

@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Server implements RemoteServer {
     private ArrayList<RemoteWorkerClient> clients;
@@ -106,11 +107,7 @@ public class Server implements RemoteServer {
 
     @Override
     public void applyForJob(Job job, Worker worker) throws RemoteException {
-        System.out.println(job);
-        System.out.println(jobMap.get(job));
-        System.out.println(jobMap.containsKey(job));
-        RemoteEmployerClient client = jobMap.get(job);
-        jobMap.remove(job);
+        RemoteEmployerClient client = jobMap.remove(job);
         persistence.applyForJob(job, worker);
         job.addApplicant(worker);
         jobMap.put(job, client);

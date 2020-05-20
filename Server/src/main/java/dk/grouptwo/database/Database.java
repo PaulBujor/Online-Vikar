@@ -433,7 +433,7 @@ public class Database implements Persistence {
             //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM applied WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
-            pstmt.setInt(1, getJobID(job));
+            pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 //TODO subject to change
@@ -464,7 +464,7 @@ public class Database implements Persistence {
             //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM works WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
-            pstmt.setInt(1, getJobID(job));
+            pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 //TODO subject to change
