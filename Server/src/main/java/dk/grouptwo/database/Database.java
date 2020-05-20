@@ -871,14 +871,14 @@ public class Database implements Persistence {
     @Override
     public void addSelectedWorker(Job job, Worker worker) {
         new Thread(() -> {
-            String SQL = "INSERT INTO works (cvr,jobID)" + "VALUES(?,?)";
+            String SQL = "INSERT INTO works (cpr,jobID)" + "VALUES(?,?)";
             PreparedStatement pstm = null;
             Connection conn = null;
             try {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -898,7 +898,7 @@ public class Database implements Persistence {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -79,6 +79,7 @@ public class WorkOfferViewModel {
 
     public boolean save() {
         try {
+//            job.setJobID(data.getJobId());
             job.setJobTitle(title.get());
             job.setSalary(salary.get());
             job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
@@ -130,7 +131,10 @@ public class WorkOfferViewModel {
         list.clear();
         ArrayList<Worker> workers = job.getApplicants();
         for (Worker worker : workers) {
-            list.add(new WorkersTableData(worker));
+            WorkersTableData data = new WorkersTableData(worker);
+            if(job.getSelectedWorkers().contains(worker))
+                data.selectedForWorkProperty().setValue(true);
+            list.add(data);
         }
         return list;
     }

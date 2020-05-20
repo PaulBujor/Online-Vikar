@@ -136,9 +136,9 @@
             </HBox>
          </children>
       </VBox>
-      <TableView fx:id="workOfferTable" layoutX="639.0" layoutY="101.0" onMouseClicked="#workOfferWorkerSelected" prefHeight="299.0" prefWidth="546.0" AnchorPane.leftAnchor="639.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="101.0">
+      <TableView fx:id="workOfferTable" editable="true" layoutX="639.0" layoutY="101.0" onMouseClicked="#workOfferWorkerSelected" prefHeight="299.0" prefWidth="546.0" AnchorPane.leftAnchor="639.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="101.0">
         <columns>
-          <TableColumn fx:id="workOfferFullNameColumn" prefWidth="355.0" text="Worker's full name" />
+          <TableColumn fx:id="workOfferFullNameColumn" editable="false" prefWidth="355.0" text="Worker's full name" />
           <TableColumn fx:id="workOfferSelectColumn" prefWidth="190.0" text="Select worker" />
         </columns>
       </TableView>
