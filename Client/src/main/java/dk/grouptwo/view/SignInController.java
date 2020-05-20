@@ -20,7 +20,7 @@ public class SignInController {
     }
 
     @FXML
-    public void singInEmployerButtonPressed() {
+    public void signInEmployerButtonPressed() {
         viewHandler.openView("signInEmployer");
     }
 
