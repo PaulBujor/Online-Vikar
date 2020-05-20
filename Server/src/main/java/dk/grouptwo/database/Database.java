@@ -3,14 +3,13 @@ package dk.grouptwo.database;
 import dk.grouptwo.model.objects.*;
 import org.apache.commons.dbutils.DbUtils;
 
-import javax.print.DocFlavor;
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Database implements Persistence {
     public Database() {
-
+        updateThread();
     }
 
     public void close(ResultSet rs, Statement statement, Connection connection) {
@@ -19,6 +18,38 @@ public class Database implements Persistence {
         }
         DbUtils.closeQuietly(statement);
         DbUtils.closeQuietly(connection);
+    }
+
+    //updates job status, checks every 30 minutes
+    private void updateThread() {
+        new Thread(() -> {
+            while (1 < 2) {
+                updateJobStatus();
+                try {
+                    Thread.sleep(30 * 60 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void updateJobStatus() {
+        new Thread(() -> {
+            Connection conn = null;
+            String SQL = "UPDATE job SET status='completed' WHERE ?>job.shiftend";
+            PreparedStatement posted = null;
+            try {
+                conn = DatabaseConnection.getInstance().connect();
+                posted = conn.prepareStatement(SQL);
+                posted.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                posted.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                close(null, posted, conn);
+            }
+        }).start();
     }
 
     @Override
