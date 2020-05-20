@@ -41,68 +41,67 @@ public class Server implements RemoteServer {
     }
 
     public void registerEmployerClient(RemoteEmployerClient client, ArrayList<Job> jobs) throws RemoteException {
-        for (Job job : jobs) {
-            jobMap.put(job, client);
-        }
-        System.out.println(jobMap);
-        jobs.addAll(jobs);
+        new Thread(() -> {
+            for (Job job : jobs) {
+                jobMap.put(job, client);
+            }
+            jobs.addAll(jobs);
+        }).start();
     }
 
     @Override
     public void addJob(Job job, RemoteEmployerClient employerClient) throws RemoteException {
-        persistence.addJobToDB(job);
-        job.setJobID(persistence.getJobID(job));
-        jobs.add(job);
-        for (RemoteWorkerClient client : clients) {
-            try {
-                client.addJob(job);
-            } catch (Exception e) {
-                throw new RemoteException(e.getMessage());
+        new Thread(() -> {
+            persistence.addJobToDB(job);
+            job.setJobID(persistence.getJobID(job));
+            jobs.add(job);
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.addJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
     @Override
     public void removeJob(Job job) throws RemoteException {
-        jobs.remove(job);
-        persistence.removeJobFromDB(job);
-        for (RemoteWorkerClient client : clients) {
-            try {
-                client.removeJob(job);
-            } catch (Exception e) {
-                throw new RemoteException(e.getMessage());
+        new Thread(() -> {
+            jobs.remove(job);
+            persistence.removeJobFromDB(job);
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.removeJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
 
         Employer employer = null; //todo get employer CVR password
-        try
-        {
-            employer = persistence.loginEmployer(CVR,password);
-        }
-        catch (Exception e)
-        {
+        try {
+            employer = persistence.loginEmployer(CVR, password);
+        } catch (Exception e) {
             throw new RemoteException(e.getMessage());
         }
-            return employer;
+        return employer;
     }
 
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
         Worker worker = null; //todo get worker CPR password
-        try
-        {
+        try {
             worker = persistence.loginWorker(CPR, password);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw  new RemoteException(e.getMessage());
+            throw new RemoteException(e.getMessage());
         }
-            return worker;
+        return worker;
     }
 
     @Override
@@ -116,45 +115,49 @@ public class Server implements RemoteServer {
 
     @Override
     public void cancelWorkerFromJob(Job job, Worker worker) {
-        RemoteEmployerClient client = jobMap.get(job);
-        jobMap.remove(job);
-        persistence.cancelWorkerFromJob(job, worker);
-        job.removeWorker(worker);
-        jobMap.put(job, client);
-        try {
-            client.updateJob(job);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            RemoteEmployerClient client = jobMap.get(job);
+            jobMap.remove(job);
+            persistence.cancelWorkerFromJob(job, worker);
+            job.removeWorker(worker);
+            jobMap.put(job, client);
+            try {
+                client.updateJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override //TODO modify selected workers --- needs tested
     public void updateJob(Job job) throws RemoteException {
-        RemoteEmployerClient employer = jobMap.get(job);
-        jobMap.remove(job);
-        jobMap.put(job, employer);
-        persistence.updateJob(job);
+        new Thread(() -> {
+            RemoteEmployerClient employer = jobMap.get(job);
+            jobMap.remove(job);
+            jobMap.put(job, employer);
+            persistence.updateJob(job);
 
-        //update in database
-        ArrayList<Worker> selectedWorkers = persistence.getAllAcceptedWorkers(job);
-        for (Worker worker : job.getSelectedWorkers()) {
-            if (!selectedWorkers.contains(worker)) {
-                persistence.addSelectedWorker(job, worker);
+            //update in database
+            ArrayList<Worker> selectedWorkers = persistence.getAllAcceptedWorkers(job);
+            for (Worker worker : job.getSelectedWorkers()) {
+                if (!selectedWorkers.contains(worker)) {
+                    persistence.addSelectedWorker(job, worker);
+                }
             }
-        }
-        for (Worker worker : selectedWorkers) {
-            if (!job.getSelectedWorkers().contains(worker)) {
-                persistence.removeSelectedWorker(job, worker);
+            for (Worker worker : selectedWorkers) {
+                if (!job.getSelectedWorkers().contains(worker)) {
+                    persistence.removeSelectedWorker(job, worker);
+                }
             }
-        }
 
-        for (RemoteWorkerClient client : clients) {
-            try {
-                client.updateJob(job);
-            } catch (Exception e) {
-                e.printStackTrace();
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.updateJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
     @Override
