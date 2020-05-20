@@ -108,7 +108,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void removeListener(PropertyChangeListener listener) {
         property.removePropertyChangeListener(listener);
-
     }
 
     @Override
@@ -159,7 +158,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.createEmployer(employer, password, passwordConfirmation))
                 server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
-            e.printStackTrace();
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
