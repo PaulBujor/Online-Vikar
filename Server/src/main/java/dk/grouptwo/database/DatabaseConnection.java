@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -31,14 +32,19 @@ public class DatabaseConnection {
             in = new Scanner(configFile);
             cfg = gson.fromJson(in.nextLine(), DatabaseConfiguration.class);
         } catch (FileNotFoundException e) {
-            System.out.println("Configuration file could not be found, loading default configuration.");
+            System.out.println("Configuration file could not be found, loading default configuration and creating configuration file.");
             cfg = new DatabaseConfiguration();
+            try {
+                PrintWriter out = new PrintWriter(configFile);
+                out.println(gson.toJson(cfg));
+            } catch (FileNotFoundException fileNotFoundException) {
+                System.out.println("Could not create configuration file. You're on your own. Over.");
+            }
         }
         driver = cfg.getDriver();
         url = cfg.getUrl();
         user = cfg.getUser();
         password = cfg.getPassword();
-
     }
 
     public static DatabaseConnection getInstance() {
