@@ -88,8 +88,10 @@ public class WorkOfferViewModel {
             job.setDescription(description.get());
             job.setWorkersNeeded(workersNeeded.get());
             job.setSelectedWorkers(getSelectedWorkers());
+            if (job.getSelectedWorkers().size() > workersNeeded.get())
+                throw new Exception("too many workers selected");
             model.updateWorkOffer(job);
-            data.update(job); //updates the table data system-wide
+            data.update(job); //updates the table data system-wide todo needs tested, probably doesn't work
             return true;
         } catch (Exception e) {
             error.set(e.getMessage());
@@ -132,7 +134,7 @@ public class WorkOfferViewModel {
         ArrayList<Worker> workers = job.getApplicants();
         for (Worker worker : workers) {
             WorkersTableData data = new WorkersTableData(worker);
-            if(job.getSelectedWorkers().contains(worker))
+            if (job.getSelectedWorkers().contains(worker))
                 data.selectedForWorkProperty().setValue(true);
             list.add(data);
         }

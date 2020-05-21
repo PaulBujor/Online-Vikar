@@ -40,7 +40,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private WorkerClient workerClient;
     private EmployerClient employerClient;
 
-    //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
     public ModelManager() {
         jobs = new ArrayList<Job>();
         workHistory = new ArrayList<Job>();
@@ -48,6 +47,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         server = new Server(host, port);
     }
 
+    //todo not working properly currently
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         switch (evt.getPropertyName()) {
@@ -95,7 +95,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 jobs.add((Job) evt.getNewValue());
                 property.firePropertyChange("addJob", 0, evt.getNewValue());
                 break;
-            case "removeJob": //could change to cancel todo
+            case "removeJob":
                 jobs.remove(evt.getNewValue());
                 property.firePropertyChange("removeJob", 0, evt.getNewValue());
                 break;

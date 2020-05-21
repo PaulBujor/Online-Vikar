@@ -471,13 +471,11 @@ public class Database implements Persistence {
         try {
             conn = DatabaseConnection.getInstance().connect();
 
-            //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM applied WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                //TODO subject to change
                 Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
                         null, null, null, null);
                 process(rs, tmpWorker);
@@ -502,13 +500,11 @@ public class Database implements Persistence {
         try {
             conn = DatabaseConnection.getInstance().connect();
 
-            //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM works WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                //TODO subject to change
                 Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
                         null, null, null, null);
                 process(rs, tmpWorker);
