@@ -2,6 +2,7 @@ package dk.grouptwo.utility;
 
 import dk.grouptwo.model.objects.Address;
 import dk.grouptwo.model.objects.Job;
+import dk.grouptwo.model.objects.Worker;
 import javafx.beans.property.*;
 
 import java.text.DecimalFormat;
@@ -11,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 public class WorkTableData {
 
     private int jobId;
+    private StringProperty workerStatus;
     private StringProperty jobTitle;
     private StringProperty status;
     private StringProperty employer;
@@ -33,6 +35,11 @@ public class WorkTableData {
         address = job.getLocation();
         jobId = job.getJobID();
         description = job.getDescription();
+    }
+
+    public WorkTableData(Job job, Worker worker) {
+        this(job);
+        workerStatus = new SimpleStringProperty(job.getSelectedWorkers().contains(worker) ? "Confirmed" : (job.getApplicants().contains(worker) ? "Applied" : "NULL"));
     }
 
     public void update(Job job) {
@@ -84,6 +91,10 @@ public class WorkTableData {
         return new SimpleStringProperty(address.toString());
     }
 
+    public StringProperty workerStatusProperty() {
+        return workerStatus;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -97,7 +108,7 @@ public class WorkTableData {
     }
 
     public boolean equals(Object obj) {
-        if(!(obj instanceof WorkTableData))
+        if (!(obj instanceof WorkTableData))
             return false;
         WorkTableData other = (WorkTableData) obj;
         return jobId == other.jobId;

@@ -108,7 +108,6 @@ public class WorkerProfileController extends WorkerViewTabController {
     public void init(ViewHandler viewHandler, WorkerProfileViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
-        profileButton.setText(viewModel.usernameProperty().get());
         workerProfileNameLabel.setText(viewModel.usernameProperty().get());
 
         workerProfileCPR.textProperty().bind(viewModel.CPRProperty());

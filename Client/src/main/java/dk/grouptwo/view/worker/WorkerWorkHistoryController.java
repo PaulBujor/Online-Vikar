@@ -67,14 +67,11 @@ public class WorkerWorkHistoryController extends WorkerViewTabController {
     @FXML
     private Label workHistoryHoursLabel;
 
-    @FXML
-    private Button profileButton;
 
     public void init(ViewHandler viewHandler, WorkerWorkHistoryViewModel viewModel, Region root) {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
-        profileButton.setText(viewModel.usernameProperty().get());
-        workHistoryHoursLabel.setText("" + viewModel.hoursWorkedProperty().get());
+        Bindings.bindBidirectional(workHistoryHoursLabel.textProperty(), viewModel.hoursWorkedProperty(), new StringDoubleConverter(0));
         workHistoryDetailsTitle.textProperty().bind(viewModel.jobTitleProperty());
         workHistoryDetailsEmployer.textProperty().bind(viewModel.employerProperty());
         Bindings.bindBidirectional(workHistoryDetailsSalary.textProperty(), viewModel.salaryProperty(), new StringDoubleConverter(0));
@@ -96,21 +93,16 @@ public class WorkerWorkHistoryController extends WorkerViewTabController {
     }
 
     @FXML
-    public void workerHistoryJobSelected()
-    {
+    public void workerHistoryJobSelected() {
         try {
             WorkTableData workTableData = workHistoryTable.getSelectionModel().getSelectedItem();
             viewModel.selectJob(workTableData);
-        }
-        catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             //
         }
-
-
     }
 
-
-
-
+    public void reset() {
+        viewModel.reset();
+    }
 }

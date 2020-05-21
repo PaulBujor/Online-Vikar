@@ -66,8 +66,6 @@ public class FindWorkController extends WorkerViewTabController {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
 
-        profileButton.setText(viewModel.usernameProperty().get());
-
         findWorkDetailsTitle.textProperty().bind(viewModel.jobTitleProperty());
         findWorkDetailsEmployer.textProperty().bind(viewModel.employerProperty());
         Bindings.bindBidirectional(findWorkDetailsSalary.textProperty(), viewModel.salaryProperty(), new StringDoubleConverter(0));

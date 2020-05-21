@@ -39,6 +39,9 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
     private TableColumn<WorkersTableData, String> employerHistoryEmployeesTableCPRColumn;
 
     @FXML
+    private TableColumn<WorkersTableData, String> employerHistoryEmployeesTableTaxColumn;
+
+    @FXML
     private TableColumn<WorkersTableData, String> employerHistoryEmployeesTableNameColumn;
 
     @FXML
@@ -83,8 +86,10 @@ public class EmployerWorkHistoryController extends EmployerViewTabController {
         employerHistoryEndColumn.setCellValueFactory(cellData -> cellData.getValue().endTimeProperty());
         employerHistoryLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         employerHistoryMainTable.setItems(viewModel.getListHistory());
+        employerHistoryMainTable.onMouseClickedProperty().set(evt -> employerHistoryJobSelected());
 
         employerHistoryEmployeesTableCPRColumn.setCellValueFactory(cellData -> cellData.getValue().CPRProperty());
+        employerHistoryEmployeesTableTaxColumn.setCellValueFactory(cellData -> cellData.getValue().taxProperty());
         employerHistoryEmployeesTableNameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         employerHistoryEmployeesTable.setItems(viewModel.getListWorkers());
     }

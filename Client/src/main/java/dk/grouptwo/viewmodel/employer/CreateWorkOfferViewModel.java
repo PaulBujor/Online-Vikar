@@ -49,7 +49,7 @@ public class CreateWorkOfferViewModel {
     public boolean create() {
         try {
             model.createWorkOffer(new Job(title.get(), description.get(), salary.get(), workersNeeded.get(), LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())),
-                    LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())), new Address(country.get(), city.get(), street.get(), postCode.get()), "created", model.getEmployer()));
+                    LocalDateTime.of(endDate.get(), LocalTime.of(endHour.get(), endMinutes.get())), new Address(country.get(), city.get(), street.get(), postCode.get()), "pending", model.getEmployer()));
             return true;
         } catch (Exception e) {
             error.set(e.getMessage());

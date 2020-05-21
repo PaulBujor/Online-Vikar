@@ -149,6 +149,7 @@
       </AnchorPane>
       <TableView fx:id="upcomingTable" layoutX="127.0" layoutY="50.0" prefHeight="665.0" prefWidth="743.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="70.0">
          <columns>
+            <TableColumn fx:id="upcomingJobStatus" prefWidth="75.0" text="Status" />
             <TableColumn fx:id="upcomingJobTitleColumn" prefWidth="77.0" text="Job Title" />
             <TableColumn fx:id="upcomingEmployerColumn" prefWidth="111.0" text="Employer" />
             <TableColumn fx:id="upcomingSalaryColumn" prefWidth="93.0" text="Salary" />
