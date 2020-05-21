@@ -179,8 +179,11 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.logInEmployer(CVR, password)) {
                 employer = server.loginEmployer(CVR, password);
                 jobs = server.getEmployerJobs(employer);
-                //todo possible optimisation: get all jobs of employer and then move completed or cancelled to workhistory
-                workHistory = server.getEmployerJobHistory(employer);
+                for(Job job : jobs) {
+                    if(job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
+                        workHistory.add(job);
+                }
+                jobs.removeAll(workHistory);
                 employerClient = new EmployerClient();
                 employerClient.addListener(this);
                 server.registerEmployerClient(employerClient, jobs);

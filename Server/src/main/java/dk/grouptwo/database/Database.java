@@ -439,7 +439,7 @@ public class Database implements Persistence {
     @Override
     public ArrayList<Job> getCurrentEmployerJobs(Employer employer) {
         ArrayList<Job> jobs = new ArrayList<>();
-        String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending'";
+        String SQL = "SELECT * FROM job WHERE cvr=?";
         ResultSet rs = null;
         PreparedStatement pstm = null;
         Connection conn = null;
