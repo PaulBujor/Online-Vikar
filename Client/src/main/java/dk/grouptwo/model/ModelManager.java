@@ -47,6 +47,14 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         server = new Server(host, port);
     }
 
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        if(employer != null) {
+//
+//        } else if (worker != null) {
+//
+//        }
+//    }
+
     //todo not working properly currently
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -55,37 +63,28 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
                 Job newJob = (Job) evt.getNewValue();
                 if (worker != null) {
-                    if (newJob.workerSelected(worker)) {
                         jobs.remove(prevJob);
+                        upcomingJobs.remove(prevJob);
                         if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
                             if (!workHistory.contains(newJob)) {
                                 workHistory.add(newJob);
                                 property.firePropertyChange("moveToHistory", prevJob, newJob);
                             }
-                        } else {
+                        } else if (newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)){
                             if (!upcomingJobs.contains(newJob)) {
                                 upcomingJobs.add(newJob);
                                 property.firePropertyChange("moveToUpcoming", prevJob, newJob);
                             }
+                        } else {
+                            jobs.add(newJob);
+                            property.firePropertyChange("addJob", 0, newJob);
                         }
-                    } else if (prevJob.getSelectedWorkers().contains(worker) && !newJob.getSelectedWorkers().contains(worker)) {
-                        upcomingJobs.remove(prevJob);
-                        jobs.add(newJob);
-                        property.firePropertyChange("workerCancelled", prevJob, newJob);
-                        property.firePropertyChange("addJob", prevJob, newJob);
-                    } else {
-                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
-                            jobs.remove(prevJob);
-                            property.firePropertyChange("removeFromJobs", prevJob, newJob);
-                        }
-                    }
                 } else if (employer != null) {
+                    jobs.remove(prevJob);
                     if (newJob.getStatus().equals("completed")) {
-                        jobs.remove(prevJob);
                         workHistory.add(newJob);
                         property.firePropertyChange("moveToHistory", prevJob, newJob);
                     } else {
-                        jobs.remove(prevJob);
                         jobs.add(newJob);
                         property.firePropertyChange("updateJob", prevJob, newJob);
                     }
