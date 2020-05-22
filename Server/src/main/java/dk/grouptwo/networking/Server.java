@@ -55,6 +55,7 @@ public class Server implements RemoteServer {
             persistence.addJobToDB(job);
             job.setJobID(persistence.getJobID(job));
             jobs.add(job);
+            jobMap.put(job, employerClient);
             for (RemoteWorkerClient client : clients) {
                 try {
                     client.addJob(job);
@@ -106,11 +107,24 @@ public class Server implements RemoteServer {
 
     @Override
     public void applyForJob(Job job, Worker worker) throws RemoteException {
-        RemoteEmployerClient client = jobMap.remove(job);
-        persistence.applyForJob(job, worker);
-        job.addApplicant(worker);
-        jobMap.put(job, client);
-        client.updateJob(job);
+        new Thread(() -> {
+            RemoteEmployerClient client = jobMap.remove(job);
+            persistence.applyForJob(job, worker);
+            job.addApplicant(worker);
+            jobMap.put(job, client);
+            try {
+                client.updateJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            for (RemoteWorkerClient callback : clients) {
+                try {
+                    callback.updateJob(job);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -120,11 +134,19 @@ public class Server implements RemoteServer {
             jobMap.remove(job);
             persistence.cancelWorkerFromJob(job, worker);
             job.removeWorker(worker);
+            job.removeApplicant(worker);
             jobMap.put(job, client);
             try {
                 client.updateJob(job);
             } catch (RemoteException e) {
                 e.printStackTrace();
+            }
+            for (RemoteWorkerClient callback : clients) {
+                try {
+                    callback.updateJob(job);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }

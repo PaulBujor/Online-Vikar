@@ -43,6 +43,7 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
     }
 
     private void createList() {
+        list.clear();
         try {
             ArrayList<Job> jobs = model.getUpcomingJobs();
             for(Job job : jobs)
@@ -68,7 +69,6 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
     }
 
     public void reset() {
-        list.clear();
         jobTitle.set("");
         employer.set("");
         salary.set(0);
@@ -121,12 +121,7 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("moveToUpcoming"))
-            Platform.runLater(() -> list.add(new WorkTableData((Job) evt.getNewValue(), model.getWorker())));
-        else if(evt.getPropertyName().equals("workerCancelled"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
-        else if(evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
+        Platform.runLater(this::createList);
     }
 
 }

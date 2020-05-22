@@ -107,6 +107,6 @@ public class EmployerWorkHistoryViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> listHistory.add(new WorkTableData((Job) evt.getNewValue())));
+            Platform.runLater(this::createListHistory);
     }
 }

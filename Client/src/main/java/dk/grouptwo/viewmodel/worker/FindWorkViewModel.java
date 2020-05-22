@@ -108,10 +108,7 @@ public class FindWorkViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("addJob"))
-            Platform.runLater(() -> list.add(new WorkTableData((Job) evt.getNewValue())));
-        else if (evt.getPropertyName().equals("moveToUpcoming"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
+        Platform.runLater(this::createList);
     }
 
 }

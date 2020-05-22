@@ -47,58 +47,43 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         server = new Server(host, port);
     }
 
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        if(employer != null) {
-//
-//        } else if (worker != null) {
-//
-//        }
-//    }
-
     //todo not working properly currently
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        Job newJob = (Job) evt.getNewValue();
+        Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
         switch (evt.getPropertyName()) {
             case "updateJob":
-                Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
-                Job newJob = (Job) evt.getNewValue();
+                jobs.remove(prevJob);
                 if (worker != null) {
-                        jobs.remove(prevJob);
-                        upcomingJobs.remove(prevJob);
-                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
-                            if (!workHistory.contains(newJob)) {
-                                workHistory.add(newJob);
-                                property.firePropertyChange("moveToHistory", prevJob, newJob);
-                            }
-                        } else if (newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)){
-                            if (!upcomingJobs.contains(newJob)) {
-                                upcomingJobs.add(newJob);
-                                property.firePropertyChange("moveToUpcoming", prevJob, newJob);
-                            }
-                        } else {
-                            jobs.add(newJob);
-                            property.firePropertyChange("addJob", 0, newJob);
+                    upcomingJobs.remove(prevJob);
+                    if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                        if (!workHistory.contains(newJob)) {
+                            workHistory.add(newJob);
                         }
-                } else if (employer != null) {
-                    jobs.remove(prevJob);
-                    if (newJob.getStatus().equals("completed")) {
-                        workHistory.add(newJob);
-                        property.firePropertyChange("moveToHistory", prevJob, newJob);
+                    } else if (newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)) {
+                        if (!upcomingJobs.contains(newJob)) {
+                            upcomingJobs.add(newJob);
+                        }
                     } else {
                         jobs.add(newJob);
-                        property.firePropertyChange("updateJob", prevJob, newJob);
+                    }
+                } else if (employer != null) {
+                    if (newJob.getStatus().equals("completed") || newJob.getStatus().equals("cancelled")) {
+                        workHistory.add(newJob);
+                    } else {
+                        jobs.add(newJob);
                     }
                 }
                 break;
             case "addJob":
-                jobs.add((Job) evt.getNewValue());
-                property.firePropertyChange("addJob", 0, evt.getNewValue());
+                jobs.add(newJob);
                 break;
             case "removeJob":
-                jobs.remove(evt.getNewValue());
-                property.firePropertyChange("removeJob", 0, evt.getNewValue());
+                jobs.remove(prevJob);
                 break;
         }
+        property.firePropertyChange("update", 0, 1);
     }
 
     @Override
@@ -144,7 +129,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 server.registerWorkerClient(workerClient);
                 jobs = server.getJobs();
                 for (Job job : jobs) {
-                    if(job.getSelectedWorkers().contains(worker) || job.getApplicants().contains(worker)) {
+                    if (job.getSelectedWorkers().contains(worker) || job.getApplicants().contains(worker)) {
                         upcomingJobs.add(job);
                     }
                 }
@@ -178,8 +163,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.logInEmployer(CVR, password)) {
                 employer = server.loginEmployer(CVR, password);
                 jobs = server.getEmployerJobs(employer);
-                for(Job job : jobs) {
-                    if(job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
+                for (Job job : jobs) {
+                    if (job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
                         workHistory.add(job);
                 }
                 jobs.removeAll(workHistory);

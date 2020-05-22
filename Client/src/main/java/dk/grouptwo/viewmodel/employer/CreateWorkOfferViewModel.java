@@ -71,6 +71,7 @@ public class CreateWorkOfferViewModel {
         postCode.set("");
         street.set("");
         description.set("");
+        workersNeeded.set(0);
         error.set("");
     }
 

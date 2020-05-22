@@ -44,6 +44,7 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
     }
 
     private void createList() {
+        list.clear();
         ArrayList<Job> jobs = model.getWorkHistory();
         for (Job job : jobs) {
             list.add(new WorkTableData(job));
@@ -109,10 +110,6 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> {
-                list.add(new WorkTableData((Job) evt.getNewValue()));
-                hoursWorked.set(model.getHoursWorkedThisMonth());
-            });
+        Platform.runLater(this::createList);
     }
 }

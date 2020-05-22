@@ -54,31 +54,29 @@ public class Database implements Persistence {
 
     @Override
     public synchronized void addJobToDB(Job job) {
-        new Thread(() -> {
-            Connection conn = null;
-            String SQL =
-                    "INSERT INTO job(jobtitle,description,salary,workersneeded,shiftstart,shiftend,status,cvr,address)"
-                            + "VALUES(?,?,?,?,?,?,?,?,?)";
-            PreparedStatement posted = null;
-            try {
-                conn = DatabaseConnection.getInstance().connect();
-                posted = conn.prepareStatement(SQL);
-                posted.setString(1, job.getJobTitle());
-                posted.setString(2, job.getDescription());
-                posted.setDouble(3, job.getSalary());
-                posted.setInt(4, job.getWorkersNeeded());
-                posted.setTimestamp(5, Timestamp.valueOf(job.getShiftStart()));
-                posted.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
-                posted.setString(7, job.getStatus());
-                posted.setString(8, job.getEmployer().getCVR());
-                posted.setInt(9, insertAddress(job.getLocation()));
-                posted.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } finally {
-                close(null, posted, conn);
-            }
-        }).start();
+        Connection conn = null;
+        String SQL =
+                "INSERT INTO job(jobtitle,description,salary,workersneeded,shiftstart,shiftend,status,cvr,address)"
+                        + "VALUES(?,?,?,?,?,?,?,?,?)";
+        PreparedStatement posted = null;
+        try {
+            conn = DatabaseConnection.getInstance().connect();
+            posted = conn.prepareStatement(SQL);
+            posted.setString(1, job.getJobTitle());
+            posted.setString(2, job.getDescription());
+            posted.setDouble(3, job.getSalary());
+            posted.setInt(4, job.getWorkersNeeded());
+            posted.setTimestamp(5, Timestamp.valueOf(job.getShiftStart()));
+            posted.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
+            posted.setString(7, job.getStatus());
+            posted.setString(8, job.getEmployer().getCVR());
+            posted.setInt(9, insertAddress(job.getLocation()));
+            posted.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close(null, posted, conn);
+        }
     }
 
     public Employer getEmployer(String cvr) {
