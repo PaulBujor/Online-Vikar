@@ -27,7 +27,6 @@ public interface Persistence {
 
     Worker loginWorker(String CPR, String password) throws Exception;
 
-    //Creating accounts**** //TODO needs testing
     void createEmployerAccount(Employer employer, String password)
             throws SQLException;
 

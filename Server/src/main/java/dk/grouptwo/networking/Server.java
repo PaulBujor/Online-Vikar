@@ -83,7 +83,7 @@ public class Server implements RemoteServer {
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
 
-        Employer employer = null; //todo get employer CVR password
+        Employer employer = null;
         try {
             employer = persistence.loginEmployer(CVR, password);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class Server implements RemoteServer {
 
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
-        Worker worker = null; //todo get worker CPR password
+        Worker worker = null;
         try {
             worker = persistence.loginWorker(CPR, password);
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class Server implements RemoteServer {
         }).start();
     }
 
-    @Override //TODO modify selected workers --- needs tested
+    @Override
     public void updateJob(Job job) throws RemoteException {
         new Thread(() -> {
             RemoteEmployerClient employer = jobMap.get(job);
@@ -203,8 +203,6 @@ public class Server implements RemoteServer {
         return persistence.getCurrentEmployerJobs(employer);
     }
 
-
-    //todo throw remote exception if an error occurs
     @Override
     public void editEmployer(Employer employer, String password) throws RemoteException {
         try {

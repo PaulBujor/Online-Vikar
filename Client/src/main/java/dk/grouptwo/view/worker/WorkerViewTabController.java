@@ -26,7 +26,7 @@ class WorkerViewTabController {
     public void init(ViewHandler viewHandler, Region root){
         this.viewHandler = viewHandler;
         this.root = root;
-        profileButton.setText(ModelManager.getWorkerName());
+        profileButton.textProperty().bind(ModelManager.getWorkerName());
     }
 
     @FXML

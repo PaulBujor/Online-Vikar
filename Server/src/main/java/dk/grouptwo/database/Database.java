@@ -3,14 +3,13 @@ package dk.grouptwo.database;
 import dk.grouptwo.model.objects.*;
 import org.apache.commons.dbutils.DbUtils;
 
-import javax.print.DocFlavor;
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Database implements Persistence {
     public Database() {
-
+        updateThread();
     }
 
     public void close(ResultSet rs, Statement statement, Connection connection) {
@@ -19,6 +18,38 @@ public class Database implements Persistence {
         }
         DbUtils.closeQuietly(statement);
         DbUtils.closeQuietly(connection);
+    }
+
+    //updates job status, checks every 30 minutes
+    private void updateThread() {
+        new Thread(() -> {
+            while (1 < 2) {
+                updateJobStatus();
+                try {
+                    Thread.sleep(10 * 60 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void updateJobStatus() {
+        new Thread(() -> {
+            Connection conn = null;
+            String SQL = "UPDATE job SET status='completed' WHERE ?>job.shiftend";
+            PreparedStatement posted = null;
+            try {
+                conn = DatabaseConnection.getInstance().connect();
+                posted = conn.prepareStatement(SQL);
+                posted.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now()));
+                posted.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                close(null, posted, conn);
+            }
+        }).start();
     }
 
     @Override
@@ -115,7 +146,7 @@ public class Database implements Persistence {
             try {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
-                pstm.setInt(1, getJobID(job));
+                pstm.setInt(1, job.getJobID());
                 pstm.executeUpdate();
 
             } catch (SQLException e) {
@@ -165,7 +196,7 @@ public class Database implements Persistence {
                 pstm.setTimestamp(6, Timestamp.valueOf(job.getShiftEnd()));
                 pstm.setString(7, job.getStatus());
                 pstm.setInt(8, insertAddress(job.getLocation()));
-                pstm.setInt(9, getJobID(job));
+                pstm.setInt(9, job.getJobID());
                 pstm.executeUpdate();
 
             } catch (SQLException e) {
@@ -408,7 +439,7 @@ public class Database implements Persistence {
     @Override
     public ArrayList<Job> getCurrentEmployerJobs(Employer employer) {
         ArrayList<Job> jobs = new ArrayList<>();
-        String SQL = "SELECT * FROM job WHERE cvr=? AND status='pending' OR status='created'";
+        String SQL = "SELECT * FROM job WHERE cvr=?";
         ResultSet rs = null;
         PreparedStatement pstm = null;
         Connection conn = null;
@@ -440,13 +471,11 @@ public class Database implements Persistence {
         try {
             conn = DatabaseConnection.getInstance().connect();
 
-            //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM applied WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                //TODO subject to change
                 Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
                         null, null, null, null);
                 process(rs, tmpWorker);
@@ -471,13 +500,11 @@ public class Database implements Persistence {
         try {
             conn = DatabaseConnection.getInstance().connect();
 
-            //TODO might need to change SQL
             String SQL = "Select * FROM worker WHERE cpr IN (SELECT cpr FROM works WHERE jobID =? )";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, job.getJobID());
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                //TODO subject to change
                 Worker tmpWorker = new Worker(null, null, null, null, null, null, null,
                         null, null, null, null);
                 process(rs, tmpWorker);
@@ -646,7 +673,7 @@ public class Database implements Persistence {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -659,7 +686,7 @@ public class Database implements Persistence {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL1);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -840,14 +867,14 @@ public class Database implements Persistence {
     @Override
     public void addSelectedWorker(Job job, Worker worker) {
         new Thread(() -> {
-            String SQL = "INSERT INTO works (cvr,jobID)" + "VALUES(?,?)";
+            String SQL = "INSERT INTO works (cpr,jobID)" + "VALUES(?,?)";
             PreparedStatement pstm = null;
             Connection conn = null;
             try {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -867,7 +894,7 @@ public class Database implements Persistence {
                 conn = DatabaseConnection.getInstance().connect();
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, worker.getCPR());
-                pstm.setInt(2, getJobID(job));
+                pstm.setInt(2, job.getJobID());
                 pstm.execute();
             } catch (SQLException e) {
                 e.printStackTrace();

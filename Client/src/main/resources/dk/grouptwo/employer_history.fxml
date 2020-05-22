@@ -80,8 +80,9 @@
                   </Label>
                   <TableView fx:id="employerHistoryEmployeesTable" prefHeight="194.0" prefWidth="321.0">
                     <columns>
-                      <TableColumn fx:id="employerHistoryEmployeesTableCPRColumn" prefWidth="75.0" text="CPR" />
-                      <TableColumn fx:id="employerHistoryEmployeesTableNameColumn" prefWidth="244.0" text="Name" />
+                      <TableColumn fx:id="employerHistoryEmployeesTableCPRColumn" prefWidth="101.0" text="CPR" />
+                        <TableColumn fx:id="employerHistoryEmployeesTableTaxColumn" prefWidth="75.0" text="Tax Card" />
+                      <TableColumn fx:id="employerHistoryEmployeesTableNameColumn" prefWidth="218.0" text="Name" />
                     </columns>
                   </TableView>
                </children>
