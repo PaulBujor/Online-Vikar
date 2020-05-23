@@ -83,12 +83,15 @@
                       <TableColumn fx:id="employerHistoryEmployeesTableCPRColumn" prefWidth="75.0" text="CPR" />
                       <TableColumn fx:id="employerHistoryEmployeesTableNameColumn" prefWidth="244.0" text="Name" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                </children>
             </VBox>
          </children>
       </AnchorPane>
-      <TableView fx:id="employerHistoryMainTable" layoutX="127.0" layoutY="77.0" onMouseClicked="#employerHistoryJobSelected" prefHeight="673.0" prefWidth="715.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="77.0">
+      <TableView fx:id="employerHistoryMainTable" layoutX="127.0" layoutY="77.0" onMouseClicked="#employerHistoryJobSelected" prefHeight="673.0" prefWidth="715.0" stylesheets="@css/style.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="77.0">
          <columns>
             <TableColumn fx:id="employerHistoryJobTitleColumn" prefWidth="77.0" text="Job Title" />
             <TableColumn fx:id="employerHistoryStatusColumn" prefWidth="88.0" text="Status" />
@@ -98,6 +101,9 @@
             <TableColumn fx:id="employerHistoryEndColumn" prefWidth="93.0" text="Work Time" />
             <TableColumn fx:id="employerHistoryLocationColumn" prefWidth="105.0" text="Location" />
          </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Label layoutX="136.0" layoutY="14.0" prefHeight="49.0" prefWidth="174.0" text="History" textFill="#008fcc" AnchorPane.leftAnchor="135.0">
          <font>
