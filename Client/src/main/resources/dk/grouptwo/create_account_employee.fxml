@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -100,8 +101,8 @@
             <TextField fx:id="createAccountEmployeeEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField fx:id="createAccountEmployeePassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Password" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="createAccountEmployeeConfirmPassword" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="createAccountEmployeePassword" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" promptText="Passowrd" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="createAccountEmployeeConfirmPasswordcreateAccountEmployeeConfirmPassword" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <Label fx:id="createAccountEmployeeErrorLabel" text="Error_label" textFill="RED">

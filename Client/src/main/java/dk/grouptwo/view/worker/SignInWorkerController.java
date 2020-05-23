@@ -5,6 +5,7 @@ import dk.grouptwo.viewmodel.worker.SignInWorkerViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
@@ -17,7 +18,7 @@ public class SignInWorkerController {
     private TextField signInEmployeeCPRTextField;
 
     @FXML
-    private TextField signInEmployeePasswordTextField;
+    private PasswordField signInEmployeePasswordTextField;
 
     @FXML
     private Label signInEmployeeErrorLabel;

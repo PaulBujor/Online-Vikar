@@ -4,6 +4,7 @@ import dk.grouptwo.view.ViewHandler;
 import dk.grouptwo.viewmodel.employer.EmployerProfileViewModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
@@ -32,13 +33,13 @@ public class EmployerProfileController extends EmployerViewTabController {
     private TextField employerProfileEmail;
 
     @FXML
-    private TextField employerProfileCurrentPassword;
+    private PasswordField employerProfileCurrentPassword;
 
     @FXML
-    private TextField employerProfileNewPassword;
+    private PasswordField employerProfileNewPassword;
 
     @FXML
-    private TextField employerProfileConfirmPassword;
+    private PasswordField employerProfileConfirmPassword;
 
     @FXML
     private Label employerProfileErrorLabel;

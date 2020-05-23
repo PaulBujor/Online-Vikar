@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -138,9 +139,9 @@
             <TextField fx:id="workerProfileEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="393.0" promptText="Email address" />
             <HBox spacing="28.0">
                <children>
-                  <TextField fx:id="workerProfileCurrentPassword" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Current Password" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="workerProfileNewPassword" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="New Password" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="workerProfileConfirmPassword" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="158.0" prefHeight="30.0" prefWidth="100.0" promptText="Confirm Password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="workerProfileCurrentPassword" minHeight="30.0" minWidth="158.0" prefHeight="30.0" promptText="Current password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="workerProfileNewPassword" layoutX="10.0" layoutY="10.0" minHeight="30.0" minWidth="158.0" prefHeight="30.0" promptText="New password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="workerProfileConfirmPassword" layoutX="196.0" layoutY="10.0" minHeight="30.0" minWidth="158.0" prefHeight="30.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <TableView fx:id="workerProfileLicenseTable" prefHeight="93.0" prefWidth="530.0">
