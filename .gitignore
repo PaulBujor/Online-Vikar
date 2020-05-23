@@ -124,3 +124,5 @@ Client/target/classes/dk/grouptwo/utility/Encryptor.class
 Client/target/classes/dk/grouptwo/networking/LocalClientTest.class
 Client/target/classes/dk/grouptwo/utility/LicenseTableData.class
 Client/target/classes/dk/grouptwo/utility/WorkersTableData.class
+Client/target/classes/dk/grouptwo/viewmodel/employer/WorkOfferViewModel.class
+Server/target/classes/dk/grouptwo/networking/Server.class
