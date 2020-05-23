@@ -172,6 +172,12 @@ public class Server implements RemoteServer {
                 }
             }
 
+            try {
+                employer.updateJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
             for (RemoteWorkerClient client : clients) {
                 try {
                     client.updateJob(job);

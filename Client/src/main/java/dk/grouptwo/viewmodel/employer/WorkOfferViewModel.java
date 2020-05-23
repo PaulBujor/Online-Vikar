@@ -124,7 +124,7 @@ public class WorkOfferViewModel {
         description.set(data.getDescription());
         workersNeeded.set(data.numberOfWorkersProperty().get());
         error.set("");
-        job = model.getJobById(data.getJobId());
+        job = model.getJobById(data.getJobId()).copy();
         this.data = data;
         createList();
     }

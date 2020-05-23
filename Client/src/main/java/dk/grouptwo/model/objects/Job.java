@@ -187,4 +187,8 @@ public class Job implements Serializable {
     public int hashCode() {
         return jobID;
     }
+
+    public Job copy() {
+        return new Job(jobID, jobTitle, description, salary, workersNeeded, shiftStart, shiftEnd, status, location, employer);
+    }
 }

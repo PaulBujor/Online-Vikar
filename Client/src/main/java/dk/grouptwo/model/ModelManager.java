@@ -47,7 +47,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         server = new Server(host, port);
     }
 
-    //todo not working properly currently
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Job newJob = (Job) evt.getNewValue();
@@ -57,7 +56,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 jobs.remove(prevJob);
                 if (worker != null) {
                     upcomingJobs.remove(prevJob);
-                    if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                    if ((newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) && newJob.getSelectedWorkers().contains(worker)) {
                         if (!workHistory.contains(newJob)) {
                             workHistory.add(newJob);
                         }
@@ -78,9 +77,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 break;
             case "addJob":
                 jobs.add(newJob);
-                break;
-            case "removeJob":
-                jobs.remove(prevJob);
                 break;
         }
         property.firePropertyChange("update", 0, 1);
