@@ -39,6 +39,9 @@ public class UpcomingWorkController extends WorkerViewTabController {
     private TableView<WorkTableData> upcomingTable;
 
     @FXML
+    private TableColumn<WorkTableData, String> upcomingJobStatus;
+
+    @FXML
     private TableColumn<WorkTableData, String> upcomingJobTitleColumn;
 
     @FXML
@@ -65,7 +68,6 @@ public class UpcomingWorkController extends WorkerViewTabController {
     public void init(ViewHandler viewHandler, UpcomingWorkViewModel viewModel, Region root){
         super.init(viewHandler, root);
         this.viewModel = viewModel;
-        profileButton.setText(viewModel.usernameProperty().get());
 
         upcomingDetailsTitle.textProperty().bind(viewModel.jobTitleProperty());
         upcomingDetailsEmployer.textProperty().bind(viewModel.employerProperty());
@@ -74,6 +76,7 @@ public class UpcomingWorkController extends WorkerViewTabController {
         upcomingDetailsLocation.textProperty().bind(viewModel.locationProperty());
         upcomingDetailsWorkDescription.textProperty().bind(viewModel.descriptionProperty());
 
+        upcomingJobStatus.setCellValueFactory(cellData -> cellData.getValue().workerStatusProperty());
         upcomingJobTitleColumn.setCellValueFactory(cellData -> cellData.getValue().jobTitleProperty());
         upcomingEmployerColumn.setCellValueFactory(cellData -> cellData.getValue().employerProperty());
         upcomingSalaryColumn.setCellValueFactory(cellData -> cellData.getValue().salaryProperty());
@@ -95,6 +98,10 @@ public class UpcomingWorkController extends WorkerViewTabController {
     @FXML
     void upcomingCancelButtonPressed() {
         viewModel.cancel();
+    }
+
+    public void reset() {
+        viewModel.reset();
     }
 
 }

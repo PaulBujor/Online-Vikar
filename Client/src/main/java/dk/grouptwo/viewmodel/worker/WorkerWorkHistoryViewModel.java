@@ -33,7 +33,7 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
         this.model = model;
         model.addListener(this);
         username = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
         hoursWorked = new SimpleDoubleProperty(model.getHoursWorkedThisMonth());
         jobTitle = new SimpleStringProperty("");
         employer = new SimpleStringProperty("");
@@ -43,13 +43,12 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
         description = new SimpleStringProperty("");
     }
 
-    private ObservableList<WorkTableData> createList() {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+    private void createList() {
+        list.clear();
         ArrayList<Job> jobs = model.getWorkHistory();
         for (Job job : jobs) {
             list.add(new WorkTableData(job));
         }
-        return list;
     }
 
     public void selectJob(WorkTableData workTableData) {
@@ -60,6 +59,17 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
         startEndDates.set(job.getShiftStart() + " - " + job.getShiftEnd());
         location.set(job.getLocation().toString());
         description.set(job.getDescription());
+    }
+
+    public void reset() {
+        jobTitle.set("");
+        employer.set("");
+        salary.setValue(0);
+        startEndDates.set("");
+        location.set("");
+        description.set("");
+        createList();
+        hoursWorked.set(model.getHoursWorkedThisMonth());
     }
 
     public StringProperty usernameProperty() {
@@ -100,10 +110,6 @@ public class WorkerWorkHistoryViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> {
-                list.add(new WorkTableData((Job) evt.getNewValue()));
-                hoursWorked.set(model.getHoursWorkedThisMonth());
-            });
+        Platform.runLater(this::createList);
     }
 }

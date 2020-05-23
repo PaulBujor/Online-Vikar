@@ -35,7 +35,6 @@ public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubje
     @Override
     public void removeListener(PropertyChangeListener listener) {
         property.removePropertyChangeListener(listener);
-
     }
 
     @Override

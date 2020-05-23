@@ -194,11 +194,16 @@ public class Validator {
     public static boolean createWork(Job job) throws Exception {
         if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() ==  null || job.getStatus().isEmpty() || job.getLocation() == null)
             throw new Exception("All the fields must be filled");
+        if (job.getShiftStart().isAfter(job.getShiftEnd()))
+            throw new Exception("Start time cannot be after end time");
         return true;
     }
 
-    public static boolean updateWork(Job job) {
-        //todo
+    public static boolean updateWork(Job job) throws Exception {
+        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() ==  null || job.getStatus().isEmpty() || job.getLocation() == null)
+            throw new Exception("All the fields must be filled");
+        if (job.getShiftStart().isAfter(job.getShiftEnd()))
+            throw new Exception("Start time cannot be after end time");
         return true;
     }
 }

@@ -22,7 +22,7 @@ class EmployerViewTabController {
     public void init(ViewHandler viewHandler, Region root){
         this.viewHandler = viewHandler;
         this.root = root;
-        profileButton.setText(ModelManager.getEmployerName());
+        profileButton.textProperty().bind(ModelManager.getEmployerName());
     }
 
     @FXML

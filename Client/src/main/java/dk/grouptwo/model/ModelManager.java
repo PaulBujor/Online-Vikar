@@ -9,6 +9,8 @@ import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 import dk.grouptwo.utility.PropertyChangeSubject;
 import dk.grouptwo.utility.Validator;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -35,10 +37,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     private String host = "localhost";
     private int port = 1099;
     private RemoteServer server = new Server(host, port);
-    private RemoteWorkerClient workerClient;
-    private RemoteEmployerClient employerClient;
+    private WorkerClient workerClient;
+    private EmployerClient employerClient;
 
-    //todo observer pattern move from arrays based on udpate and fire udpate to viewmodel to update tables (simple remove and add)
     public ModelManager() {
         jobs = new ArrayList<Job>();
         workHistory = new ArrayList<Job>();
@@ -46,54 +47,43 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         server = new Server(host, port);
     }
 
+    //todo not working properly currently
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        Job newJob = (Job) evt.getNewValue();
+        Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
         switch (evt.getPropertyName()) {
             case "updateJob":
-                Job prevJob = getJobById(((Job) evt.getNewValue()).getJobID());
-                Job newJob = (Job) evt.getNewValue();
+                jobs.remove(prevJob);
                 if (worker != null) {
-                    if (newJob.workerSelected(worker)) {
-                        jobs.remove(prevJob);
-                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
-                            if (!workHistory.contains(newJob)) {
-                                workHistory.add(newJob);
-                                property.firePropertyChange("moveToHistory", prevJob, newJob);
-                            }
-                        } else {
-                            if (!upcomingJobs.contains(newJob)) {
-                                upcomingJobs.add(newJob);
-                                property.firePropertyChange("moveToUpcoming", prevJob, newJob);
-                            }
+                    upcomingJobs.remove(prevJob);
+                    if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
+                        if (!workHistory.contains(newJob)) {
+                            workHistory.add(newJob);
                         }
-                    } else if (prevJob.getSelectedWorkers().contains(worker) && !newJob.getSelectedWorkers().contains(worker)) {
-                        upcomingJobs.remove(prevJob);
-                        jobs.add(newJob);
-                        property.firePropertyChange("workerCancelled", prevJob, newJob);
-                        property.firePropertyChange("addJob", prevJob, newJob);
+                    } else if (newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)) {
+                        if (!upcomingJobs.contains(newJob)) {
+                            upcomingJobs.add(newJob);
+                        }
                     } else {
-                        if (newJob.getStatus().equals("cancelled") || newJob.getStatus().equals("completed")) {
-                            jobs.remove(prevJob);
-                            property.firePropertyChange("removeFromJobs", prevJob, newJob);
-                        }
+                        jobs.add(newJob);
                     }
                 } else if (employer != null) {
-                    if (newJob.getStatus().equals("completed")) {
-                        jobs.remove(prevJob);
+                    if (newJob.getStatus().equals("completed") || newJob.getStatus().equals("cancelled")) {
                         workHistory.add(newJob);
-                        property.firePropertyChange("moveToHistory", prevJob, newJob);
+                    } else {
+                        jobs.add(newJob);
                     }
                 }
                 break;
             case "addJob":
-                jobs.add((Job) evt.getNewValue());
-                property.firePropertyChange("addJob", 0, evt.getNewValue());
+                jobs.add(newJob);
                 break;
-            case "removeJob": //could change to cancel todo
-                jobs.remove(evt.getNewValue());
-                property.firePropertyChange("removeJob", 0, evt.getNewValue());
+            case "removeJob":
+                jobs.remove(prevJob);
                 break;
         }
+        property.firePropertyChange("update", 0, 1);
     }
 
     @Override
@@ -104,7 +94,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void removeListener(PropertyChangeListener listener) {
         property.removePropertyChangeListener(listener);
-
     }
 
     @Override
@@ -136,15 +125,23 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 worker = server.loginWorker(CPR, password);
                 setWorkerName(worker.getFirstName());
                 workerClient = new WorkerClient();
+                workerClient.addListener(this);
                 server.registerWorkerClient(workerClient);
                 jobs = server.getJobs();
-                upcomingJobs = server.getUpcomingJobs(worker);
+                for (Job job : jobs) {
+                    if (job.getSelectedWorkers().contains(worker) || job.getApplicants().contains(worker)) {
+                        upcomingJobs.add(job);
+                    }
+                }
+                jobs.removeAll(upcomingJobs);
                 workHistory = server.getWorkerJobHistory(worker);
             }
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -154,7 +151,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.createEmployer(employer, password, passwordConfirmation))
                 server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
-            e.printStackTrace();
             throw new Exception("Account could not be created!");
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
@@ -167,7 +163,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.logInEmployer(CVR, password)) {
                 employer = server.loginEmployer(CVR, password);
                 jobs = server.getEmployerJobs(employer);
+                for (Job job : jobs) {
+                    if (job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
+                        workHistory.add(job);
+                }
+                jobs.removeAll(workHistory);
                 employerClient = new EmployerClient();
+                employerClient.addListener(this);
                 server.registerEmployerClient(employerClient, jobs);
                 setEmployerName(employer.getCompanyName());
             }
@@ -249,6 +251,14 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public Job getJobById(int jobId) {
         for (Job job : jobs) {
+            if (job.getJobID() == jobId)
+                return job;
+        }
+        for (Job job : workHistory) {
+            if (job.getJobID() == jobId)
+                return job;
+        }
+        for (Job job : upcomingJobs) {
             if (job.getJobID() == jobId)
                 return job;
         }
@@ -365,7 +375,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getEmployerJobs() {
+    public ArrayList<Job> getJobs() {
         return jobs;
     }
 
@@ -380,32 +390,27 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     }
 
     @Override
-    public ArrayList<Job> getJobs() {
-        return jobs;
-    }
-
-    @Override
     public ArrayList<Job> getUpcomingJobs() throws Exception {
         return upcomingJobs;
     }
 
     //static for username button
-    private static String employerName;
-    private static String workerName;
+    private static StringProperty employerName = new SimpleStringProperty();
+    private static StringProperty workerName = new SimpleStringProperty();
 
-    public static String getEmployerName() {
+    public static StringProperty getEmployerName() {
         return employerName;
     }
 
-    public static String getWorkerName() {
+    public static StringProperty getWorkerName() {
         return workerName;
     }
 
     public static void setEmployerName(String employerName) {
-        ModelManager.employerName = employerName;
+        ModelManager.employerName.set(employerName);
     }
 
     public static void setWorkerName(String workerName) {
-        ModelManager.workerName = workerName;
+        ModelManager.workerName.set(workerName);
     }
 }

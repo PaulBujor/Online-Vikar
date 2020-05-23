@@ -21,6 +21,12 @@ public class App extends Application {
         new ViewHandler(new ViewModelFactory(new ModelManager())).start(stage);
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.exit(0);
+    }
+
     public static void main(String[] args) {
         launch();
     }

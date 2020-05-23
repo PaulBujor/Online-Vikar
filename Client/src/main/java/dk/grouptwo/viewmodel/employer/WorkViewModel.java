@@ -40,11 +40,10 @@ public class WorkViewModel implements PropertyChangeListener {
         list = FXCollections.observableArrayList();
     }
 
-    private ObservableList<WorkTableData> createList()
-    {
+    private ObservableList<WorkTableData> createList() {
         list.clear();
-       try {
-            ArrayList<Job> jobs = model.getEmployerJobs();
+        try {
+            ArrayList<Job> jobs = model.getJobs();
             for (Job job : jobs)
                 list.add(new WorkTableData(job));
         } catch (Exception e) {
@@ -65,8 +64,7 @@ public class WorkViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
+        Platform.runLater(this::createList);
     }
 
     public WorkTableData getSelectedWorkOffer() {
@@ -80,6 +78,7 @@ public class WorkViewModel implements PropertyChangeListener {
         startEndDates.set("");
         location.set("");
         description.set("");
+        selectedItem = null;
         createList();
     }
 

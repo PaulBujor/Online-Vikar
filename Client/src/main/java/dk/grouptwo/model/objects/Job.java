@@ -3,6 +3,7 @@ package dk.grouptwo.model.objects;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Job implements Serializable {
     private int jobID;
@@ -150,6 +151,10 @@ public class Job implements Serializable {
             selectedWorkers.add(worker);
     }
 
+    public void setApplicants(ArrayList<Worker> applicants) {
+        this.applicants = applicants;
+    }
+
     public void removeSelectedWorker(Worker worker) {
         selectedWorkers.remove(worker);
     }
@@ -163,6 +168,14 @@ public class Job implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Job{" +
+                "jobID=" + jobID +
+                ", jobTitle='" + jobTitle + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -171,10 +184,7 @@ public class Job implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Job{" +
-                "jobID=" + jobID +
-                ", jobTitle='" + jobTitle + '\'' +
-                '}';
+    public int hashCode() {
+        return jobID;
     }
 }

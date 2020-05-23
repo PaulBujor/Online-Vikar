@@ -32,7 +32,7 @@ public class EmployerWorkHistoryViewModel implements PropertyChangeListener {
     public EmployerWorkHistoryViewModel(EmployerModel model) {
         this.model = model;
         model.addListener(this);
-        listHistory = createListHistory();
+        listHistory = FXCollections.observableArrayList();
         listWorkers = FXCollections.observableArrayList();
 
         jobTitle = new SimpleStringProperty("");
@@ -42,16 +42,15 @@ public class EmployerWorkHistoryViewModel implements PropertyChangeListener {
         description = new SimpleStringProperty("");
     }
 
-    private ObservableList<WorkTableData> createListHistory() {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+    private void createListHistory() {
+        listHistory.clear();
         try {
             ArrayList<Job> jobs = model.getWorkHistory();
             for (Job job : jobs)
-                list.add(new WorkTableData(job));
+                listHistory.add(new WorkTableData(job));
         } catch (Exception e) {
             //
         }
-        return list;
     }
 
     public void selectJob(WorkTableData workTableData) {
@@ -61,19 +60,20 @@ public class EmployerWorkHistoryViewModel implements PropertyChangeListener {
         dates.set(job.getShiftStart() + " - " + job.getShiftEnd());
         location.set(job.getLocation().toString());
         description.set(job.getDescription());
-        listWorkers.removeAll();
+        listWorkers.clear();
         for (Worker worker : job.getSelectedWorkers()) {
             listWorkers.add(new WorkersTableData(worker));
         }
     }
 
     public void reset() {
-        listWorkers.removeAll();
+        listWorkers.clear();
         jobTitle.set("");
         salary.set(0);
         dates.set("");
         location.set("");
         description.set("");
+        createListHistory();
     }
 
     public ObservableList<WorkTableData> getListHistory() {
@@ -107,6 +107,6 @@ public class EmployerWorkHistoryViewModel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> listHistory.add(new WorkTableData((Job) evt.getNewValue())));
+            Platform.runLater(this::createListHistory);
     }
 }

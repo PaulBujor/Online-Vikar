@@ -39,19 +39,18 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
         startEndDates = new SimpleStringProperty("");
         location = new SimpleStringProperty("");
         description = new SimpleStringProperty("");
-        list = createList();
+        list = FXCollections.observableArrayList();
     }
 
-    private ObservableList<WorkTableData> createList() {
-        ObservableList<WorkTableData> list = FXCollections.observableArrayList();
+    private void createList() {
+        list.clear();
         try {
             ArrayList<Job> jobs = model.getUpcomingJobs();
             for(Job job : jobs)
-                list.add(new WorkTableData(job));
+                list.add(new WorkTableData(job, model.getWorker()));
         } catch (Exception e) {
             //
         }
-        return list;
     }
 
     public ObservableList<WorkTableData> getList()
@@ -67,6 +66,16 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
         startEndDates.set(data.startTimeProperty().get() + " - " + data.endTimeProperty().get());
         location.set(data.locationProperty().get());
         description.set(data.getDescription());
+    }
+
+    public void reset() {
+        jobTitle.set("");
+        employer.set("");
+        salary.set(0);
+        startEndDates.set("");
+        location.set("");
+        description.set("");
+        createList();
     }
 
     public void cancel()
@@ -112,12 +121,7 @@ public class UpcomingWorkViewModel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("moveToUpcoming"))
-            Platform.runLater(() -> list.add(new WorkTableData((Job) evt.getNewValue())));
-        else if(evt.getPropertyName().equals("workerCancelled"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
-        else if(evt.getPropertyName().equals("moveToHistory"))
-            Platform.runLater(() -> list.remove(new WorkTableData((Job) evt.getOldValue())));
+        Platform.runLater(this::createList);
     }
 
 }

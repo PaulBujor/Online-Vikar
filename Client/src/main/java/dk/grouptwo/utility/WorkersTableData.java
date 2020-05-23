@@ -10,12 +10,14 @@ public class WorkersTableData {
 
     private StringProperty CPR;
     private StringProperty name;
+    private StringProperty tax;
     private BooleanProperty selectedForWork;
 
     public WorkersTableData (Worker worker)
     {
         CPR = new SimpleStringProperty(worker.getCPR());
         name = new SimpleStringProperty(worker.getFirstName() + " " + worker.getLastName());
+        tax = new SimpleStringProperty(worker.getTaxCard());
         selectedForWork = new SimpleBooleanProperty(false);
     }
 
@@ -29,5 +31,9 @@ public class WorkersTableData {
 
     public BooleanProperty selectedForWorkProperty() {
         return selectedForWork;
+    }
+
+    public StringProperty taxProperty() {
+        return tax;
     }
 }

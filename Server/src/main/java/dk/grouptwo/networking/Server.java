@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Server implements RemoteServer {
     private ArrayList<RemoteWorkerClient> clients;
@@ -40,125 +41,145 @@ public class Server implements RemoteServer {
     }
 
     public void registerEmployerClient(RemoteEmployerClient client, ArrayList<Job> jobs) throws RemoteException {
-        for (Job job : jobs) {
-            jobMap.put(job, client);
-        }
-        jobs.addAll(jobs);
+        new Thread(() -> {
+            for (Job job : jobs) {
+                jobMap.put(job, client);
+            }
+            jobs.addAll(jobs);
+        }).start();
     }
 
     @Override
     public void addJob(Job job, RemoteEmployerClient employerClient) throws RemoteException {
-        persistence.addJobToDB(job);
-        //todo job.setID with id added by database
-        jobs.add(job);
-        for (RemoteWorkerClient client : clients) {
-            try {
-                client.addJob(job);
-            } catch (Exception e) {
-                throw new RemoteException(e.getMessage());
+        new Thread(() -> {
+            persistence.addJobToDB(job);
+            job.setJobID(persistence.getJobID(job));
+            jobs.add(job);
+            jobMap.put(job, employerClient);
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.addJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
     @Override
     public void removeJob(Job job) throws RemoteException {
-        jobs.remove(job);
-        persistence.removeJobFromDB(job);
-        for (RemoteWorkerClient client : clients) {
-            try {
-                client.removeJob(job);
-            } catch (Exception e) {
-                throw new RemoteException(e.getMessage());
+        new Thread(() -> {
+            jobs.remove(job);
+            persistence.removeJobFromDB(job);
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.removeJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
+        }).start();
     }
 
     @Override
     public Employer loginEmployer(String CVR, String password) throws RemoteException {
 
-        Employer employer = null; //todo get employer CVR password
-        try
-        {
-            employer = persistence.loginEmployer(CVR,password);
-        }
-        catch (Exception e)
-        {
+        Employer employer = null;
+        try {
+            employer = persistence.loginEmployer(CVR, password);
+        } catch (Exception e) {
             throw new RemoteException(e.getMessage());
         }
-
-            return employer;
-
+        return employer;
     }
 
     @Override
     public Worker loginWorker(String CPR, String password) throws RemoteException {
-        Worker worker = null; //todo get worker CPR password
-        try
-        {
+        Worker worker = null;
+        try {
             worker = persistence.loginWorker(CPR, password);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw  new RemoteException(e.getMessage());
+            throw new RemoteException(e.getMessage());
         }
-
-
-            return worker;
-
+        return worker;
     }
 
     @Override
     public void applyForJob(Job job, Worker worker) throws RemoteException {
-        RemoteEmployerClient client = jobMap.get(job);
-        jobMap.remove(job);
-        persistence.applyForJob(job, worker);
-        job.addApplicant(worker);
-        jobMap.put(job, client);
-        client.updateJob(job);
+        new Thread(() -> {
+            RemoteEmployerClient client = jobMap.remove(job);
+            persistence.applyForJob(job, worker);
+            job.addApplicant(worker);
+            jobMap.put(job, client);
+            try {
+                client.updateJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            for (RemoteWorkerClient callback : clients) {
+                try {
+                    callback.updateJob(job);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
     public void cancelWorkerFromJob(Job job, Worker worker) {
-        RemoteEmployerClient client = jobMap.get(job);
-        jobMap.remove(job);
-        persistence.cancelWorkerFromJob(job, worker);
-        job.removeWorker(worker);
-        jobMap.put(job, client);
-        try {
-            client.updateJob(job);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override //TODO modify selected workers --- needs tested
-    public void updateJob(Job job) throws RemoteException {
-        RemoteEmployerClient employer = jobMap.get(job);
-        jobMap.remove(job);
-        jobMap.put(job, employer);
-        persistence.updateJob(job);
-
-        //update in database
-        ArrayList<Worker> selectedWorkers = persistence.getAllAcceptedWorkers(job);
-        for (Worker worker : job.getSelectedWorkers()) {
-            if (!selectedWorkers.contains(worker)) {
-                persistence.addSelectedWorker(job, worker);
-            }
-        }
-        for (Worker worker : selectedWorkers) {
-            if (!job.getSelectedWorkers().contains(worker)) {
-                persistence.removeSelectedWorker(job, worker);
-            }
-        }
-
-        for (RemoteWorkerClient client : clients) {
+        new Thread(() -> {
+            RemoteEmployerClient client = jobMap.get(job);
+            jobMap.remove(job);
+            persistence.cancelWorkerFromJob(job, worker);
+            job.removeWorker(worker);
+            job.removeApplicant(worker);
+            jobMap.put(job, client);
             try {
                 client.updateJob(job);
-            } catch (Exception e) {
+            } catch (RemoteException e) {
                 e.printStackTrace();
             }
-        }
+            for (RemoteWorkerClient callback : clients) {
+                try {
+                    callback.updateJob(job);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void updateJob(Job job) throws RemoteException {
+        new Thread(() -> {
+            RemoteEmployerClient employer = jobMap.get(job);
+            jobMap.remove(job);
+            jobMap.put(job, employer);
+            persistence.updateJob(job);
+
+            //update in database
+            ArrayList<Worker> selectedWorkers = persistence.getAllAcceptedWorkers(job);
+            for (Worker worker : job.getSelectedWorkers()) {
+                if (!selectedWorkers.contains(worker)) {
+                    persistence.addSelectedWorker(job, worker);
+                }
+            }
+            for (Worker worker : selectedWorkers) {
+                if (!job.getSelectedWorkers().contains(worker)) {
+                    persistence.removeSelectedWorker(job, worker);
+                }
+            }
+
+            for (RemoteWorkerClient client : clients) {
+                try {
+                    client.updateJob(job);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -204,8 +225,6 @@ public class Server implements RemoteServer {
         return persistence.getCurrentEmployerJobs(employer);
     }
 
-
-    //todo throw remote exception if an error occurs
     @Override
     public void editEmployer(Employer employer, String password) throws RemoteException {
         try {

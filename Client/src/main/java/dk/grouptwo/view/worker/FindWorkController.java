@@ -66,8 +66,6 @@ public class FindWorkController extends WorkerViewTabController {
         super.init(viewHandler, root);
         this.viewModel = viewModel;
 
-        profileButton.setText(viewModel.usernameProperty().get());
-
         findWorkDetailsTitle.textProperty().bind(viewModel.jobTitleProperty());
         findWorkDetailsEmployer.textProperty().bind(viewModel.employerProperty());
         Bindings.bindBidirectional(findWorkDetailsSalary.textProperty(), viewModel.salaryProperty(), new StringDoubleConverter(0));
@@ -83,6 +81,14 @@ public class FindWorkController extends WorkerViewTabController {
         findWorkWorkTimeColumn.setCellValueFactory(cellData -> cellData.getValue().workTimeProperty());
         findWorkLocationColumn.setCellValueFactory(cellData -> cellData.getValue().locationProperty());
         findWorkTable.setItems(viewModel.getList());
+
+        findWorkTable.onMouseClickedProperty().set(evt -> {
+            try {
+                viewModel.selectItem(findWorkTable.getSelectionModel().getSelectedItem());
+            } catch (Exception e) {
+                //
+            }
+        });
     }
 
     @FXML

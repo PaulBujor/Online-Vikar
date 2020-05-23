@@ -110,6 +110,10 @@ public class Worker extends Account {
         this.CPR = CPR;
     }
 
+    public String toString() {
+        return getCPR();
+    }
+
     public boolean equals(Object obj) {
         if(!(obj instanceof Worker))
             return false;

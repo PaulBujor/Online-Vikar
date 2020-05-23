@@ -79,6 +79,7 @@ public class WorkOfferViewModel {
 
     public boolean save() {
         try {
+//            job.setJobID(data.getJobId());
             job.setJobTitle(title.get());
             job.setSalary(salary.get());
             job.setShiftStart(LocalDateTime.of(startDate.get(), LocalTime.of(startHour.get(), startMinutes.get())));
@@ -87,8 +88,10 @@ public class WorkOfferViewModel {
             job.setDescription(description.get());
             job.setWorkersNeeded(workersNeeded.get());
             job.setSelectedWorkers(getSelectedWorkers());
+            if (job.getSelectedWorkers().size() > workersNeeded.get())
+                throw new Exception("too many workers selected");
             model.updateWorkOffer(job);
-            data.update(job); //updates the table data system-wide
+            data.update(job); //updates the table data system-wide todo needs tested, probably doesn't work
             return true;
         } catch (Exception e) {
             error.set(e.getMessage());
@@ -123,15 +126,17 @@ public class WorkOfferViewModel {
         error.set("");
         job = model.getJobById(data.getJobId());
         this.data = data;
-        list = createList();
+        createList();
     }
 
     public ObservableList<WorkersTableData> createList() {
-        ObservableList<WorkersTableData> list = FXCollections.observableArrayList();
+        list.clear();
         ArrayList<Worker> workers = job.getApplicants();
-
         for (Worker worker : workers) {
-            list.add(new WorkersTableData(worker));
+            WorkersTableData data = new WorkersTableData(worker);
+            if (job.getSelectedWorkers().contains(worker))
+                data.selectedForWorkProperty().setValue(true);
+            list.add(data);
         }
         return list;
     }
