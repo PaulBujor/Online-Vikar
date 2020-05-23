@@ -40,9 +40,9 @@ public class CreateWorkerAccountController {
     @FXML
     private TextField createAccountEmployeeEmail;
     @FXML
-    private TextField createAccountEmployeePassword;
+    private PasswordField createAccountEmployeePassword;
     @FXML
-    private TextField createAccountEmployeeConfirmPassword;
+    private PasswordField createAccountEmployeeConfirmPassword;
     @FXML
     private Label createAccountEmployeeErrorLabel;
 

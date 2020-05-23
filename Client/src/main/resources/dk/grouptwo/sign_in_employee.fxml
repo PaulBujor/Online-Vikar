@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -21,7 +22,7 @@
                </VBox.margin>
             </Label>
             <TextField fx:id="signInEmployeeCPRTextField" prefHeight="39.0" prefWidth="414.0" promptText="CPR" />
-            <TextField fx:id="signInEmployeePasswordTextField" prefHeight="39.0" prefWidth="414.0" promptText="Password" />
+            <PasswordField fx:id="signInEmployeePasswordTextField" prefHeight="39.0" promptText="Password" />
             <Label fx:id="signInEmployeeErrorLabel" alignment="CENTER" text="Error_label" textFill="RED">
                <VBox.margin>
                   <Insets bottom="-13.0" top="-13.0" />

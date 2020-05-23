@@ -8,6 +8,7 @@ import dk.grouptwo.viewmodel.employer.CreateEmployerAccountViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 
@@ -33,9 +34,9 @@ public class CreateEmployerAccountController {
     @FXML
     private TextField createAccountEmployerEmail;
     @FXML
-    private TextField createAccountEmployerPassword;
+    private PasswordField createAccountEmployerPassword;
     @FXML
-    private TextField createAccountEmployerConfirmPassword;
+    private PasswordField createAccountEmployerConfirmPassword;
     @FXML
     private Label createAccountEmployerErrorLabel;
 
