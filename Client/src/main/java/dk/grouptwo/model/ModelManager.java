@@ -323,11 +323,16 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logOutWorker() {
         worker = null;
+        jobs.clear();
+        upcomingJobs.clear();
+        workHistory.clear();
     }
 
     @Override
     public void logOutEmployer() {
         employer = null;
+        jobs.clear();
+        workHistory.clear();
     }
 
     @Override
