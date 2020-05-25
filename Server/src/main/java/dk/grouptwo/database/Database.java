@@ -136,9 +136,9 @@ public class Database implements Persistence {
     }
 
     @Override
-    public void removeJobFromDB(Job job) {
+    public void cancelJob(Job job) {
         new Thread(() -> {
-            String SQL = "DELETE FROM job WHERE jobID=?";
+            String SQL = "UPDATE job SET status='cancelled' WHERE jobid=?";
             PreparedStatement pstm = null;
             Connection conn = null;
             try {
@@ -547,7 +547,7 @@ public class Database implements Persistence {
     @Override
     public void removeLicense(License license) {
         new Thread(() -> {
-            String SQL = "DELETE FROM licence where licensenumber=?";
+            String SQL = "DELETE FROM license where licensenumber=?";
             PreparedStatement pstm = null;
             Connection conn = null;
             try {

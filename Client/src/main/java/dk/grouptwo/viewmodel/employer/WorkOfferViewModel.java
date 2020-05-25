@@ -129,7 +129,15 @@ public class WorkOfferViewModel {
         createList();
     }
 
-    public ObservableList<WorkersTableData> createList() {
+    public void cancel() {
+        try {
+            model.cancelWorkOffer(job);
+        } catch (Exception e) {
+            error.set(e.getMessage());
+        }
+    }
+
+    public void createList() {
         list.clear();
         ArrayList<Worker> workers = job.getApplicants();
         for (Worker worker : workers) {
@@ -138,7 +146,6 @@ public class WorkOfferViewModel {
                 data.selectedForWorkProperty().setValue(true);
             list.add(data);
         }
-        return list;
     }
 
     public void selectWorker(WorkersTableData workersTableData) {
@@ -152,7 +159,6 @@ public class WorkOfferViewModel {
         } catch (NullPointerException e) {
             //
         }
-
     }
 
     public StringProperty titleProperty() {

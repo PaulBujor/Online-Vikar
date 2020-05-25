@@ -88,4 +88,22 @@
 }
 
 
+#cancel {
+    -fx-background-color:  #fe0000;
+    -fx-background-radius: 0;
+    -fx-text-fill : white;
+}
+
+#cancel:hover {
+    -fx-background-color: #f50000;
+    -fx-background-radius: 0;
+    -fx-text-fill : white;
+}
+
+#cancel:pressed {
+    -fx-background-color: #e60000;
+    -fx-text-fill : white;
+}
+
+
 
