@@ -27,6 +27,10 @@ public class EmployerClient implements RemoteEmployerClient, PropertyChangeSubje
         property.firePropertyChange("updateJob", 0, job);
     }
 
+    public void addJob(Job job) throws RemoteException {
+        property.firePropertyChange("addJob", 0, job);
+    }
+
     @Override
     public void addListener(PropertyChangeListener listener) {
         property.addPropertyChangeListener(listener);

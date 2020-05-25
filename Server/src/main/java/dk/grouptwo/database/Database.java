@@ -357,7 +357,7 @@ public class Database implements Persistence {
     public ArrayList<Job> getAllJobHistoryWorkerFromDB(Worker worker) {
 
         ArrayList<Job> jobs = new ArrayList<>();
-        String SQL = "SELECT * FROM job INNER JOIN works ON job.jobID = works.jobID WHERE works.cpr=? AND job.status='completed'";
+        String SQL = "SELECT * FROM job INNER JOIN works ON job.jobID = works.jobID WHERE works.cpr=? AND (job.status='completed' OR job.status='cancelled')";
         ResultSet rs = null;
         PreparedStatement pstmt = null;
         Connection conn = null;

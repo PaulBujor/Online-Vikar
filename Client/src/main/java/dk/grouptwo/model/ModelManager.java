@@ -62,7 +62,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                             upcomingJobs.add(newJob);
                         }
                     } else {
-                        jobs.add(newJob);
+                        if (!newJob.getStatus().equals("cancelled"))
+                            jobs.add(newJob);
                     }
                 } else if (employer != null) {
                     if (newJob.getStatus().equals("completed") || newJob.getStatus().equals("cancelled")) {
@@ -164,8 +165,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     public void updateThread() {
         Thread thread = new Thread(() -> {
-            while(true) {
-                if(worker != null) {
+            while (true) {
+                if (worker != null) {
                     try {
                         jobs.clear();
                         jobs = server.getJobs();
@@ -203,7 +204,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 }
                 property.firePropertyChange("update", 0, 1);
                 try {
-                    Thread.sleep(10*1000*60);
+                    Thread.sleep(10 * 1000 * 60);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -312,8 +313,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         int minutes = 0;
 
         for (Job job : workHistory) {
-            if (job.getShiftStart().getMonth().equals(currentDate.getMonth())) {
-                minutes += ChronoUnit.MINUTES.between(job.getShiftEnd(), job.getShiftStart());
+            if (job.getShiftStart().getMonth().equals(currentDate.getMonth()) && job.getStatus().equals("completed")) {
+                minutes += ChronoUnit.MINUTES.between(job.getShiftStart(), job.getShiftEnd());
             }
         }
         return (double) minutes / 60;
@@ -339,7 +340,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             if (Validator.createWork(job)) {
                 server.addJob(job, employerClient);
-                jobs.add(job);
             }
         } catch (RemoteException e) {
             throw new Exception("An error has occurred.");

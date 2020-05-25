@@ -53,6 +53,11 @@ public class Server implements RemoteServer {
             job.setJobID(persistence.getJobID(job));
             jobs.add(job);
             jobMap.put(job, employerClient);
+            try {
+                employerClient.addJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
 
             for (RemoteWorkerClient worker : clients) {
                 new Thread(() -> {
