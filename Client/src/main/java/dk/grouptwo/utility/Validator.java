@@ -26,19 +26,16 @@ public class Validator {
             return false;
         } else {
 
-            for (int i = 0; i < emailToArray.length; i++)
-            {
+            for (int i = 0; i < emailToArray.length; i++) {
                 if (emailToArray[i] == '@')
                     atPosition = i;
             }
 
-            for (int i = 0; i < atPosition; i++)
-            {
+            for (int i = 0; i < atPosition; i++) {
                 emailBeforeAtSign.add(emailToArray[i]);
             }
 
-            for (int i = atPosition + 1; i < emailToArray.length; i++)
-            {
+            for (int i = atPosition + 1; i < emailToArray.length; i++) {
                 emailAfterAtSign.add(emailToArray[i]);
             }
 
@@ -64,28 +61,23 @@ public class Validator {
     private static boolean afterAtSign() {
 
         int dotPosition = 0;
-        for (int i = 0; i < emailAfterAtSign.size(); i++)
-        {
-            if (emailAfterAtSign.get(i) == '.')
-            {
-                if (i == emailAfterAtSign.size() - 1  || emailAfterAtSign.get(i-1) == '-' || emailAfterAtSign.get(i-1) == '.' || emailAfterAtSign.get(i+1) == '-' || emailAfterAtSign.get(i+1) == '.')
+        for (int i = 0; i < emailAfterAtSign.size(); i++) {
+            if (emailAfterAtSign.get(i) == '.') {
+                if (i == emailAfterAtSign.size() - 1 || emailAfterAtSign.get(i - 1) == '-' || emailAfterAtSign.get(i - 1) == '.' || emailAfterAtSign.get(i + 1) == '-' || emailAfterAtSign.get(i + 1) == '.')
                     return false;
                 dotPosition = i;
             }
         }
 
-        for (int i = 0; i < dotPosition - 1; i++)
-        {
+        for (int i = 0; i < dotPosition - 1; i++) {
             domain.add(emailAfterAtSign.get(i));
         }
 
-        for (int i = dotPosition + 1; i < emailAfterAtSign.size(); i++)
-        {
+        for (int i = dotPosition + 1; i < emailAfterAtSign.size(); i++) {
             postDomain.add(emailAfterAtSign.get(i));
         }
 
-        for (int i = 0; i < domain.size(); i++)
-        {
+        for (int i = 0; i < domain.size(); i++) {
             if (!((domain.get(i) >= 48 && domain.get(i) <= 57) || (domain.get(i) >= 65 && domain.get(i) <= 90) || (domain.get(i) >= 97 && domain.get(i) <= 122) || (domain.get(i) == 46)))
                 return false;
         }
@@ -93,8 +85,7 @@ public class Validator {
         if (postDomain.size() < 2)
             return false;
 
-        for (int i = 0; i < postDomain.size(); i++)
-        {
+        for (int i = 0; i < postDomain.size(); i++) {
             if (!((domain.get(i) >= 48 && domain.get(i) <= 57) || (domain.get(i) >= 65 && domain.get(i) <= 90) || (domain.get(i) >= 97 && domain.get(i) <= 122) || (domain.get(i) == 46)))
                 return false;
         }
@@ -124,16 +115,16 @@ public class Validator {
         } else if (!(emailCheck(worker.getEmail()))) {
             throw new Exception("Wrong email format.");
         }
-        if(password.isEmpty())
+        if (password.isEmpty())
             throw new Exception("Enter your password to save changes");
         return true;
     }
 
     public static boolean updateWorker(Worker worker, String password, String newPassword, String newPasswordConfirm) throws Exception {
-        if(updateWorker(worker, password)) {
-            if(!newPassword.equals(newPasswordConfirm))
+        if (updateWorker(worker, password)) {
+            if (!newPassword.equals(newPasswordConfirm))
                 throw new Exception("Passwords do not match");
-            else if (newPassword.length()>0 && newPassword.length()<8)
+            else if (newPassword.length() > 0 && newPassword.length() < 8)
                 throw new Exception("New password must contain at least 8 characters");
         } else {
             return false;
@@ -142,7 +133,7 @@ public class Validator {
     }
 
     public static boolean logInWorker(String CPR, String password) throws Exception {
-        if(CPR.isEmpty() || password.isEmpty())
+        if (CPR.isEmpty() || password.isEmpty())
             throw new Exception("Login fields cannot be empty");
         return true;
     }
@@ -168,31 +159,31 @@ public class Validator {
         } else if (!(emailCheck(employer.getEmail()))) {
             throw new Exception("Wrong email format.");
         }
-        if(password.isEmpty())
+        if (password.isEmpty())
             throw new Exception("Enter your password to save changes");
         return true;
     }
 
     public static boolean updateEmployer(Employer employer, String password, String newPassword, String newPasswordConfirm) throws Exception {
-         if (updateEmployer(employer, password)) {
-             if(!newPassword.equals(newPasswordConfirm))
-                 throw new Exception("Passwords do not match");
-             else if (newPassword.length()>0 && newPassword.length()<8)
-                 throw new Exception("New password must contain at least 8 characters");
-         } else {
-             return false;
-         }
-         return true;
+        if (updateEmployer(employer, password)) {
+            if (!newPassword.equals(newPasswordConfirm))
+                throw new Exception("Passwords do not match");
+            else if (newPassword.length() > 0 && newPassword.length() < 8)
+                throw new Exception("New password must contain at least 8 characters");
+        } else {
+            return false;
+        }
+        return true;
     }
 
     public static boolean logInEmployer(String CVR, String password) throws Exception {
-        if(CVR.isEmpty() || password.isEmpty())
+        if (CVR.isEmpty() || password.isEmpty())
             throw new Exception("Login fields cannot be empty");
         return true;
     }
 
     public static boolean createWork(Job job) throws Exception {
-        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() ==  null || job.getStatus().isEmpty() || job.getLocation() == null)
+        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() == null || job.getStatus().isEmpty() || job.getLocation() == null)
             throw new Exception("All the fields must be filled");
         if (job.getShiftStart().isAfter(job.getShiftEnd()))
             throw new Exception("Start time cannot be after end time");
@@ -200,7 +191,7 @@ public class Validator {
     }
 
     public static boolean updateWork(Job job) throws Exception {
-        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() ==  null || job.getStatus().isEmpty() || job.getLocation() == null)
+        if (job.getJobTitle().isEmpty() || job.getDescription().isEmpty() || job.getSalary() == 0 || job.getWorkersNeeded() == 0 || job.getShiftStart() == null || job.getShiftEnd() == null || job.getStatus().isEmpty() || job.getLocation() == null)
             throw new Exception("All the fields must be filled");
         if (job.getShiftStart().isAfter(job.getShiftEnd()))
             throw new Exception("Start time cannot be after end time");

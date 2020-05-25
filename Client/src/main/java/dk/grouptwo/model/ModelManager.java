@@ -313,7 +313,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             server.cancelWorkerFromJob(job, worker);
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 
@@ -323,7 +323,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             server.removeJob(job);
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 
@@ -334,7 +334,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 server.updateJob(job);
             }
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 
@@ -343,7 +343,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             server.applyForJob(getJobById(jobID), worker);
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 
@@ -352,7 +352,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             server.addLicense(license, worker);
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 
@@ -361,7 +361,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             server.removeLicense(getLicenseByNumber(licenseNumber));
         } catch (RemoteException e) {
-            throw new Exception("An error has occured.");
+            throw new Exception("An error has occurred.");
         }
     }
 

@@ -1,14 +1,12 @@
 import dk.grouptwo.model.ModelManager;
-import dk.grouptwo.model.objects.Address;
-import dk.grouptwo.model.objects.Employer;
-import dk.grouptwo.model.objects.Job;
-import dk.grouptwo.model.objects.Worker;
+import dk.grouptwo.model.objects.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,6 +15,16 @@ class ModelManagerTest {
     private ModelManager model;
     Employer dummyEmployer = new Employer("employer@gmail.com", "11111111", new Address("Denmark", "Horsens", "Sundvej", "8700"), "111111", "Employer Company");
     Worker dummyWorker = new Worker("worker@gmail.com", "11223344", new Address("Denmark", "Horsens", "Sundvej", "8700"), "220220-2222", "John", "Doe", "A", "Danish, English", "I like to be a human-being", LocalDate.of(2020, 02, 22), "Other");
+    Job dummyJobOne = new Job("Work1", "Work needed", 101, 1,
+            LocalDateTime.of(2020, 7, 19, 6, 0, 0),
+            LocalDateTime.of(2020, 7, 19, 14, 15, 0),
+            new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
+            dummyEmployer);
+    Job dummyJobTwo = new Job("Work2", "Work needed", 102, 2,
+            LocalDateTime.of(2020, 8, 19, 6, 0, 0),
+            LocalDateTime.of(2020, 8, 19, 14, 15, 0),
+            new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
+            dummyEmployer);
 
 
     @BeforeEach
@@ -42,9 +50,7 @@ class ModelManagerTest {
         Worker anotherDummyWorker = dummyWorker;
         try {
             model.registerAccountWorker(anotherDummyWorker, "12345678", "12345678");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             errorMessage = e.getMessage();
         }
         assertEquals("Account could not be created!", errorMessage);
@@ -249,42 +255,127 @@ class ModelManagerTest {
 
 
     @Test
-    void getEmployer() {
+    void getEmployer() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        assertEquals(dummyEmployer, model.getEmployer());
     }
 
     @Test
-    void getWorker() {
+    void getWorker() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        assertEquals(dummyWorker, model.getWorker());
     }
 
     @Test
-    void getJobById() {
+    void getJobByIdNull() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        assertNull(model.getJobById(-1));
     }
 
     @Test
-    void getLicenseByNumber() {
+    void getJobById() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+        assertEquals(dummyJobOne, model.getJobById(dummyJobOne.getJobID()));
     }
 
     @Test
-    void getHoursWorkedThisMonth() {
+    void getLicenseByNumber() throws Exception {
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        model.addLicense(dummyLicense);
+        assertEquals(dummyLicense, model.getLicenseByNumber("12345678"));
     }
 
     @Test
-    void logOutWorker() {
+    void getHoursWorkedThisMonth() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        model.createWorkOffer(dummyJobOne);
+        dummyJobOne.addSelectedworker(dummyWorker);
+        dummyJobOne.setStatus("completed");
+
+
     }
 
     @Test
-    void logOutEmployer() {
+    void logOutWorker() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.logOutWorker();
+        assertNull(model.getWorker());
     }
 
     @Test
-    void getWorkHistory() {
+    void logOutEmployer() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        model.logOutEmployer();
+        assertNull(model.getEmployer());
+    }
+
+    @Test
+    void getWorkHistoryZero() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(null);
+        model.createWorkOffer(null);
+        assertNull(model.getWorkHistory());
+    }
+
+    @Test
+    void getWorkHistoryOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        model.createWorkOffer(dummyJobOne);
+        assertEquals(dummyJobs, model.getWorkHistory());
+    }
+
+    @Test
+    void getWorkHistoryMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        dummyJobs.add(dummyJobTwo);
+
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+
+
+        assertEquals(dummyJobs, model.getWorkHistory());
     }
 
     @Test
     void createWorkOffer() throws Exception {
         Job job = new Job("Work", "Work needed", 100, 1,
-                LocalDateTime.of(2020, 05, 19, 6, 0, 0),
-                LocalDateTime.of(2020, 05, 19, 14, 15, 0),
+                LocalDateTime.of(2020, 5, 19, 6, 0, 0),
+                LocalDateTime.of(2020, 5, 19, 14, 15, 0),
                 new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
                 dummyEmployer);
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
@@ -295,15 +386,11 @@ class ModelManagerTest {
     @Test
     void createWorkOfferInvalidData() throws Exception {
         String errorMessage = "";
-        Job job = new Job("Work", "Work needed", 100, 1,
-                LocalDateTime.of(2020, 05, 19, 6, 0, 0),
-                LocalDateTime.of(2020, 05, 19, 14, 15, 0),
-                new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
-                dummyEmployer);
+        dummyJobOne.setJobTitle("");
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
         try {
-            model.createWorkOffer(job);
+            model.createWorkOffer(dummyJobOne);
         } catch (Exception e) {
             errorMessage = e.getMessage();
         }
@@ -312,46 +399,407 @@ class ModelManagerTest {
     }
 
     @Test
-    void cancelWorkerFromJob() {
+    void cancelWorkerFromJob() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+        dummyJobOne.addApplicant(dummyWorker);
+        dummyJobTwo.addApplicant(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
+        model.updateWorkOffer(dummyJobTwo);
+        model.cancelWorkerFromJob(dummyJobOne);
+
+        boolean firstCondition = !dummyJobOne.getApplicants().contains(dummyWorker);
+        boolean secondCondition = dummyJobTwo.getApplicants().contains(dummyWorker);
+
+        assertTrue(firstCondition && secondCondition);
     }
 
     @Test
-    void cancelWorkOffer() {
+    void cancelSelectedWorkerFromJob() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+        dummyJobOne.addSelectedworker(dummyWorker);
+        dummyJobTwo.addSelectedworker(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
+        model.updateWorkOffer(dummyJobTwo);
+
+        dummyJobOne.removeSelectedWorker(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
+
+
+        boolean firstCondition = !dummyJobOne.getSelectedWorkers().contains(dummyWorker);
+        boolean secondCondition = dummyJobTwo.getSelectedWorkers().contains(dummyWorker);
+
+        assertTrue(firstCondition && secondCondition);
     }
 
     @Test
-    void updateWorkOffer() {
+    void cancelWorkOfferZero() throws Exception {
+        String errorMessage = "";
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        try {
+            model.cancelWorkOffer(dummyJobOne);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("An error has occurred.", errorMessage);
+
+
     }
 
     @Test
-    void applyForJob() {
+    void cancelWorkOfferOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        model.createWorkOffer(dummyJobOne);
+
+        dummyJobs.remove(dummyJobOne);
+        model.cancelWorkOffer(dummyJobOne);
+
+        assertEquals(dummyJobs, model.getJobs());
     }
 
     @Test
-    void addLicense() {
+    void cancelWorkOfferMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        dummyJobs.add(dummyJobTwo);
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+
+        dummyJobs.remove(dummyJobOne);
+        dummyJobs.remove(dummyJobTwo);
+        model.cancelWorkOffer(dummyJobOne);
+        model.cancelWorkOffer(dummyJobTwo);
+
+        assertEquals(dummyJobs, model.getJobs());
     }
 
     @Test
-    void deleteLicense() {
+    void updateWorkOfferNotFilledFields() throws Exception {
+        String errorMessage = "";
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        dummyJobOne.setJobTitle("");
+        try {
+            model.updateWorkOffer(dummyJobOne);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("All the fields must be filled", errorMessage);
     }
 
     @Test
-    void getLicenses() {
+    void updateWorkOfferWrongDates() throws Exception {
+        String errorMessage = "";
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        dummyJobOne.setShiftStart(LocalDateTime.of(2020, 7, 19, 14, 15, 0));
+        dummyJobOne.setShiftEnd(LocalDateTime.of(2020, 7, 19, 6, 0, 0));
+        try {
+            model.updateWorkOffer(dummyJobOne);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+        assertEquals("Start time cannot be after end time", errorMessage);
     }
 
     @Test
-    void getEmployerJobs() {
+    void updateWorkOffer() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        model.updateWorkOffer(dummyJobTwo);
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        assertEquals(dummyJobs, model.getJobs());
     }
 
     @Test
-    void getWorkerByJob() {
+    void applyForJobZero() throws Exception {
+        String errorMessage = "";
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        try {
+            model.applyForJob(dummyJobOne.getJobID());
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("An error has occurred.", errorMessage);
     }
 
     @Test
-    void getJobs() {
+    void applyForJobOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Worker> dummyWorkers = new ArrayList<>();
+        dummyWorkers.add(dummyWorker);
+
+        model.createWorkOffer(dummyJobOne);
+        model.applyForJob(dummyJobOne.getJobID());
+
+        assertEquals(dummyWorkers, dummyJobOne.getApplicants());
     }
 
     @Test
-    void getUpcomingJobs() {
+    void applyForJobMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+        model.applyForJob(dummyJobOne.getJobID());
+        model.applyForJob(dummyJobTwo.getJobID());
+        assertEquals(2, dummyJobOne.getApplicants().size());
+    }
+
+    @Test
+    void addLicenseZero() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.addLicense(null);
+        assertNull(model.getLicenses());
+    }
+
+    @Test
+    void addLicenseOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        model.addLicense(dummyLicense);
+        assertEquals(dummyLicenses, model.getLicenses());
+    }
+
+    @Test
+    void addLicenseMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        License anotherDummyLicense = new License("Forklift license", "Class 4 - Internal Combustion Engine", "012345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        dummyLicenses.add(anotherDummyLicense);
+
+        model.addLicense(dummyLicense);
+        model.addLicense(anotherDummyLicense);
+        assertEquals(dummyLicenses, model.getLicenses());
+    }
+
+    @Test
+    void deleteLicenseOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        License anotherDummyLicense = new License("Forklift license", "Class 4 - Internal Combustion Engine", "012345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        dummyLicenses.add(anotherDummyLicense);
+        model.addLicense(dummyLicense);
+        model.addLicense(anotherDummyLicense);
+
+        model.deleteLicense(anotherDummyLicense.getLicenseNumber());
+        dummyLicenses.remove(anotherDummyLicense);
+
+        assertEquals(dummyLicenses, model.getLicenses());
+
+    }
+
+    @Test
+    void deleteLicenseMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        License anotherDummyLicense = new License("Forklift license", "Class 4 - Internal Combustion Engine", "012345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        dummyLicenses.add(anotherDummyLicense);
+        model.addLicense(dummyLicense);
+        model.addLicense(anotherDummyLicense);
+
+        model.deleteLicense(anotherDummyLicense.getLicenseNumber());
+        model.deleteLicense(dummyLicense.getLicenseNumber());
+        dummyLicenses.remove(anotherDummyLicense);
+        dummyLicenses.remove(dummyLicense);
+
+        assertEquals(dummyLicenses, model.getLicenses());
+
+    }
+
+    @Test
+    void deleteLicenseInvalidLicenseNumber() throws Exception {
+        String errorMessage = "";
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        License anotherDummyLicense = new License("Forklift license", "Class 4 - Internal Combustion Engine", "012345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        dummyLicenses.add(anotherDummyLicense);
+        model.addLicense(dummyLicense);
+        model.addLicense(anotherDummyLicense);
+
+        try {
+            model.deleteLicense("-1");
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+        }
+
+        assertEquals("An error has occurred.", errorMessage);
+    }
+
+    @Test
+    void getLicensesZero() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        assertTrue(model.getLicenses().isEmpty());
+    }
+
+    @Test
+    void getLicensesOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        model.addLicense(dummyLicense);
+
+        assertEquals(dummyLicenses, model.getLicenses());
+    }
+
+    @Test
+    void getLicensesMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        ArrayList<License> dummyLicenses = new ArrayList<>();
+        License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        License anotherDummyLicense = new License("Forklift license", "Class 4 - Internal Combustion Engine", "012345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        dummyLicenses.add(dummyLicense);
+        dummyLicenses.add(anotherDummyLicense);
+        model.addLicense(dummyLicense);
+        model.addLicense(anotherDummyLicense);
+
+        assertEquals(dummyLicenses, model.getLicenses());
+    }
+
+    @Test
+    void getJobsZero() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        assertTrue(model.getJobs().isEmpty());
+    }
+
+    @Test
+    void getJobsOne() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        model.createWorkOffer(dummyJobOne);
+
+        assertEquals(dummyJobs, model.getJobs());
+    }
+
+    @Test
+    void getJobsMany() throws Exception {
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        dummyJobs.add(dummyJobTwo);
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+
+        assertEquals(dummyJobs, model.getJobs());
+    }
+
+    @Test
+    void getUpcomingJobsZero() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+
+        assertTrue(model.getUpcomingJobs().isEmpty());
+    }
+
+    @Test
+    void getUpcomingJobsOne() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        model.createWorkOffer(dummyJobOne);
+        dummyJobOne.addSelectedworker(dummyWorker);
+
+        assertEquals(dummyJobs, model.getUpcomingJobs());
+    }
+
+    @Test
+    void getUpcomingJobsMany() throws Exception {
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobOne);
+        dummyJobs.add(dummyJobTwo);
+        model.createWorkOffer(dummyJobOne);
+        model.createWorkOffer(dummyJobTwo);
+        dummyJobOne.addSelectedworker(dummyWorker);
+        dummyJobTwo.addSelectedworker(dummyWorker);
+
+        assertEquals(dummyJobs, model.getUpcomingJobs());
     }
 }
