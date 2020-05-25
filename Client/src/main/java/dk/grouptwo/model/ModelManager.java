@@ -326,6 +326,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         jobs.clear();
         upcomingJobs.clear();
         workHistory.clear();
+        workerClient.removeListener(this);
+        workerClient = null;
     }
 
     @Override
@@ -333,6 +335,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         employer = null;
         jobs.clear();
         workHistory.clear();
+        employerClient.removeListener(this);
+        employerClient = null;
     }
 
     @Override
