@@ -4,10 +4,7 @@ import dk.grouptwo.model.objects.*;
 import dk.grouptwo.networking.EmployerClient;
 import dk.grouptwo.networking.Server;
 import dk.grouptwo.networking.WorkerClient;
-import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
-import dk.grouptwo.networking.remote.RemoteWorkerClient;
-import dk.grouptwo.utility.PropertyChangeSubject;
 import dk.grouptwo.utility.Validator;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -60,12 +57,13 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                         if (!workHistory.contains(newJob)) {
                             workHistory.add(newJob);
                         }
-                    } else if (newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)) {
+                    } else if ((newJob.getSelectedWorkers().contains(worker) || newJob.getApplicants().contains(worker)) && !newJob.getStatus().equals("cancelled")) {
                         if (!upcomingJobs.contains(newJob)) {
                             upcomingJobs.add(newJob);
                         }
                     } else {
-                        jobs.add(newJob);
+                        if (!newJob.getStatus().equals("cancelled"))
+                            jobs.add(newJob);
                     }
                 } else if (employer != null) {
                     if (newJob.getStatus().equals("completed") || newJob.getStatus().equals("cancelled")) {
@@ -120,17 +118,10 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.logInWorker(CPR, password)) {
                 worker = server.loginWorker(CPR, password);
                 setWorkerName(worker.getFirstName());
+                updateThread();
                 workerClient = new WorkerClient();
                 workerClient.addListener(this);
                 server.registerWorkerClient(workerClient);
-                jobs = server.getJobs();
-                for (Job job : jobs) {
-                    if (job.getSelectedWorkers().contains(worker) || job.getApplicants().contains(worker)) {
-                        upcomingJobs.add(job);
-                    }
-                }
-                jobs.removeAll(upcomingJobs);
-                workHistory = server.getWorkerJobHistory(worker);
             }
         } catch (RemoteException e) {
             throw new Exception("Account does not exist!");
@@ -158,22 +149,69 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             if (Validator.logInEmployer(CVR, password)) {
                 employer = server.loginEmployer(CVR, password);
-                jobs = server.getEmployerJobs(employer);
-                for (Job job : jobs) {
-                    if (job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
-                        workHistory.add(job);
-                }
-                jobs.removeAll(workHistory);
                 employerClient = new EmployerClient();
                 employerClient.addListener(this);
                 server.registerEmployerClient(employerClient, jobs);
                 setEmployerName(employer.getCompanyName());
+                updateThread();
             }
         } catch (RemoteException e) {
+            e.printStackTrace();
             throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         }
+    }
+
+    public void updateThread() {
+        Thread thread = new Thread(() -> {
+            while (true) {
+                if (worker != null) {
+                    try {
+                        jobs.clear();
+                        jobs = server.getJobs();
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    upcomingJobs.clear();
+                    for (Job job : jobs) {
+                        if (job.getSelectedWorkers().contains(worker) || job.getApplicants().contains(worker)) {
+                            upcomingJobs.add(job);
+                        }
+                    }
+                    jobs.removeAll(upcomingJobs);
+                    try {
+                        workHistory.clear();
+                        workHistory = server.getWorkerJobHistory(worker);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                } else if (employer != null) {
+                    try {
+                        jobs.clear();
+                        jobs = server.getEmployerJobs(employer);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                    workHistory.clear();
+                    for (Job job : jobs) {
+                        if (job.getStatus().equals("completed") || job.getStatus().equals("cancelled"))
+                            workHistory.add(job);
+                    }
+                    jobs.removeAll(workHistory);
+                } else {
+                    break;
+                }
+                property.firePropertyChange("update", 0, 1);
+                try {
+                    Thread.sleep(10 * 1000 * 60);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.setDaemon(true);
+        thread.start();
     }
 
     @Override
@@ -275,8 +313,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         int minutes = 0;
 
         for (Job job : workHistory) {
-            if (job.getShiftStart().getMonth().equals(currentDate.getMonth())) {
-                minutes += ChronoUnit.MINUTES.between(job.getShiftEnd(), job.getShiftStart());
+            if (job.getShiftStart().getMonth().equals(currentDate.getMonth()) && job.getStatus().equals("completed")) {
+                minutes += ChronoUnit.MINUTES.between(job.getShiftStart(), job.getShiftEnd());
             }
         }
         return (double) minutes / 60;
@@ -285,11 +323,20 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void logOutWorker() {
         worker = null;
+        jobs.clear();
+        upcomingJobs.clear();
+        workHistory.clear();
+        workerClient.removeListener(this);
+        workerClient = null;
     }
 
     @Override
     public void logOutEmployer() {
         employer = null;
+        jobs.clear();
+        workHistory.clear();
+        employerClient.removeListener(this);
+        employerClient = null;
     }
 
     @Override
@@ -302,7 +349,6 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
         try {
             if (Validator.createWork(job)) {
                 server.addJob(job, employerClient);
-                jobs.add(job);
             }
         } catch (RemoteException e) {
             throw new Exception("An error has occurred.");
@@ -319,9 +365,8 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
 
     @Override
     public void cancelWorkOffer(Job job) throws Exception {
-        jobs.remove(job);
         try {
-            server.removeJob(job);
+            server.cancelJob(job);
         } catch (RemoteException e) {
             throw new Exception("An error has occurred.");
         }

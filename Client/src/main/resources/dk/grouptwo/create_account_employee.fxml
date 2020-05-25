@@ -102,7 +102,7 @@
             <HBox spacing="28.0">
                <children>
                   <PasswordField fx:id="createAccountEmployeePassword" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" promptText="Passowrd" HBox.hgrow="ALWAYS" />
-                  <PasswordField fx:id="createAccountEmployeeConfirmPasswordcreateAccountEmployeeConfirmPassword" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="createAccountEmployeeConfirmPassword" minHeight="30.0" prefHeight="30.0" prefWidth="182.0" promptText="Confirm password" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <Label fx:id="createAccountEmployeeErrorLabel" text="Error_label" textFill="RED">

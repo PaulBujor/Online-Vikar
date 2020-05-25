@@ -40,7 +40,7 @@ public interface RemoteServer extends Remote {
     //client used for callback, might not be needed if exceptions are handled nicely
     void addJob(Job job, RemoteEmployerClient employerClient) throws RemoteException;
 
-    void removeJob(Job job) throws RemoteException;
+    void cancelJob(Job job) throws RemoteException;
 
     void updateJob(Job job) throws RemoteException;
 

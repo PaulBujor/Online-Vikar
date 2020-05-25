@@ -26,6 +26,7 @@ public class SignInEmployerViewModel {
             model.logInEmployer(CVR.get(), password.get());
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             error.set(e.getMessage());
             return false;
         }

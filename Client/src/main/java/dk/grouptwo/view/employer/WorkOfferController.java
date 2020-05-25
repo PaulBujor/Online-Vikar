@@ -15,6 +15,8 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
+import java.util.Optional;
+
 public class WorkOfferController extends EmployerViewTabController {
     private WorkOfferViewModel viewModel;
 
@@ -143,5 +145,20 @@ public class WorkOfferController extends EmployerViewTabController {
             //
         }
 
+    }
+
+    //https://code.makery.ch/blog/javafx-dialogs-official/
+    @FXML
+    void cancelWork() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Work Confirmation");
+        alert.setHeaderText("You are about to cancel a work offer");
+        alert.setContentText("Are you sure you want to cancel this work offer?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            viewModel.cancel();
+            viewHandler.openView("employerWork");
+        }
     }
 }

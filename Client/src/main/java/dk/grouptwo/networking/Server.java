@@ -13,7 +13,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -99,8 +98,8 @@ public class Server implements RemoteServer {
         server.addJob(job, employerClient);
     }
 
-    public void removeJob(Job job) throws RemoteException {
-        server.removeJob(job);
+    public void cancelJob(Job job) throws RemoteException {
+        server.cancelJob(job);
     }
 
     public void updateJob(Job job) throws RemoteException {

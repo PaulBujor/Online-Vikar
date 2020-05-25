@@ -10,15 +10,12 @@ import dk.grouptwo.networking.remote.RemoteEmployerClient;
 import dk.grouptwo.networking.remote.RemoteServer;
 import dk.grouptwo.networking.remote.RemoteWorkerClient;
 
-import java.lang.reflect.Array;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Server implements RemoteServer {
     private ArrayList<RemoteWorkerClient> clients;
@@ -56,27 +53,50 @@ public class Server implements RemoteServer {
             job.setJobID(persistence.getJobID(job));
             jobs.add(job);
             jobMap.put(job, employerClient);
-            for (RemoteWorkerClient client : clients) {
-                try {
-                    client.addJob(job);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try {
+                employerClient.addJob(job);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+            for (RemoteWorkerClient worker : clients) {
+                new Thread(() -> {
+                    try {
+                        worker.addJob(job);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         }).start();
     }
 
     @Override
-    public void removeJob(Job job) throws RemoteException {
+    public void cancelJob(Job job) throws RemoteException {
         new Thread(() -> {
+            RemoteEmployerClient client = jobMap.remove(job);
             jobs.remove(job);
-            persistence.removeJobFromDB(job);
-            for (RemoteWorkerClient client : clients) {
+            job.setStatus("cancelled");
+            jobs.add(job);
+            jobMap.put(job, client);
+            persistence.cancelJob(job);
+
+            new Thread(() -> {
                 try {
-                    client.removeJob(job);
+                    client.updateJob(job);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }).start();
+
+            for (RemoteWorkerClient worker : clients) {
+                new Thread(() -> {
+                    try {
+                        worker.updateJob(job);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         }).start();
     }
@@ -112,17 +132,22 @@ public class Server implements RemoteServer {
             persistence.applyForJob(job, worker);
             job.addApplicant(worker);
             jobMap.put(job, client);
-            try {
-                client.updateJob(job);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            for (RemoteWorkerClient callback : clients) {
+            new Thread(() -> {
                 try {
-                    callback.updateJob(job);
-                } catch (RemoteException e) {
+                    client.updateJob(job);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }).start();
+
+            for (RemoteWorkerClient remoteWorkerClient : clients) {
+                new Thread(() -> {
+                    try {
+                        remoteWorkerClient.updateJob(job);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         }).start();
     }
@@ -136,17 +161,22 @@ public class Server implements RemoteServer {
             job.removeWorker(worker);
             job.removeApplicant(worker);
             jobMap.put(job, client);
-            try {
-                client.updateJob(job);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            for (RemoteWorkerClient callback : clients) {
+            new Thread(() -> {
                 try {
-                    callback.updateJob(job);
-                } catch (RemoteException e) {
+                    client.updateJob(job);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }).start();
+
+            for (RemoteWorkerClient remoteWorkerClient : clients) {
+                new Thread(() -> {
+                    try {
+                        remoteWorkerClient.updateJob(job);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         }).start();
     }
@@ -154,9 +184,9 @@ public class Server implements RemoteServer {
     @Override
     public void updateJob(Job job) throws RemoteException {
         new Thread(() -> {
-            RemoteEmployerClient employer = jobMap.get(job);
+            RemoteEmployerClient client = jobMap.get(job);
             jobMap.remove(job);
-            jobMap.put(job, employer);
+            jobMap.put(job, client);
             persistence.updateJob(job);
 
             //update in database
@@ -172,18 +202,22 @@ public class Server implements RemoteServer {
                 }
             }
 
-            try {
-                employer.updateJob(job);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-
-            for (RemoteWorkerClient client : clients) {
+            new Thread(() -> {
                 try {
                     client.updateJob(job);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }).start();
+
+            for (RemoteWorkerClient worker : clients) {
+                new Thread(() -> {
+                    try {
+                        worker.updateJob(job);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         }).start();
     }

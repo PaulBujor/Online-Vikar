@@ -189,6 +189,9 @@ public class Job implements Serializable {
     }
 
     public Job copy() {
-        return new Job(jobID, jobTitle, description, salary, workersNeeded, shiftStart, shiftEnd, status, location, employer);
+        Job job = new Job(jobID, jobTitle, description, salary, workersNeeded, shiftStart, shiftEnd, status, location, employer);
+        job.setApplicants(this.getApplicants());
+        job.setSelectedWorkers(this.getSelectedWorkers());
+        return job;
     }
 }

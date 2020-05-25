@@ -11,7 +11,7 @@ public interface Persistence {
     //Adding removing, applying for jobs*******
     void addJobToDB(Job job);
 
-    void removeJobFromDB(Job job);
+    void cancelJob(Job job);
 
     // maybe Worker instead of void
 

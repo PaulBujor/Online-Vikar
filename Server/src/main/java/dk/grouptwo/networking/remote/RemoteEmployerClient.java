@@ -8,4 +8,6 @@ import java.rmi.RemoteException;
 
 public interface RemoteEmployerClient extends Remote, Serializable {
     public void updateJob(Job job) throws RemoteException;
+
+    public void addJob(Job job) throws RemoteException;
 }

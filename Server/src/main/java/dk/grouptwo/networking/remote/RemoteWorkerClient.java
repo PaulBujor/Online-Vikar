@@ -10,7 +10,5 @@ public interface RemoteWorkerClient extends Remote, Serializable {
     public void addJob(Job job) throws RemoteException;
 
     public void updateJob(Job job) throws RemoteException;
-
-    public void removeJob(Job job) throws RemoteException;
 }
 

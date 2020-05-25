@@ -33,11 +33,6 @@ public class WorkerClient implements RemoteWorkerClient, PropertyChangeSubject {
     }
 
     @Override
-    public void removeJob(Job job) throws RemoteException {
-        property.firePropertyChange("removeJob", 0, job);
-    }
-
-    @Override
     public void addListener(PropertyChangeListener listener) {
         property.addPropertyChangeListener(listener);
     }
