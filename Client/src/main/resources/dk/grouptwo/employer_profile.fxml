@@ -19,11 +19,6 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
-      <ImageView fitHeight="681.0" fitWidth="505.0" layoutX="685.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="70.0">
-         <image>
-            <Image url="@images/maestro.jpg" />
-         </image>
-      </ImageView>
       <VBox layoutX="135.0" layoutY="70.0" prefHeight="244.0" prefWidth="530.0" spacing="23.0" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="535.0">
          <children>
             <HBox spacing="28.0">
@@ -117,5 +112,10 @@
             <Font name="System Bold" size="33.0" />
          </font>
       </Label>
+      <ImageView fitHeight="765.0" fitWidth="454.0" layoutX="750.0" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@images/employer_profile_graphic.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
