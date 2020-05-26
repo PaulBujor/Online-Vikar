@@ -106,7 +106,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.createWorker(worker, password, passwordConfirmation))
                 server.createWorkerAccount(worker, password);
         } catch (RemoteException e) {
-            throw new Exception("Account could not be created!");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
         }
@@ -124,7 +124,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
                 server.registerWorkerClient(workerClient);
             }
         } catch (RemoteException e) {
-            throw new Exception("Account does not exist!");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted. For the safety of your account, you will not be logged in.");
         } catch (Exception e) {
@@ -138,7 +138,7 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
             if (Validator.createEmployer(employer, password, passwordConfirmation))
                 server.createEmployerAccount(employer, password);
         } catch (RemoteException e) {
-            throw new Exception("Account could not be created!");
+            throw new Exception(e.getMessage());
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("Password could not be encrypted.");
         }
@@ -395,9 +395,12 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void addLicense(License license) throws Exception {
         try {
+            worker.addLicense(license);
             server.addLicense(license, worker);
         } catch (RemoteException e) {
             throw new Exception("An error has occurred.");
+        } catch (Exception e) {
+            throw new Exception("Could not add license");
         }
     }
 
@@ -405,8 +408,9 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     public void deleteLicense(String licenseNumber) throws Exception {
         try {
             server.removeLicense(getLicenseByNumber(licenseNumber));
+            worker.removeLicense(getLicenseByNumber(licenseNumber));
         } catch (RemoteException e) {
-            throw new Exception("An error has occurred.");
+            throw new Exception(e.getMessage());
         }
     }
 

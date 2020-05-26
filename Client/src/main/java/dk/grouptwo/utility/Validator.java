@@ -15,6 +15,10 @@ public class Validator {
     private static ArrayList<Character> postDomain = new ArrayList<>();
 
     public static boolean emailCheck(String email) {
+        emailBeforeAtSign.clear();
+        emailAfterAtSign.clear();
+        domain.clear();
+        postDomain.clear();
         int atCount = 0;
         int atPosition = 0;
         emailToArray = email.toCharArray();
@@ -45,8 +49,6 @@ public class Validator {
     }
 
     private static boolean beforeAtSign() {
-        System.out.println(emailBeforeAtSign.toString());
-        System.out.println(emailAfterAtSign.toString());
         if (emailBeforeAtSign.get(0) == '.' || emailBeforeAtSign.get(emailBeforeAtSign.size() - 1) == '.') {
             return false;
         } else {
