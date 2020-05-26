@@ -15,7 +15,11 @@ public class EvenMoreTesting
 
   public void insertTest(Employer employer, String password) throws SQLException
   {
-    persistence.createEmployerAccount(employer,password);
+    try {
+      persistence.createEmployerAccount(employer,password);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public int insertAddressTest(Address address) throws SQLException{

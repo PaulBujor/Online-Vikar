@@ -267,8 +267,8 @@ public class Database implements Persistence {
 
     @Override
     public void createEmployerAccount(Employer employer,
-                                      String password) throws SQLException {
-        new Thread(() -> {
+                                      String password) throws Exception {
+//        new Thread(() -> {
 
             String SQL =
                     "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
@@ -288,16 +288,17 @@ public class Database implements Persistence {
                 posted.executeUpdate();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                if(e.getMessage().contains("duplicate key value"))
+                    throw new Exception("Account already exists!");
             } finally {
                 close(null, posted, conn);
             }
-        }).start();
+//        }).start();
     }
 
     @Override
-    public void createWorkerAccount(Worker worker, String password) {
-        new Thread(() -> {
+    public void createWorkerAccount(Worker worker, String password) throws Exception {
+//        new Thread(() -> {
 
             String SQL =
                     "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address,birthday,gender)"
@@ -323,10 +324,12 @@ public class Database implements Persistence {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                if(e.getMessage().contains("duplicate key value"))
+                    throw new Exception("Account already exists!");
             } finally {
                 close(null, posted, conn);
             }
-        }).start();
+//        }).start();
     }
 
     @Override
@@ -545,8 +548,8 @@ public class Database implements Persistence {
     }
 
     @Override
-    public void removeLicense(License license) {
-        new Thread(() -> {
+    public void removeLicense(License license) throws Exception {
+//        new Thread(() -> {
             String SQL = "DELETE FROM license where licensenumber=?";
             PreparedStatement pstm = null;
             Connection conn = null;
@@ -557,11 +560,11 @@ public class Database implements Persistence {
                 pstm.execute();
 
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new Exception("Could not delete license");
             } finally {
                 close(null, pstm, conn);
             }
-        }).start();
+//        }).start();
     }
 
     @Override

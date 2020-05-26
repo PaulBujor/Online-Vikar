@@ -119,7 +119,6 @@ public class Server implements RemoteServer {
         try {
             worker = persistence.loginWorker(CPR, password);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RemoteException(e.getMessage());
         }
         return worker;

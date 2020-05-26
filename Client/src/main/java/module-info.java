@@ -11,7 +11,10 @@ module dk.grouptwo {
     opens dk.grouptwo.view.worker to javafx.fxml;
     opens dk.grouptwo.view.employer to javafx.fxml;
     exports dk.grouptwo;
+    exports dk.grouptwo.model.objects;
+    exports dk.grouptwo.model;
+    exports dk.grouptwo.networking.remote;
+    exports dk.grouptwo.networking;
     exports dk.grouptwo.view.worker to javafx.fxml;
     exports dk.grouptwo.view.employer to javafx.fxml;
-    exports dk.grouptwo.networking.remote to java.rmi;
 }

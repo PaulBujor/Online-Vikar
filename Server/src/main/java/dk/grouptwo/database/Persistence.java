@@ -28,9 +28,9 @@ public interface Persistence {
     Worker loginWorker(String CPR, String password) throws Exception;
 
     void createEmployerAccount(Employer employer, String password)
-            throws SQLException;
+            throws Exception;
 
-    void createWorkerAccount(Worker worker, String password);
+    void createWorkerAccount(Worker worker, String password) throws Exception;
 
     ArrayList<Job> getAllJobsFromDB();
 
@@ -48,7 +48,7 @@ public interface Persistence {
 
     void addLicense(License license, Worker worker);
 
-    void removeLicense(License license);
+    void removeLicense(License license) throws Exception;
 
     int insertAddress(Address address);
 

@@ -80,13 +80,13 @@ public class Worker extends Account {
         this.licenses = licenses;
     }
 
-    public void addLicense(License license)
-    {
-        licenses.add(license);
+    public void addLicense(License license) throws Exception {
+        if (license != null)
+            licenses.add(license);
+        else throw new Exception();
     }
 
-    public void removeLicense(License license)
-    {
+    public void removeLicense(License license) {
         licenses.remove(license);
     }
 
@@ -115,7 +115,7 @@ public class Worker extends Account {
     }
 
     public boolean equals(Object obj) {
-        if(!(obj instanceof Worker))
+        if (!(obj instanceof Worker))
             return false;
         Worker other = (Worker) obj;
         return CPR.equals(other.CPR);
