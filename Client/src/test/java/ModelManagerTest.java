@@ -17,8 +17,8 @@ class ModelManagerTest {
     Employer dummyEmployer = new Employer("employer@gmail.com", "11111111", new Address("Denmark", "Horsens", "Sundvej", "8700"), "111111", "Employer Company");
     Worker dummyWorker = new Worker("worker@gmail.com", "11223344", new Address("Denmark", "Horsens", "Sundvej", "8700"), "220220-2222", "John", "Doe", "A", "Danish, English", "I like to be a human-being", LocalDate.of(2020, 02, 22), "Other");
     Job dummyJobOne = new Job("Work1", "Work needed", 101, 1,
-            LocalDateTime.of(2020, 7, 19, 6, 0, 0),
-            LocalDateTime.of(2020, 7, 19, 14, 15, 0),
+            LocalDateTime.of(2020, 5, 19, 6, 0, 0),
+            LocalDateTime.of(2020, 5, 19, 14, 15, 0),
             new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
             dummyEmployer);
     Job dummyJobTwo = new Job("Work2", "Work needed", 102, 2,
@@ -41,8 +41,8 @@ class ModelManagerTest {
         dummyEmployer = new Employer("employer@gmail.com", "11111111", new Address("Denmark", "Horsens", "Sundvej", "8700"), "111111", "Employer Company");
         dummyWorker = new Worker("worker@gmail.com", "11223344", new Address("Denmark", "Horsens", "Sundvej", "8700"), "220220-2222", "John", "Doe", "A", "Danish, English", "I like to be a human-being", LocalDate.of(2020, 02, 22), "Other");
         dummyJobOne = new Job("Work1", "Work needed", 101, 1,
-                LocalDateTime.of(2020, 7, 19, 6, 0, 0),
-                LocalDateTime.of(2020, 7, 19, 14, 15, 0),
+                LocalDateTime.of(2020, 5, 19, 6, 0, 0),
+                LocalDateTime.of(2020, 5, 19, 14, 15, 0),
                 new Address("Denmark", "Horsens", "Sundvej", "8700"), "pending",
                 dummyEmployer);
         dummyJobTwo = new Job("Work2", "Work needed", 102, 2,
@@ -104,12 +104,12 @@ class ModelManagerTest {
         assertEquals("The password should contain at least 8 characters.", errorMessage);
     }
 
-    @Test
-    void registerAccountWorkerEmailFormat() throws Exception {
+    @Test //not working
+    void registerAccountWorkerEmailFormat() {
         String errorMessage = "";
         dummyWorker.setEmail("worker@@gmail.com");
         try {
-            model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+            model.registerAccountWorker(dummyWorker, "12345678", "12345678");
         } catch (Exception e) {
             errorMessage = e.getMessage();
         }
@@ -322,22 +322,24 @@ class ModelManagerTest {
         assertNull(model.getJobById(-1));
     }
 
-    @Test //todo redo
+    @Test
     void getJobById() throws Exception {
-        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
-        model.logInWorker(dummyWorker.getCPR(), "12345678");
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
-
         model.createWorkOffer(dummyJobOne);
-        model.createWorkOffer(dummyJobTwo);
         Thread.sleep(1000);
+        model.createWorkOffer(dummyJobTwo);
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        Thread.sleep(1000);
+        dummyJobOne = model.getJobs().get(0); //update dummyJob with new ID
         assertEquals(model.getJobs().get(0), model.getJobById(dummyJobOne.getJobID()));
     }
 
     @Test
     void getLicenseByNumber() throws Exception {
         License dummyLicense = new License("Forklift license", "Class 1 - Electric", "12345678", LocalDate.of(2020, 01, 01), LocalDate.of(2021, 01, 01));
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
         model.logInWorker(dummyWorker.getCPR(), "12345678");
         model.addLicense(dummyLicense);
         assertEquals(dummyLicense, model.getLicenseByNumber("12345678"));
@@ -346,12 +348,17 @@ class ModelManagerTest {
     @Test
     void getHoursWorkedThisMonth() throws Exception {
         model.registerAccountWorker(dummyWorker, "12345678", "12345678");
-        model.logInWorker(dummyWorker.getCPR(), "12345678");
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
         dummyJobOne.setStatus("completed");
         model.createWorkOffer(dummyJobOne);
+        Thread.sleep(1000);
+        dummyJobOne = model.getJobs().get(0);
         dummyJobOne.addSelectedworker(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
+        Thread.sleep(1000);
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        Thread.sleep(1000);
         assertEquals(8.25, model.getHoursWorkedThisMonth());
     }
 
@@ -390,33 +397,50 @@ class ModelManagerTest {
 
     @Test
     void getWorkHistoryOne() throws Exception {
-        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
-        model.logInWorker(dummyWorker.getCPR(), "12345678");
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        model.createWorkOffer(dummyJobOne);
+        Thread.sleep(1000);
+        dummyJobOne = model.getJobs().get(0);
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.applyForJob(dummyJobOne.getJobID());
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        dummyJobOne.setStatus("completed");
+        dummyJobOne.addSelectedworker(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
 
         ArrayList<Job> dummyJobs = new ArrayList<>();
         dummyJobs.add(dummyJobOne);
-        model.createWorkOffer(dummyJobOne);
         Thread.sleep(1000);
         assertEquals(dummyJobs, model.getWorkHistory());
     }
 
     @Test
     void getWorkHistoryMany() throws Exception {
-        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
-        model.logInWorker(dummyWorker.getCPR(), "12345678");
         model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
         model.logInEmployer(dummyEmployer.getCVR(), "12345678");
-
-        ArrayList<Job> dummyJobs = new ArrayList<>();
-        dummyJobs.add(dummyJobOne);
-        dummyJobs.add(dummyJobTwo);
-
         model.createWorkOffer(dummyJobOne);
         model.createWorkOffer(dummyJobTwo);
+        Thread.sleep(2000);
+        dummyJobOne = model.getJobs().get(0);
+        dummyJobTwo = model.getJobs().get(1);
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.applyForJob(dummyJobOne.getJobID());
+        model.applyForJob(dummyJobTwo.getJobID());
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+        dummyJobOne.setStatus("completed");
+        dummyJobOne.addSelectedworker(dummyWorker);
+        dummyJobTwo.setStatus("completed");
+        dummyJobTwo.addSelectedworker(dummyWorker);
+        model.updateWorkOffer(dummyJobOne);
+        model.updateWorkOffer(dummyJobTwo);
 
-
+        ArrayList<Job> dummyJobs = new ArrayList<>();
+        dummyJobs.add(dummyJobTwo);
+        dummyJobs.add(dummyJobOne);
+        Thread.sleep(1000);
         assertEquals(dummyJobs, model.getWorkHistory());
     }
 
@@ -459,14 +483,26 @@ class ModelManagerTest {
 
         model.createWorkOffer(dummyJobOne);
         model.createWorkOffer(dummyJobTwo);
+        Thread.sleep(1000);
+        dummyJobOne = model.getJobs().get(0);
+        dummyJobTwo = model.getJobs().get(1);
         dummyJobOne.addApplicant(dummyWorker);
         dummyJobTwo.addApplicant(dummyWorker);
         model.updateWorkOffer(dummyJobOne);
         model.updateWorkOffer(dummyJobTwo);
+        dummyJobOne = model.getJobs().get(0);
+        dummyJobTwo = model.getJobs().get(1);
+        Thread.sleep(1000);
         model.cancelWorkerFromJob(dummyJobOne);
+        Thread.sleep(1000);
+        dummyJobOne = model.getJobs().get(0);
+        dummyJobTwo = model.getJobs().get(1);
 
         boolean firstCondition = !dummyJobOne.getApplicants().contains(dummyWorker);
         boolean secondCondition = dummyJobTwo.getApplicants().contains(dummyWorker);
+
+        System.out.println(firstCondition);
+        System.out.println(secondCondition);
 
         assertTrue(firstCondition && secondCondition);
     }
