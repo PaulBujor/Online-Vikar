@@ -533,6 +533,24 @@ class ModelManagerTest {
     }
 
     @Test
+    void cancelWorkOfferZero() throws Exception {
+        String errorMessage = "";
+        model.registerAccountWorker(dummyWorker, "12345678", "12345678");
+        model.logInWorker(dummyWorker.getCPR(), "12345678");
+        model.registerAccountEmployer(dummyEmployer, "12345678", "12345678");
+        model.logInEmployer(dummyEmployer.getCVR(), "12345678");
+
+        try {
+            model.cancelWorkOffer(dummyJobOne);
+        } catch (Exception e) {
+            errorMessage = e.getMessage();
+            e.printStackTrace();
+        }
+
+        assertEquals("An error has occurred.", errorMessage);
+    }
+
+    @Test
     void cancelWorkOfferOne() throws Exception {
         model.registerAccountWorker(dummyWorker, "12345678", "12345678");
         model.logInWorker(dummyWorker.getCPR(), "12345678");

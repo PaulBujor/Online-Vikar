@@ -149,6 +149,8 @@ public class Database implements Persistence {
 
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 close(null, pstm, conn);
             }
@@ -270,29 +272,29 @@ public class Database implements Persistence {
                                       String password) throws Exception {
 //        new Thread(() -> {
 
-            String SQL =
-                    "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
+        String SQL =
+                "INSERT INTO employer(cvr,password,companyname,email,phone,address)"
 
-                            + "VALUES(?,?,?,?,?,?)";
-            PreparedStatement posted = null;
-            Connection conn = null;
-            try {
-                conn = DatabaseConnection.getInstance().connect();
-                posted = conn.prepareStatement(SQL);
-                posted.setString(1, employer.getCVR());
-                posted.setString(2, password);
-                posted.setString(3, employer.getCompanyName());
-                posted.setString(4, employer.getEmail());
-                posted.setString(5, employer.getPhone());
-                posted.setInt(6, insertAddress(employer.getAddress()));
-                posted.executeUpdate();
+                        + "VALUES(?,?,?,?,?,?)";
+        PreparedStatement posted = null;
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getInstance().connect();
+            posted = conn.prepareStatement(SQL);
+            posted.setString(1, employer.getCVR());
+            posted.setString(2, password);
+            posted.setString(3, employer.getCompanyName());
+            posted.setString(4, employer.getEmail());
+            posted.setString(5, employer.getPhone());
+            posted.setInt(6, insertAddress(employer.getAddress()));
+            posted.executeUpdate();
 
-            } catch (SQLException e) {
-                if(e.getMessage().contains("duplicate key value"))
-                    throw new Exception("Account already exists!");
-            } finally {
-                close(null, posted, conn);
-            }
+        } catch (SQLException e) {
+            if (e.getMessage().contains("duplicate key value"))
+                throw new Exception("Account already exists!");
+        } finally {
+            close(null, posted, conn);
+        }
 //        }).start();
     }
 
@@ -300,35 +302,35 @@ public class Database implements Persistence {
     public void createWorkerAccount(Worker worker, String password) throws Exception {
 //        new Thread(() -> {
 
-            String SQL =
-                    "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address,birthday,gender)"
-                            + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement posted = null;
-            Connection conn = null;
-            try {
-                conn = DatabaseConnection.getInstance().connect();
-                posted = conn.prepareStatement(SQL);
-                posted.setString(1, worker.getCPR());
-                posted.setString(2, password);
-                posted.setString(3, worker.getFirstName());
-                posted.setString(4, worker.getLastName());
-                posted.setString(5, worker.getTaxCard());
-                posted.setString(6, worker.getEmail());
-                posted.setString(7, worker.getPhone());
-                posted.setString(8, worker.getLanguages());
-                posted.setString(9, worker.getDescription());
-                posted.setInt(10, insertAddress(worker.getAddress()));
-                posted.setDate(11, Date.valueOf(worker.getBirthday()));
-                posted.setString(12, worker.getGender());
-                posted.execute();
+        String SQL =
+                "INSERT INTO worker(cpr,password,firstname,lastname,taxcard,email,phone,languages,description,address,birthday,gender)"
+                        + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement posted = null;
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getInstance().connect();
+            posted = conn.prepareStatement(SQL);
+            posted.setString(1, worker.getCPR());
+            posted.setString(2, password);
+            posted.setString(3, worker.getFirstName());
+            posted.setString(4, worker.getLastName());
+            posted.setString(5, worker.getTaxCard());
+            posted.setString(6, worker.getEmail());
+            posted.setString(7, worker.getPhone());
+            posted.setString(8, worker.getLanguages());
+            posted.setString(9, worker.getDescription());
+            posted.setInt(10, insertAddress(worker.getAddress()));
+            posted.setDate(11, Date.valueOf(worker.getBirthday()));
+            posted.setString(12, worker.getGender());
+            posted.execute();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-                if(e.getMessage().contains("duplicate key value"))
-                    throw new Exception("Account already exists!");
-            } finally {
-                close(null, posted, conn);
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            if (e.getMessage().contains("duplicate key value"))
+                throw new Exception("Account already exists!");
+        } finally {
+            close(null, posted, conn);
+        }
 //        }).start();
     }
 
@@ -549,19 +551,19 @@ public class Database implements Persistence {
 
     @Override
     public void removeLicense(License license) throws Exception {
-            String SQL = "DELETE FROM license where licensenumber=?";
-            PreparedStatement pstm = null;
-            Connection conn = null;
-            try {
-                conn = DatabaseConnection.getInstance().connect();
-                pstm = conn.prepareStatement(SQL);
-                pstm.setString(1, license.getLicenseNumber());
-                pstm.execute();
-            } catch (SQLException e) {
-                throw new Exception("Could not delete license");
-            } finally {
-                close(null, pstm, conn);
-            }
+        String SQL = "DELETE FROM license where licensenumber=?";
+        PreparedStatement pstm = null;
+        Connection conn = null;
+        try {
+            conn = DatabaseConnection.getInstance().connect();
+            pstm = conn.prepareStatement(SQL);
+            pstm.setString(1, license.getLicenseNumber());
+            pstm.execute();
+        } catch (SQLException e) {
+            throw new Exception("Could not delete license");
+        } finally {
+            close(null, pstm, conn);
+        }
     }
 
     @Override

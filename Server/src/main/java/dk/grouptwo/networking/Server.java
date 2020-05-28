@@ -75,7 +75,8 @@ public class Server implements RemoteServer {
     public void cancelJob(Job job) throws RemoteException {
         new Thread(() -> {
             RemoteEmployerClient client = jobMap.remove(job);
-            jobs.remove(job);
+            if (jobs.contains(job))
+                jobs.remove(job);
             job.setStatus("cancelled");
             jobs.add(job);
             jobMap.put(job, client);
