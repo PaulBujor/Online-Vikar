@@ -314,7 +314,7 @@ public class Server implements RemoteServer {
         try {
             persistence.removeLicense(license);
         } catch (Exception e) {
-            throw new RemoteException(e.getMessage());
+            throw new RemoteException("Could not delete license");
         }
     }
 }

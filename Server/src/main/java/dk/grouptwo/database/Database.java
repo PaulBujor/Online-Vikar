@@ -549,7 +549,6 @@ public class Database implements Persistence {
 
     @Override
     public void removeLicense(License license) throws Exception {
-//        new Thread(() -> {
             String SQL = "DELETE FROM license where licensenumber=?";
             PreparedStatement pstm = null;
             Connection conn = null;
@@ -558,13 +557,11 @@ public class Database implements Persistence {
                 pstm = conn.prepareStatement(SQL);
                 pstm.setString(1, license.getLicenseNumber());
                 pstm.execute();
-
             } catch (SQLException e) {
                 throw new Exception("Could not delete license");
             } finally {
                 close(null, pstm, conn);
             }
-//        }).start();
     }
 
     @Override
