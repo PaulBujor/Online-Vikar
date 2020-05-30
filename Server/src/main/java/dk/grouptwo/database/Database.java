@@ -20,7 +20,7 @@ public class Database implements Persistence {
         DbUtils.closeQuietly(connection);
     }
 
-    //updates job status, checks every 30 minutes
+    //updates job status, checks every 10 minutes
     private void updateThread() {
         new Thread(() -> {
             while (1 < 2) {
