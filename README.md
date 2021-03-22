@@ -9,3 +9,5 @@ implemented in order to build a firm architecture. The design for the client-sid
 on MVVM, whereas on the server-side Singleton, Remote Proxy, and Mediator patterns
 were used. In the end, the system passed the testing successfully and all the
 requirements were met.
+
+
