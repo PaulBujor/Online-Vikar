@@ -88,7 +88,7 @@ public class Validator {
             return false;
 
         for (int i = 0; i < postDomain.size(); i++) {
-            if (!((domain.get(i) >= 48 && domain.get(i) <= 57) || (domain.get(i) >= 65 && domain.get(i) <= 90) || (domain.get(i) >= 97 && domain.get(i) <= 122) || (domain.get(i) == 46)))
+            if (!((postDomain.get(i) >= 48 && postDomain.get(i) <= 57) || (postDomain.get(i) >= 65 && postDomain.get(i) <= 90) || (postDomain.get(i) >= 97 && postDomain.get(i) <= 122) || (postDomain.get(i) == 46)))
                 return false;
         }
 

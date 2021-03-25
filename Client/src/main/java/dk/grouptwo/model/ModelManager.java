@@ -386,7 +386,11 @@ public class ModelManager implements AccountManagement, EmployerModel, WorkerMod
     @Override
     public void applyForJob(int jobID) throws Exception {
         try {
-            server.applyForJob(getJobById(jobID), worker);
+            Job job = getJobById(jobID);
+            if (job != null)
+                server.applyForJob(job, worker);
+            else
+                throw new Exception("Null job");
         } catch (RemoteException e) {
             throw new Exception("An error has occurred.");
         }

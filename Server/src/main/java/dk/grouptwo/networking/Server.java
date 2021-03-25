@@ -75,7 +75,8 @@ public class Server implements RemoteServer {
     public void cancelJob(Job job) throws RemoteException {
         new Thread(() -> {
             RemoteEmployerClient client = jobMap.remove(job);
-            jobs.remove(job);
+            if (jobs.contains(job))
+                jobs.remove(job);
             job.setStatus("cancelled");
             jobs.add(job);
             jobMap.put(job, client);
@@ -314,7 +315,7 @@ public class Server implements RemoteServer {
         try {
             persistence.removeLicense(license);
         } catch (Exception e) {
-            throw new RemoteException(e.getMessage());
+            throw new RemoteException("Could not delete license");
         }
     }
 }
